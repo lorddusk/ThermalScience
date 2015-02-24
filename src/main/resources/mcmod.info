@@ -1,0 +1,16 @@
+[
+{
+  "modid": "ThermalScience",
+  "name": "Thermal Science",
+  "description": "Adds various science related machines and recipes.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Creysys"],
+  "credits": "From the Wixxit-Modpack!",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": ["CoFHCore", "ThermalFoundation", "ThermalExpansion"]
+}
+]

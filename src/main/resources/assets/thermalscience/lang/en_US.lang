@@ -1,0 +1,19 @@
+itemGroup.ThermalScience=Thermal Science
+
+tile.blockCompressor.name=Compressor
+tile.blockCarbothermicFurnace.name=Carbothermic Furnace
+tile.blockCentrifuge.name=Centrifuge
+tile.blockWiremill.name=Wiremill
+
+tile.blockWatermill.name=Watermill
+tile.blockEnergyRelay.name=Energy Relay
+
+item.itemPortableCompressor.name=Portable Compressor
+
+item.materialTube.name=Tube
+item.materialWireCopper.name=Copper Wire
+item.materialCoil.name=Coil
+item.materialMotor.name=Motor
+
+item.dustNetherrack.name=Netherrack Dust
+item.dustDirtyNetherrack.name=Dirty Netherrack Dust
