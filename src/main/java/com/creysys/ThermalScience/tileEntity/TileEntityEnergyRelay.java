@@ -7,11 +7,8 @@ import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.ThermalScienceUtil;
 import com.creysys.ThermalScience.compat.IWailaBodyProvider;
-import com.creysys.ThermalScience.network.ThermalSciencePacketHandler;
-import com.creysys.ThermalScience.network.packet.PacketEnergy;
 import com.creysys.ThermalScience.network.packet.PacketEnergyRelaySettings;
 import com.creysys.ThermalScience.network.sync.ISyncEnergy;
-import cpw.mods.fml.common.network.NetworkRegistry;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.block.Block;
@@ -25,7 +22,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

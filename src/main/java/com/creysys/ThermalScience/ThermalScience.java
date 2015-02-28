@@ -1,6 +1,5 @@
 package com.creysys.ThermalScience;
 
-import cofh.api.modhelpers.ThermalExpansionHelper;
 import com.creysys.ThermalScience.block.*;
 import com.creysys.ThermalScience.compat.NEIThermalScienceConfig;
 import com.creysys.ThermalScience.gui.ThermalScienceGuiHandler;
@@ -22,9 +21,7 @@ import cpw.mods.fml.common.registry.GameData;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.monster.EntityEnderman;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 
 import java.util.Iterator;
 

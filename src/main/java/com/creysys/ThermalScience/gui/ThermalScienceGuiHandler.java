@@ -3,9 +3,7 @@ package com.creysys.ThermalScience.gui;
 import com.creysys.ThermalScience.container.*;
 import com.creysys.ThermalScience.tileEntity.*;
 import cpw.mods.fml.common.network.IGuiHandler;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 

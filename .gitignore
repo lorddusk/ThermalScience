@@ -46,10 +46,12 @@ Temporary Items
 /*
 /*/
 !/src/
+!/lib/
 !.gitignore
 !gradlew*
 !/gradle/
 !/LICENSE.txt
 !/README.md
 !/COPYING.lesser
+!todo.txt
 !build.gradle

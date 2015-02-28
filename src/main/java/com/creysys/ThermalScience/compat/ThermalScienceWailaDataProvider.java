@@ -1,7 +1,5 @@
 package com.creysys.ThermalScience.compat;
 
-import cofh.api.energy.IEnergyProvider;
-import cofh.api.energy.IEnergyReceiver;
 import com.creysys.ThermalScience.ThermalScience;
 import cpw.mods.fml.common.registry.GameRegistry;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -14,7 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.List;
 

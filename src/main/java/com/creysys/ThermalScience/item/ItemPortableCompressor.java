@@ -1,8 +1,6 @@
 package com.creysys.ThermalScience.item;
 
-import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.ItemEnergyContainer;
-import cofh.lib.util.helpers.ColorHelper;
 import cofh.lib.util.helpers.StringHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;

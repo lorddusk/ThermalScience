@@ -23,7 +23,18 @@ archivesBaseName = "ThermalScience"
 
 minecraft {
     version = "1.7.10-10.13.2.1291"
-    runDir = "eclipse"
+    runDir = "run"
+}
+
+repositories {
+    maven {
+        name "Mobius Repo"
+        url "http://mobiusstrip.eu/maven"
+    }
+    maven {
+        name 'CB Repo'
+        url "http://chickenbones.net/maven/"
+    }
 }
 
 dependencies {
@@ -40,6 +51,9 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
+	compile "mcp.mobius.waila:Waila:1.5.8a_1.7.10"
+	
+	compile files ("lib/CoFHLib-[1.7.10]1.0.0B7-dev-29.jar")
 }
 
 processResources

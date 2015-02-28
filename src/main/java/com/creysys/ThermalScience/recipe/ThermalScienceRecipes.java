@@ -1,7 +1,6 @@
 package com.creysys.ThermalScience.recipe;
 
 import cofh.api.modhelpers.ThermalExpansionHelper;
-import cofh.lib.CoFHLibProps;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceConfig;
 import com.creysys.ThermalScience.ThermalScienceUtil;
@@ -19,7 +18,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**

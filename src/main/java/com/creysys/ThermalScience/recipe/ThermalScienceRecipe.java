@@ -1,7 +1,5 @@
 package com.creysys.ThermalScience.recipe;
 
-
-import cofh.lib.util.helpers.StringHelper;
 import com.creysys.ThermalScience.ThermalScienceUtil;
 import net.minecraft.item.ItemStack;
 import org.apache.commons.lang3.StringUtils;

@@ -3,7 +3,6 @@ package com.creysys.ThermalScience.network.packet;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.network.IThermalSciencePacket;
 import com.creysys.ThermalScience.tileEntity.TileEntityEnergyRelay;
-import cpw.mods.fml.common.network.NetworkRegistry;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;

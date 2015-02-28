@@ -1,20 +1,12 @@
 package com.creysys.ThermalScience.compat;
 
 import codechicken.nei.PositionedStack;
-import codechicken.nei.api.API;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceUtil;
-import com.creysys.ThermalScience.container.ContainerBasic;
-import com.creysys.ThermalScience.gui.GuiCentrifuge;
 import com.creysys.ThermalScience.gui.GuiMachine;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipe;
-import com.creysys.ThermalScience.recipe.ThermalScienceRecipes;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import scala.actors.threadpool.Arrays;
 
 import java.util.ArrayList;
 import java.util.List;

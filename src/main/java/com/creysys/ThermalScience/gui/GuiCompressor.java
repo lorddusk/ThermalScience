@@ -1,10 +1,8 @@
 package com.creysys.ThermalScience.gui;
 
-import com.creysys.ThermalScience.ThermalScienceUtil;
 import com.creysys.ThermalScience.container.ContainerCompressor;
 import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
 
 /**
  * Created by Creysys on 31.01.2015.
