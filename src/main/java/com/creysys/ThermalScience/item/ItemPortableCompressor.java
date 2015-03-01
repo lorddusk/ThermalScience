@@ -167,6 +167,11 @@ public class ItemPortableCompressor extends ItemEnergyContainer
 
                         energyStored -= 1000;
 
+                        if(!stack.hasTagCompound())
+                        {
+                            stack.setTagCompound(new NBTTagCompound());
+                        }
+
                         stack.getTagCompound().setInteger(ThermalScienceNBTTags.EnergyStored, energyStored);
 
                         updateDamage(stack);
@@ -206,6 +211,18 @@ public class ItemPortableCompressor extends ItemEnergyContainer
         }
 
         return iconOff;
+    }
+
+    @Override
+    public boolean requiresMultipleRenderPasses()
+    {
+        return true;
+    }
+
+    @Override
+    public int getRenderPasses(int metadata)
+    {
+        return 1;
     }
 
     public void updateDamage(ItemStack stack) {

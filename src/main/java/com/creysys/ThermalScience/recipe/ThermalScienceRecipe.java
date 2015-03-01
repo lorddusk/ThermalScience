@@ -1,6 +1,8 @@
 package com.creysys.ThermalScience.recipe;
 
 import com.creysys.ThermalScience.ThermalScienceUtil;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import org.apache.commons.lang3.StringUtils;
 
@@ -37,12 +39,15 @@ public class ThermalScienceRecipe {
     }
 
     private boolean isObjectValid(Object obj) {
-        if (obj instanceof ItemStack) {
+        if (obj instanceof ItemStack || obj instanceof Item || obj instanceof Block) {
             return true;
         } else if (obj instanceof String) {
             String[] splits = ((String) obj).split(",");
 
-            if (splits.length == 2 && StringUtils.isNumeric(splits[1])) {
+            if(splits.length == 1){
+                return true;
+            }
+            else if (splits.length == 2 && StringUtils.isNumeric(splits[1])) {
                 return true;
             }
         }
@@ -62,13 +67,27 @@ public class ThermalScienceRecipe {
                 return false;
             }
 
+            if(this.inputs[i] instanceof Item){
+                this.inputs[i] = new ItemStack((Item)this.inputs[i]);
+            }
+            else if(this.inputs[i] instanceof Block){
+                this.inputs[i] = new ItemStack((Block)this.inputs[i]);
+            }
+
             if(this.inputs[i] instanceof ItemStack) {
                 if (((ItemStack)this.inputs[i]).stackSize > inputs[index].stackSize) {
                     return false;
                 }
             }
             else if(this.inputs[i] instanceof String){
-                if(Integer.parseInt(((String)this.inputs[i]).split(",")[1]) > inputs[index].stackSize){
+
+                int stackSize = 1;
+                String[] s = ((String)this.inputs[i]).split(",");
+                if(s.length > 1){
+                    stackSize = Integer.parseInt(s[1]);
+                }
+
+                if(stackSize > inputs[index].stackSize){
                     return false;
                 }
             }

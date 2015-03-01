@@ -6,6 +6,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,16 +30,20 @@ public class ItemMaterial extends ItemThermalScience {
         return getMaterial(material, 1);
     }
 
-    public List<IIcon> icons;
     public List<String> materials;
+    public IIcon[] icons;
 
     public ItemMaterial(){
         super("Material");
 
-        icons = new ArrayList<IIcon>();
         materials = new ArrayList<String>();
 
+        setHasSubtypes(true);
+        setMaxDamage(0);
+
         registerMaterials();
+
+        icons = new IIcon[materials.size()];
     }
 
     public void registerMaterials(){
@@ -59,17 +64,17 @@ public class ItemMaterial extends ItemThermalScience {
 
     @Override
     public IIcon getIconFromDamage(int damage) {
-        if(damage < 0 || damage >= icons.size()){
+        if(damage < 0 || damage >= icons.length){
             return null;
         }
 
-        return icons.get(damage);
+        return icons[damage];
     }
 
     @Override
     public void registerIcons(IIconRegister iconRegister) {
-        for(int i = 0; i < materials.size(); i++){
-            icons.add(iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":materials/" + materials.get(i).toLowerCase()));
+        for(int i = 0; i < icons.length; i++){
+            icons[i] = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":materials/" + StringUtils.uncapitalize(materials.get(i)));
         }
     }
 

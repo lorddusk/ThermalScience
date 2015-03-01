@@ -15,8 +15,10 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.ArrayList;
 
@@ -36,20 +38,19 @@ public class ThermalScienceRecipes {
         compressorRecipes = new ArrayList<ThermalScienceRecipe>();
         wiremillRecipes = new ArrayList<ThermalScienceRecipe>();
 
-        //For some reason TE only accepts recipes in preInit dafuq m9
         if (Loader.isModLoaded("ThermalExpansion")) {
+
+            //Cant override recipes so i have to disable this one in config
             ThermalExpansionHelper.addPulverizerRecipe(2400, new ItemStack(Blocks.netherrack), ItemDust.getDust("DirtyNetherrack"));
         }
 
-        //EnderIO too lel
         if (Loader.isModLoaded("EnderIO")) {
             ThermalScienceUtil.addEnderIORecipe("sagmill", "Netherrack", "<itemStack modID=\"minecraft\" itemName=\"netherrack\" />", "<itemStack oreDictionary=\"dustDirtyNetherrack\" />", 2400);
 
-            //Silicon
+            //Remove old silicon recipe
+            //Doesnt work yet disable in config too
             ThermalScienceUtil.removeEnderIORecipe("sagmill", "EnderIO", "Silicon");
             ThermalScienceUtil.removeEnderIORecipe("sagmill", "EnderIO", "SiliconRedSand");
-
-            addRecipe(carbothermicFurnaceRecipes, new Object[]{new ItemStack(Items.coal, 1), new ItemStack(Blocks.sand)}, new Object[]{new ItemStack(GameRegistry.findItem("EnderIO", "itemMaterial"), 1)}, 2000);
         }
     }
 
@@ -60,57 +61,65 @@ public class ThermalScienceRecipes {
         GameRegistry.addRecipe(ItemMaterial.getMaterial("Coil", 4), "WWW", "W_W", "WWW", 'W', ItemMaterial.getMaterial("WireCopper"));
         GameRegistry.addRecipe(ItemMaterial.getMaterial("Motor"), "CIC", 'C', ItemMaterial.getMaterial("Coil"), 'I', Items.iron_ingot);
 
+        //Tweaks
+        GameRegistry.addRecipe(new ShapedOreRecipe(Items.glowstone_dust, "RGR","GRG","RGR",'G', "dustGold", 'R', Items.redstone));
 
         //Carbothermic Furnace
         //Ore Processing
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreIron,1", new ItemStack(Items.coal, 1)}, new Object[]{"ingotIron,2"}, 3000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreGold,1", new ItemStack(Items.coal, 1)}, new Object[]{"ingotGold,2"}, 3000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreAdamantium,1", new ItemStack(Items.coal, 1)}, new Object[]{"ingotAdamantium,2"}, 3000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreAluminium,1", new ItemStack(Items.coal, 1)}, new Object[]{"ingotAluminium,2"}, 3000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreCopper,1", new ItemStack(Items.coal, 1)}, new Object[]{"ingotCopper,2"}, 3000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreLead,1", new ItemStack(Items.coal, 1)}, new Object[]{"ingotLead,2"}, 3000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreSilver,1", new ItemStack(Items.coal, 1)}, new Object[]{"ingotSilver,2"}, 3000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreTin,1", new ItemStack(Items.coal, 1)}, new Object[]{"ingotTin,2"}, 3000);
+        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreIron", Items.coal}, new Object[]{"ingotIron,2"}, 3000);
+        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreGold", Items.coal}, new Object[]{"ingotGold,2"}, 3000);
+        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreAdamantium", Items.coal}, new Object[]{"ingotAdamantium,2"}, 3000);
+        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreAluminium", Items.coal}, new Object[]{"ingotAluminium,2"}, 3000);
+        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreCopper", Items.coal}, new Object[]{"ingotCopper,2"}, 3000);
+        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreLead", Items.coal}, new Object[]{"ingotLead,2"}, 3000);
+        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreSilver", Items.coal}, new Object[]{"ingotSilver,2"}, 3000);
+        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreTin", Items.coal}, new Object[]{"ingotTin,2"}, 3000);
 
 
         //Centrifuge
-        addRecipe(centrifugeRecipes, new Object[]{new ItemStack(Items.magma_cream)}, new Object[]{new ItemStack(Items.blaze_powder), new ItemStack(Items.slime_ball)}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{new ItemStack(Items.ender_eye)}, new Object[]{new ItemStack(Items.ender_pearl), new ItemStack(Items.blaze_powder)}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{new ItemStack(Items.blaze_powder)}, new Object[]{"dustSulfur,1", "dustCoal,1"}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{new ItemStack(Blocks.soul_sand, 4)}, new Object[]{new ItemStack(Blocks.sand, 2), "dustSaltpeter,1"}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustDirtyNetherrack,2"}, new Object[]{"dustNetherrack,2", "dustSulfur,1"}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustNetherrack,16"}, new Object[]{new ItemStack(Items.redstone), "dustSulfur,4", "dustCoal,1", "nuggetGold,1"}, 80000);
+        addRecipe(centrifugeRecipes, new Object[]{Items.magma_cream}, new Object[]{Items.blaze_powder, Items.slime_ball}, 10000);
+        addRecipe(centrifugeRecipes, new Object[]{Items.ender_eye}, new Object[]{Items.ender_pearl, Items.blaze_powder}, 10000);
+        addRecipe(centrifugeRecipes, new Object[]{Items.blaze_powder}, new Object[]{new ItemStack(Items.redstone,2), Items.glowstone_dust}, 10000);
+        addRecipe(centrifugeRecipes, new Object[]{new ItemStack(Blocks.soul_sand, 4)}, new Object[]{new ItemStack(Blocks.sand, 2), "dustSaltpeter"}, 10000);
+        addRecipe(centrifugeRecipes, new Object[]{"dustDirtyNetherrack,2"}, new Object[]{"dustNetherrack,2", "dustSulfur"}, 10000);
+        addRecipe(centrifugeRecipes, new Object[]{"dustNetherrack,16"}, new Object[]{Items.redstone, "dustSulfur,4", "dustCoal", "nuggetGold"}, 80000);
+        addRecipe(centrifugeRecipes, new Object[]{new ItemStack(Items.gunpowder, 2)}, new Object[]{"dustCoal", "dustSaltpeter,2", "dustSulfur"}, 10000);
+        addRecipe(centrifugeRecipes, new Object[]{new ItemStack(Items.glowstone_dust, 16)}, new Object[]{new ItemStack(Items.redstone, 8), "dustGold,8"}, 1000000);
 
 
         //Alloy Seperating
-        addRecipe(centrifugeRecipes, new Object[]{"dustBrass,4"}, new Object[]{"dustCopper,3", "dustZinc,1"}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustBronze,4"}, new Object[]{"dustCopper,3", "dustTin,1"}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustElectrum,2"}, new Object[]{"dustSilver,1", "dustGold,1"}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustAluminiumBrass,4"}, new Object[]{"dustAluminium,3", "dustCopper,1"}, 10000);
+        addRecipe(centrifugeRecipes, new Object[]{"dustBrass,4"}, new Object[]{"dustCopper,3", "dustZinc"}, 10000);
+        addRecipe(centrifugeRecipes, new Object[]{"dustBronze,4"}, new Object[]{"dustCopper,3", "dustTin"}, 10000);
+        addRecipe(centrifugeRecipes, new Object[]{"dustElectrum,2"}, new Object[]{"dustSilver", "dustGold"}, 10000);
+        addRecipe(centrifugeRecipes, new Object[]{"dustAluminiumBrass,4"}, new Object[]{"dustAluminium,3", "dustCopper"}, 10000);
         addRecipe(centrifugeRecipes, new Object[]{"dustAlumite,6"}, new Object[]{"dustObsidian,2", "dustIron,4", "dustAluminium,10"}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustManyullyn,1"}, new Object[]{"dustCobalt,1", "dustArdite,1"}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustInvar,3"}, new Object[]{"dustIron,2", "dustNickel,1"}, 10000);
+        addRecipe(centrifugeRecipes, new Object[]{"dustManyullyn"}, new Object[]{"dustCobalt", "dustArdite"}, 10000);
+        addRecipe(centrifugeRecipes, new Object[]{"dustInvar,3"}, new Object[]{"dustIron,2", "dustNickel"}, 10000);
 
         //Compressor
-        addCompressorRecipe(new Object[]{new ItemStack(Items.blaze_powder, 5)}, new Object[]{new ItemStack(Items.blaze_rod)}, 3200, false);
-        addCompressorRecipe(new Object[]{"dustCoal,64"}, new Object[]{new ItemStack(Items.diamond)}, 100000, false);
+        addCompressorRecipe(new Object[]{new ItemStack(Items.blaze_powder, 5)}, new Object[]{Items.blaze_rod}, 3200, false);
+        addCompressorRecipe(new Object[]{"dustCoal,64"}, new Object[]{Items.diamond}, 100000, false);
 
         //Portable recipes
-        addCompressorRecipe(new Object[]{new ItemStack(Items.coal, 9)}, new Object[]{new ItemStack(Blocks.coal_block)}, 1000, true);
-        addCompressorRecipe(new Object[]{new ItemStack(Items.diamond, 9)}, new Object[]{new ItemStack(Blocks.diamond_block)}, 1000, true);
-        addCompressorRecipe(new Object[]{new ItemStack(Items.redstone, 9)}, new Object[]{new ItemStack(Blocks.redstone_block)}, 1000, true);
-        addCompressorRecipe(new Object[]{new ItemStack(Items.dye, 9, 4)}, new Object[]{new ItemStack(Blocks.lapis_block)}, 1000, true);
-        addCompressorRecipe(new Object[]{new ItemStack(Items.emerald, 9)}, new Object[]{new ItemStack(Blocks.emerald_block)}, 1000, true);
-        addCompressorRecipe(new Object[]{new ItemStack(Items.wheat, 9)}, new Object[]{new ItemStack(Blocks.hay_block)}, 1000, true);
+        addCompressorRecipe(new Object[]{new ItemStack(Items.coal, 9)}, new Object[]{Blocks.coal_block}, 1000, true);
+        addCompressorRecipe(new Object[]{new ItemStack(Items.diamond, 9)}, new Object[]{Blocks.diamond_block}, 1000, true);
+        addCompressorRecipe(new Object[]{new ItemStack(Items.redstone, 9)}, new Object[]{Blocks.redstone_block}, 1000, true);
+        addCompressorRecipe(new Object[]{new ItemStack(Items.dye, 9, 4)}, new Object[]{Blocks.lapis_block}, 1000, true);
+        addCompressorRecipe(new Object[]{new ItemStack(Items.emerald, 9)}, new Object[]{Blocks.emerald_block}, 1000, true);
+        addCompressorRecipe(new Object[]{new ItemStack(Items.wheat, 9)}, new Object[]{Blocks.hay_block}, 1000, true);
 
         //Wiremill
-        addRecipe(wiremillRecipes, new Object[]{"ingotCopper,1"}, new Object[]{ItemMaterial.getMaterial("WireCopper", 2)}, 3000);
+        addRecipe(wiremillRecipes, new Object[]{"ingotCopper"}, new Object[]{ItemMaterial.getMaterial("WireCopper", 2)}, 3000);
     }
 
     public static void postInitialize() {
         //Add these recipes after all items have been registered
         addCompressorOreRecipes();
         addModRecipes();
+
+        //Tweaks
+        ThermalScienceUtil.removeCraftingRecipeFor(new ItemStack(Items.gunpowder));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder,2), "dustCoal", "dustSaltpeter","dustSulfur","dustSaltpeter"));
     }
 
     public static void addRecipe(ArrayList<ThermalScienceRecipe> recipes, ThermalScienceRecipe recipe) {
@@ -209,6 +218,14 @@ public class ThermalScienceRecipes {
                 }
 
                 addCompressorRecipe(new Object[]{input}, new Object[]{new ItemStack(item, 1, i)}, 1000, true);
+            }
+        }
+
+        if (Loader.isModLoaded("EnderIO")) {
+            Item eioMaterial = GameRegistry.findItem("EnderIO", "itemMaterial");
+
+            if (eioMaterial != null) {
+                addRecipe(carbothermicFurnaceRecipes, new Object[]{Items.coal, Blocks.sand}, new Object[]{eioMaterial}, 2000);
             }
         }
     }

@@ -8,8 +8,12 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
@@ -112,6 +116,14 @@ public class ThermalScienceUtil {
     }
 
     public static ItemStack getStack(Object output) {
+
+        if(output instanceof Item){
+            output = new ItemStack((Item)output);
+        }
+        else if(output instanceof Block){
+            output = new ItemStack((Block)output);
+        }
+
         if (output instanceof ItemStack) {
             return ((ItemStack) output).copy();
         } else if (output instanceof String) {
@@ -119,10 +131,12 @@ public class ThermalScienceUtil {
 
             ItemStack stack = getPrefferedOre(splits[0]);
 
-            if (stack != null) {
+            if (stack != null && splits.length > 1) {
                 stack.stackSize = Integer.parseInt(splits[1]);
                 return stack;
             }
+
+            return stack;
         }
 
         return null;
@@ -300,12 +314,20 @@ public class ThermalScienceUtil {
         }
     }
 
-    public static String firstLetterLowerCase(String s){
+    public static void removeCraftingRecipeFor(ItemStack stack){
+        List list = CraftingManager.getInstance().getRecipeList();
+        List remove = new ArrayList<IRecipe>();
 
-        if(s.length() <= 1){
-            return s.toLowerCase();
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i) instanceof IRecipe){
+                IRecipe recipe = (IRecipe)list.get(i);
+
+                if(areStacksEqual(recipe.getRecipeOutput(), stack)){
+                    remove.add(recipe);
+                }
+            }
         }
 
-        return Character.toLowerCase(s.charAt(0)) + s.substring(1);
+        list.removeAll(remove);
     }
 }

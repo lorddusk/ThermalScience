@@ -1,13 +1,13 @@
 package com.creysys.ThermalScience.item;
 
 import com.creysys.ThermalScience.ThermalScience;
-import com.creysys.ThermalScience.ThermalScienceUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.oredict.OreDictionary;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,18 +32,21 @@ public class ItemDust extends ItemThermalScience {
     }
 
 
-    public List<IIcon> icons;
     public List<String> dusts;
+
+    IIcon[] icons;
 
     public ItemDust(){
         super("Dust");
 
-        icons = new ArrayList<IIcon>();
         dusts = new ArrayList<String>();
 
         setHasSubtypes(true);
+        setMaxDamage(0);
 
         registerDusts();
+
+        icons = new IIcon[dusts.size()];
     }
 
     public void registerDusts() {
@@ -67,17 +70,17 @@ public class ItemDust extends ItemThermalScience {
 
     @Override
     public IIcon getIconFromDamage(int damage) {
-        if(damage < 0 || damage >= icons.size()){
+        if(damage < 0 || damage >= icons.length){
             return null;
         }
 
-        return icons.get(damage);
+        return icons[damage];
     }
 
     @Override
     public void registerIcons(IIconRegister iconRegister) {
-        for(int i = 0; i < dusts.size(); i++){
-            icons.add(iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":dusts/" + ThermalScienceUtil.firstLetterLowerCase(dusts.get(i))));
+        for(int i = 0; i < icons.length; i++){
+            icons[i] = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":dusts/" + StringUtils.uncapitalize(dusts.get(i)));
         }
     }
 
