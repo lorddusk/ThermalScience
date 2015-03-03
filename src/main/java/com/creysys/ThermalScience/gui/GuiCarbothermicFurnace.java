@@ -9,12 +9,9 @@ import net.minecraft.entity.player.InventoryPlayer;
  */
 public class GuiCarbothermicFurnace extends GuiMachine {
     public GuiCarbothermicFurnace(InventoryPlayer inventory, TileEntityMachine tileEntity) {
-        super(inventory, tileEntity, "carbothermicFurnace.png", new ContainerCarbothermicFurnace(inventory, tileEntity));
+        super(tileEntity, "carbothermicFurnace.png", new ContainerCarbothermicFurnace(inventory, tileEntity));
 
-        arrowX = 90;
-        arrowY = 29;
-        arrowWidth = 23;
-        arrowHeight = 16;
+        arrowX = 82;
 
         xSize = 175;
         ySize = 150;

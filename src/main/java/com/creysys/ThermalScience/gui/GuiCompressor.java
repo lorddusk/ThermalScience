@@ -9,13 +9,7 @@ import net.minecraft.entity.player.InventoryPlayer;
  */
 public class GuiCompressor extends GuiMachine {
     public GuiCompressor(InventoryPlayer inventory, TileEntityMachine tileEntity) {
-        super(inventory, tileEntity, "compressor.png", new ContainerCompressor(inventory, tileEntity));
-
-
-        arrowX = 78;
-        arrowY = 29;
-        arrowWidth = 23;
-        arrowHeight = 16;
+        super(tileEntity, "compressor.png", new ContainerCompressor(inventory, tileEntity));
 
         xSize = 175;
         ySize = 150;

@@ -9,7 +9,7 @@ import net.minecraft.entity.player.InventoryPlayer;
  */
 public class GuiCentrifuge extends GuiMachine {
     public GuiCentrifuge(InventoryPlayer inventory, TileEntityMachine tileEntity) {
-        super(inventory, tileEntity, "centrifuge.png", new ContainerCentrifuge(inventory, tileEntity));
+        super(tileEntity, "centrifuge.png", new ContainerCentrifuge(inventory, tileEntity));
 
         xSize = 175;
         ySize = 142;

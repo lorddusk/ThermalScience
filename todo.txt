@@ -1,8 +1,8 @@
-Setup gradle dependencies properly
-
-Fix crafting metadata
-
 redstoneAlloyWire, conductiveIronWire, energeticAlloyWire, vibrantAlloyWire
 
 Teleporter?
 Void world provider?
+
+Time space manipulator
+
+Machine upgrades

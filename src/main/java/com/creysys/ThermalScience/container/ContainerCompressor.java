@@ -10,10 +10,10 @@ import net.minecraft.inventory.Slot;
  */
 public class ContainerCompressor extends ContainerBasic {
     public ContainerCompressor(InventoryPlayer inventory, TileEntityMachine tileEntity) {
-        super(inventory, tileEntity, 8 , 69);
+        super(inventory, tileEntity, 8 , 61);
 
-        inputSlots.add(new Slot(tileEntity, 0, 43,29));
-        outputSlots.add(new SlotOutput(tileEntity, 1, 116, 29));
+        inputSlots.add(new Slot(tileEntity, 0, 44,22));
+        outputSlots.add(new SlotOutput(tileEntity, 1, 117, 22));
 
         addSlots();
     }

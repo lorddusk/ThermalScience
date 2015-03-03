@@ -1,10 +1,12 @@
 package com.creysys.ThermalScience.gui;
 
 
+import cofh.lib.util.helpers.ColorHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceUtil;
 import com.creysys.ThermalScience.container.ContainerBasic;
 import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
@@ -23,7 +25,6 @@ public abstract class GuiMachine extends GuiContainer
 
     public ResourceLocation guiTexture;
 
-
     public TileEntityMachine tileEntity;
 
     public int energyX = 20;
@@ -39,7 +40,7 @@ public abstract class GuiMachine extends GuiContainer
     public int mouseX;
     public int mouseY;
 
-    public GuiMachine(InventoryPlayer inventory, TileEntityMachine tileEntity, String guiTexture, ContainerBasic container) {
+    public GuiMachine(TileEntityMachine tileEntity, String guiTexture, ContainerBasic container) {
         super(container);
 
         this.tileEntity = tileEntity;
@@ -54,6 +55,7 @@ public abstract class GuiMachine extends GuiContainer
         ThermalScienceUtil.setTexture(guiTexture);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
+        drawCenteredString(fontRendererObj, getName(), guiLeft + xSize / 2, guiTop + 4, ColorHelper.DYE_WHITE);
         drawProgress();
         drawEnergy();
         drawEnergyOverlay();
@@ -68,7 +70,7 @@ public abstract class GuiMachine extends GuiContainer
     }
 
     public void drawProgress(){
-        drawProgress(((TileEntityMachine) tileEntity).getProgress(), guiLeft, guiTop);
+        drawProgress(tileEntity.getProgress(), guiLeft, guiTop);
     }
 
     public void drawProgress(int progress, int xOffset, int yOffset){
@@ -76,12 +78,12 @@ public abstract class GuiMachine extends GuiContainer
         ThermalScienceUtil.drawTexturedModalRect(xOffset + arrowX, yOffset + arrowY, 0, 0, arrowWidth, arrowHeight, 48, 16);
 
         if (progress > 0) {
-            int width = (int) Math.round((float) arrowWidth / 100f * (float) progress);
+            int width = Math.round((float) arrowWidth / 100f * (float) progress);
             ThermalScienceUtil.drawTexturedModalRect(xOffset + arrowX, yOffset + arrowY, 24, 0, width, arrowHeight, 48, 16);
         }
     }
 
-    public void drawEnergy(){
+    private void drawEnergy(){
         drawEnergy(tileEntity.energyStored, tileEntity.maxEnergyStored,guiLeft, guiTop);
     }
 
@@ -95,11 +97,11 @@ public abstract class GuiMachine extends GuiContainer
         }
     }
 
-    public void drawEnergyOverlay(){
+    private void drawEnergyOverlay(){
         drawEnergyOverlay(mouseX, mouseY, tileEntity.energyStored, tileEntity.maxEnergyStored);
     }
 
-    public void drawEnergyOverlay(int mouseX, int mouseY, int energyStored, int maxEnergyStored){
+    private void drawEnergyOverlay(int mouseX, int mouseY, int energyStored, int maxEnergyStored){
         if(mouseX > energyX && mouseX < energyX + energyWidth &&
                 mouseY > energyY && mouseY < energyY + energyHeight) {
 
@@ -112,7 +114,10 @@ public abstract class GuiMachine extends GuiContainer
                 list.add(energyStored + " RF");
             }
 
-            drawHoveringText(list, mouseX, mouseY, fontRendererObj);
+            int x = mouseX;
+            int y = mouseY;
+
+            drawHoveringText(list, x + (width - xSize) / 2, y + (height - ySize) / 2, fontRendererObj);
         }
     }
 

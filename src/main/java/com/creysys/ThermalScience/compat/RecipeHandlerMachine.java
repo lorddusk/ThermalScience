@@ -1,10 +1,13 @@
 package com.creysys.ThermalScience.compat;
 
+import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
+import cofh.lib.util.helpers.ColorHelper;
 import com.creysys.ThermalScience.ThermalScienceUtil;
 import com.creysys.ThermalScience.gui.GuiMachine;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipe;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -147,13 +150,19 @@ public class RecipeHandlerMachine extends TemplateRecipeHandler {
     public void drawForeground(int recipeID) {
         CachedRecipeMachine recipe = (CachedRecipeMachine) arecipes.get(recipeID);
 
-        gui.drawProgress(100,xOffset - xCrop,yOffset - yCrop);
-        gui.drawEnergy(recipe.energy, 100000,xOffset - xCrop,yOffset - yCrop);
+        gui.drawProgress((cycleticks * 3) % 101, xOffset - xCrop, yOffset - yCrop);
+
+        //10mil is max for energy use
+        int energyInterpolated = (int)(16f / 7f * Math.log10(recipe.energy + 1));
+        gui.drawEnergy(energyInterpolated, 16, xOffset - xCrop, yOffset - yCrop);
+
+        GuiDraw.drawString(recipe.energy + " RF", gui.energyX + xOffset - xCrop + gui.energyWidth + 10, gui.energyY + yOffset - yCrop + gui.energyHeight - 10, ColorHelper.DYE_WHITE);
     }
 
+
     @Override
-    public void drawProgressBar(int x, int y, int tx, int ty, int w, int h, float completion, int direction) {
-        super.drawProgressBar(x, y, tx, ty, w, h, completion, direction);
+    public void loadTransferRects() {
+        super.loadTransferRects();
     }
 
     @Override

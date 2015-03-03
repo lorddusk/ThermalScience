@@ -56,10 +56,10 @@ public class ThermalScienceRecipes {
 
     public static void initialize() {
         //Materials
-        GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.getMaterial("Tube"), "RIR", "___", "RIR", 'I', "ingotInvar", 'R', Items.iron_ingot));
-        GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.getMaterial("WireCopper"), "CC", 'C', "ingotCopper"));
-        GameRegistry.addRecipe(ItemMaterial.getMaterial("Coil", 4), "WWW", "W_W", "WWW", 'W', ItemMaterial.getMaterial("WireCopper"));
-        GameRegistry.addRecipe(ItemMaterial.getMaterial("Motor"), "CIC", 'C', ItemMaterial.getMaterial("Coil"), 'I', Items.iron_ingot);
+        GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.tube, "RIR", "___", "RIR", 'I', "ingotInvar", 'R', Items.iron_ingot));
+        GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.wireCopper, "CC", 'C', "ingotCopper"));
+        GameRegistry.addRecipe(ThermalScienceUtil.setStack(ItemMaterial.coil, 4), "WWW", "W_W", "WWW", 'W', ItemMaterial.wireCopper);
+        GameRegistry.addRecipe(ItemMaterial.motor, "CIC", 'C', ItemMaterial.coil, 'I', Items.iron_ingot);
 
         //Tweaks
         GameRegistry.addRecipe(new ShapedOreRecipe(Items.glowstone_dust, "RGR","GRG","RGR",'G', "dustGold", 'R', Items.redstone));
@@ -109,7 +109,7 @@ public class ThermalScienceRecipes {
         addCompressorRecipe(new Object[]{new ItemStack(Items.wheat, 9)}, new Object[]{Blocks.hay_block}, 1000, true);
 
         //Wiremill
-        addRecipe(wiremillRecipes, new Object[]{"ingotCopper"}, new Object[]{ItemMaterial.getMaterial("WireCopper", 2)}, 3000);
+        addRecipe(wiremillRecipes, new Object[]{"ingotCopper"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireCopper, 2)}, 3000);
     }
 
     public static void postInitialize() {
@@ -166,12 +166,12 @@ public class ThermalScienceRecipes {
             Item teMaterial = GameRegistry.findItem("ThermalExpansion", "material");
 
             //Machines
-            GameRegistry.addRecipe(new ItemStack(ThermalScience.blockWatermill), "MGM", "GFG", "MGM", 'G', new ItemStack(GameRegistry.findItem("ThermalFoundation", "material"), 1, 137), 'M', ItemMaterial.getMaterial("Motor"), 'F', basicMachineFrame);
-            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockCompressor, "MPM", "IFI", "MPM", 'M', ItemMaterial.getMaterial("Motor"), 'P', Blocks.piston, 'I', Blocks.iron_bars, 'F', basicMachineFrame));
-            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockWiremill, "MII", "PFT", "MII", 'M', ItemMaterial.getMaterial("Motor"), 'P', Blocks.piston, 'T', ItemMaterial.getMaterial("Tube"), 'I', Items.iron_ingot, 'F', basicMachineFrame));
+            GameRegistry.addRecipe(new ItemStack(ThermalScience.blockWatermill), "MGM", "GFG", "MGM", 'G', new ItemStack(GameRegistry.findItem("ThermalFoundation", "material"), 1, 137), 'M', ItemMaterial.motor, 'F', basicMachineFrame);
+            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockCompressor, "MPM", "IFI", "MPM", 'M', ItemMaterial.motor, 'P', Blocks.piston, 'I', Blocks.iron_bars, 'F', basicMachineFrame));
+            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockWiremill, "MII", "PFT", "MII", 'M', ItemMaterial.motor, 'P', Blocks.piston, 'T', ItemMaterial.tube, 'I', Items.iron_ingot, 'F', basicMachineFrame));
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockCarbothermicFurnace, "III", "ISI", "III", 'I', "ingotInvar", 'S', new ItemStack(GameRegistry.findItem("ThermalExpansion", "Machine"), 1, 3)));
-            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockCentrifuge, "IMI", "BFB", "IMI", 'I', "ingotInvar", 'M', ItemMaterial.getMaterial("Motor"), 'B', Items.bucket, 'F', basicMachineFrame));
-            GameRegistry.addRecipe(new ItemStack(ThermalScience.blockEnergyRelay), "ICI", "TFR","ICI", 'C', new ItemStack(teMaterial, 1, 3), 'T', new ItemStack(teMaterial, 1, 2), 'R', new ItemStack(teMaterial, 1, 1), 'F', basicMachineFrame, 'I', Items.iron_ingot);
+            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockCentrifuge, "IMI", "BFB", "IMI", 'I', "ingotInvar", 'M', ItemMaterial.motor, 'B', Items.bucket, 'F', basicMachineFrame));
+            GameRegistry.addRecipe(new ItemStack(ThermalScience.blockEnergyRelay), "ICI", "TWR","ICI", 'C', new ItemStack(teMaterial, 1, 3), 'T', new ItemStack(teMaterial, 1, 2), 'R', new ItemStack(teMaterial, 1, 1), 'W', ItemMaterial.wireCopper, 'I', Items.iron_ingot);
 
             //Items
             GameRegistry.addShapelessRecipe(new ItemStack(ThermalScience.itemPortableCompressor), new ItemStack(ThermalScience.blockCompressor), new ItemStack(GameRegistry.findItem("ThermalExpansion", "capacitor"), 1, 4));

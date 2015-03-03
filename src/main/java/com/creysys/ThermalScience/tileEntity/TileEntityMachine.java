@@ -211,7 +211,7 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
             }
 
             ThermalScience.packetHandler.sendPacketToDimension(worldObj.provider.dimensionId, new PacketMachineProgress(xCoord, yCoord, zCoord, craftingEnergyNeeded, craftingEnergy));
-            ThermalScienceUtil.syncEnergy(worldObj, xCoord, yCoord, zCoord, energyStored, maxEnergyReceive);
+            ThermalScienceUtil.syncEnergy(worldObj, xCoord, yCoord, zCoord, energyStored, maxEnergyStored);
 
             updateCrafting(true);
         }
@@ -315,7 +315,7 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
         if(!simulate && receive > 0) {
             energyStored += receive;
 
-            ThermalScienceUtil.syncEnergy(worldObj, xCoord, yCoord, zCoord, energyStored, maxEnergyReceive);
+            ThermalScienceUtil.syncEnergy(worldObj, xCoord, yCoord, zCoord, energyStored, maxEnergyStored);
         }
 
         return receive;

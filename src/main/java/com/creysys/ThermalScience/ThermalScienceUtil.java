@@ -330,4 +330,9 @@ public class ThermalScienceUtil {
 
         list.removeAll(remove);
     }
+
+    public static ItemStack setStack(ItemStack stack, int stacks){
+        stack.stackSize = stacks;
+        return stack;
+    }
 }

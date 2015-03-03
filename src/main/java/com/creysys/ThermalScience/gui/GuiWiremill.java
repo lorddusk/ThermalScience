@@ -9,13 +9,7 @@ import net.minecraft.entity.player.InventoryPlayer;
  */
 public class GuiWiremill extends GuiMachine {
     public GuiWiremill(InventoryPlayer inventory, TileEntityMachine tileEntity) {
-        super(inventory, tileEntity, "wiremill.png", new ContainerCompressor(inventory, tileEntity));
-
-
-        arrowX = 78;
-        arrowY = 29;
-        arrowWidth = 23;
-        arrowHeight = 16;
+        super(tileEntity, "wiremill.png", new ContainerCompressor(inventory, tileEntity));
 
         xSize = 175;
         ySize = 150;

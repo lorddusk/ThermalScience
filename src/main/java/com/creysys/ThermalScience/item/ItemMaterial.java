@@ -16,19 +16,10 @@ import java.util.List;
  */
 public class ItemMaterial extends ItemThermalScience {
 
-    public static ItemStack getMaterial(String material, int stackSize){
-        for(int i = 0; i < ThermalScience.itemMaterial.materials.size(); i++){
-            if(ThermalScience.itemMaterial.materials.get(i).equals(material)){
-                return new ItemStack(ThermalScience.itemMaterial, stackSize, i);
-            }
-        }
-
-        return null;
-    }
-
-    public static ItemStack getMaterial(String material){
-        return getMaterial(material, 1);
-    }
+    public static ItemStack tube;
+    public static ItemStack wireCopper;
+    public static ItemStack coil;
+    public static ItemStack motor;
 
     public List<String> materials;
     public IIcon[] icons;
@@ -47,10 +38,15 @@ public class ItemMaterial extends ItemThermalScience {
     }
 
     public void registerMaterials(){
-        materials.add("Tube");
-        materials.add("WireCopper");
-        materials.add("Coil");
-        materials.add("Motor");
+        tube = registerMaterial("Tube");
+        wireCopper = registerMaterial("WireCopper");
+        coil = registerMaterial("Coil");
+        motor = registerMaterial("Motor");
+    }
+
+    public ItemStack registerMaterial(String name){
+        materials.add(name);
+        return new ItemStack(this, 1, materials.size() - 1);
     }
 
     @Override

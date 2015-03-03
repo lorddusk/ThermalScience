@@ -61,7 +61,6 @@ public class ContainerBasic extends Container
                 return null;
             }
 
-            boolean success = false;
             for(int i = 0; i < to.getSizeInventory(); i++){
                 ItemStack toStack = to.getStackInSlot(i);
 
@@ -71,18 +70,22 @@ public class ContainerBasic extends Container
 
                 if(toStack == null){
                     to.setInventorySlotContents(i, from.getStack().copy());
-                    success = true;
+                    from.putStack(null);
                     break;
                 }
-                else if(ThermalScienceUtil.areStacksEqual(toStack, from.getStack()) && toStack.stackSize + from.getStack().stackSize <= from.getStack().getMaxStackSize()){
-                    toStack.stackSize += from.getStack().stackSize;
-                    success = true;
-                    break;
-                }
-            }
+                else if(ThermalScienceUtil.areStacksEqual(toStack, from.getStack()) && toStack.stackSize < 64) {
 
-            if(success){
-                from.putStack(null);
+                    int transferred = Math.min(64 - toStack.stackSize, from.getStack().stackSize);
+                    toStack.stackSize += transferred;
+
+                    if(from.getStack().stackSize - transferred <= 0){
+                        from.putStack(null);
+                        break;
+                    }
+                    else {
+                        from.getStack().stackSize -= transferred;
+                    }
+                }
             }
         }
 

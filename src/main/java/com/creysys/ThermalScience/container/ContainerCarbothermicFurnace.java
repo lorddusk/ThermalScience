@@ -10,11 +10,11 @@ import net.minecraft.inventory.Slot;
  */
 public class ContainerCarbothermicFurnace extends ContainerBasic {
     public ContainerCarbothermicFurnace(InventoryPlayer inventory, TileEntityMachine tileEntity) {
-        super(inventory, tileEntity, 8, 69);
+        super(inventory, tileEntity, 8, 61);
 
-        inputSlots.add(new Slot(tileEntity, 0, 39, 29));
-        inputSlots.add(new Slot(tileEntity, 1, 57, 29));
-        outputSlots.add(new SlotOutput(tileEntity, 2, 130, 29));
+        inputSlots.add(new Slot(tileEntity, 0, 35, 22));
+        inputSlots.add(new Slot(tileEntity, 1, 53, 22));
+        outputSlots.add(new SlotOutput(tileEntity, 2, 117, 22));
 
         addSlots();
     }
