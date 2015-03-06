@@ -54,6 +54,7 @@ dependencies {
 	compile "mcp.mobius.waila:Waila:1.5.8a_1.7.10"
 	
 	compile files ("lib/CoFHLib-[1.7.10]1.0.0B7-dev-29.jar")
+	compile files ("lib/ComputerCraft1.73.jar")
 }
 
 processResources

@@ -6,7 +6,7 @@ import cofh.lib.util.helpers.StringHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.ThermalScienceUtil;
-import com.creysys.ThermalScience.compat.IWailaBodyProvider;
+import com.creysys.ThermalScience.compat.waila.IWailaBodyProvider;
 import com.creysys.ThermalScience.network.packet.PacketEnergyRelaySettings;
 import com.creysys.ThermalScience.network.sync.ISyncEnergy;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -64,32 +64,11 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
             sideConfigs[side] = 0;
         }
 
-        ThermalScience.packetHandler.sendPacketToDimension(worldObj.provider.dimensionId, new PacketEnergyRelaySettings(xCoord,yCoord,zCoord,maxIn,maxOut, sideConfigs));
-        updateMetadata();
+        ThermalScience.packetHandler.sendPacketToDimension(worldObj.provider.dimensionId, new PacketEnergyRelaySettings(xCoord, yCoord, zCoord, maxIn, maxOut, sideConfigs));
     }
 
     public void setSideConfigs(int[] sideConfigs){
         this.sideConfigs = sideConfigs;
-
-        updateMetadata();
-    }
-
-    public void updateMetadata(){
-
-        if(worldObj.isRemote){
-            return;
-        }
-
-        int meta = 0;
-
-        for(int i = 0; i < 6; i++){
-            meta |= sideConfigs[i] << (i * 2);
-        }
-
-        worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta, 2);
-        worldObj.notifyBlockChange(xCoord,yCoord,zCoord, blockType);
-        worldObj.markBlockForUpdate(xCoord,yCoord,zCoord);
-        markDirty();
     }
 
     public void readCustomFromNBT(NBTTagCompound tag){

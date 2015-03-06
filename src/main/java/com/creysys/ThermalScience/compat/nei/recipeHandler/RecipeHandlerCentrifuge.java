@@ -1,4 +1,4 @@
-package com.creysys.ThermalScience.compat;
+package com.creysys.ThermalScience.compat.nei.recipeHandler;
 
 import com.creysys.ThermalScience.gui.GuiCentrifuge;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipes;

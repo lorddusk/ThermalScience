@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -61,7 +62,45 @@ public class BlockEnergyRelay extends BlockContainer {
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
-        if (player.isSneaking()) {
+
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        if (!(tileEntity instanceof TileEntityEnergyRelay)) {
+            return false;
+        }
+
+        TileEntityEnergyRelay energyRelay = (TileEntityEnergyRelay) tileEntity;
+
+
+        if (player.getHeldItem() == null) {
+            if (player.isSneaking()) {
+                if (!world.isRemote) {
+                    energyRelay.setSideConfig(side);
+                }
+            }
+            else {
+                if (!world.isRemote) {
+                    FMLNetworkHandler.openGui(player, ThermalScience.instance, ThermalScienceGuiID.EnergyRelay.ordinal(), world, x, y, z);
+                }
+            }
+        } else if (ThermalScienceUtil.isItemWrench(player.getHeldItem().getItem())) {
+            if (player.isSneaking()) {
+                if (!world.isRemote) {
+                    ThermalScienceUtil.wrenchBlock(world, x, y, z);
+                }
+            } else {
+                if (!world.isRemote) {
+                    energyRelay.setSideConfig(side);
+                }
+            }
+        } else {
+            if (!world.isRemote) {
+                FMLNetworkHandler.openGui(player, ThermalScience.instance, ThermalScienceGuiID.EnergyRelay.ordinal(), world, x, y, z);
+            }
+        }
+
+
+
+        /*if (player.isSneaking()) {
             ItemStack heldItemStack = player.getHeldItem();
             if (heldItemStack == null) {
                 TileEntity tileEntity = world.getTileEntity(x, y, z);
@@ -87,8 +126,18 @@ public class BlockEnergyRelay extends BlockContainer {
 
         if(!world.isRemote) {
             FMLNetworkHandler.openGui(player, ThermalScience.instance, ThermalScienceGuiID.EnergyRelay.ordinal(), world, x, y, z);
-        }
+        }*/
         return true;
+    }
+
+    @Override
+    public boolean renderAsNormalBlock() {
+        return false;
+    }
+
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
     }
 
     @Override

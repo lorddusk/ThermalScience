@@ -1,4 +1,4 @@
-package com.creysys.ThermalScience.compat;
+package com.creysys.ThermalScience.compat.waila;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;

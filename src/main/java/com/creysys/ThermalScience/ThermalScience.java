@@ -1,7 +1,8 @@
 package com.creysys.ThermalScience;
 
 import com.creysys.ThermalScience.block.*;
-import com.creysys.ThermalScience.compat.NEIThermalScienceConfig;
+import com.creysys.ThermalScience.compat.ThermalScienceCompat;
+import com.creysys.ThermalScience.compat.nei.NEIThermalScienceConfig;
 import com.creysys.ThermalScience.gui.ThermalScienceGuiHandler;
 import com.creysys.ThermalScience.item.ItemDust;
 import com.creysys.ThermalScience.item.ItemMaterial;
@@ -18,7 +19,6 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameData;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.monster.EntityEnderman;
@@ -50,15 +50,13 @@ public class ThermalScience
     public static Block blockWiremill;
 
     public static Block blockWatermill;
-    public static Block blockEnergyRelay;
+    public static BlockEnergyRelay blockEnergyRelay;
 
     //Items
     public static ItemMaterial itemMaterial;
     public static ItemDust itemDust;
 
     public static Item itemPortableCompressor;
-
-    public static NEIThermalScienceConfig NEIconfig;
 
     @EventHandler
     public void preInitialize(FMLPreInitializationEvent event){
@@ -87,8 +85,6 @@ public class ThermalScience
     {
         packetHandler = new ThermalSciencePacketHandler();
 
-        NEIconfig = new NEIThermalScienceConfig();
-
         ThermalScienceUtil.initialize();
         ThermalScienceRecipes.initialize();
 
@@ -96,8 +92,7 @@ public class ThermalScience
 
         proxy.initialize();
 
-        //Initialize waila compat
-        FMLInterModComms.sendMessage("Waila", "register", "com.creysys.ThermalScience.compat.ThermalScienceWailaDataProvider.load");
+        ThermalScienceCompat.initialize();
     }
 
     @EventHandler

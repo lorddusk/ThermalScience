@@ -1,4 +1,4 @@
-package com.creysys.ThermalScience.compat;
+package com.creysys.ThermalScience.compat.waila;
 
 import com.creysys.ThermalScience.ThermalScience;
 import cpw.mods.fml.common.registry.GameRegistry;

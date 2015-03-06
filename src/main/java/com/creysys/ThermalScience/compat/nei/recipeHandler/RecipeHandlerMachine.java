@@ -1,4 +1,4 @@
-package com.creysys.ThermalScience.compat;
+package com.creysys.ThermalScience.compat.nei.recipeHandler;
 
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;

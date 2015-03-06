@@ -4,7 +4,7 @@ import cofh.api.energy.IEnergyReceiver;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.ThermalScienceUtil;
-import com.creysys.ThermalScience.compat.IWailaBodyProvider;
+import com.creysys.ThermalScience.compat.waila.IWailaBodyProvider;
 import com.creysys.ThermalScience.network.packet.PacketMachineProgress;
 import com.creysys.ThermalScience.network.sync.ISyncEnergy;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipe;

@@ -1,8 +1,9 @@
-package com.creysys.ThermalScience.compat;
+package com.creysys.ThermalScience.compat.nei;
 
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
 import com.creysys.ThermalScience.ThermalScience;
+import com.creysys.ThermalScience.compat.nei.recipeHandler.*;
 
 import java.util.ArrayList;
 import java.util.List;
