@@ -49,8 +49,11 @@ public class ThermalScienceRecipes {
 
             //Remove old silicon recipe
             //Doesnt work yet disable in config too
-            ThermalScienceUtil.removeEnderIORecipe("sagmill", "EnderIO", "Silicon");
-            ThermalScienceUtil.removeEnderIORecipe("sagmill", "EnderIO", "SiliconRedSand");
+
+            if(ThermalScienceConfig.recipeOverrideSilicon) {
+                ThermalScienceUtil.removeEnderIORecipe("sagmill", "EnderIO", "Silicon");
+                ThermalScienceUtil.removeEnderIORecipe("sagmill", "EnderIO", "SiliconRedSand");
+            }
         }
     }
 
@@ -118,7 +121,9 @@ public class ThermalScienceRecipes {
         addModRecipes();
 
         //Tweaks
-        ThermalScienceUtil.removeCraftingRecipeFor(new ItemStack(Items.gunpowder));
+        if(ThermalScienceConfig.recipesOverrideGunpowder) {
+            ThermalScienceUtil.removeCraftingRecipeFor(new ItemStack(Items.gunpowder));
+        }
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder,2), "dustCoal", "dustSaltpeter","dustSulfur","dustSaltpeter"));
     }
 

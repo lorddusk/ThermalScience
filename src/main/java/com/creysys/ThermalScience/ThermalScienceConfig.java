@@ -13,6 +13,7 @@ public class ThermalScienceConfig
     public static boolean crashOnInvalidRecipe;
 
     public static boolean recipeOverrideSilicon;
+    public static boolean recipesOverrideGunpowder;
 
     public static void load(File file){
         Configuration config = new Configuration(file);
@@ -22,7 +23,8 @@ public class ThermalScienceConfig
         crashOnInvalidRecipe = config.getBoolean("crashOnInvalidRecipe", "common", true, "Crashes the game if recipes couldnt load properly.");
 
         config.addCustomCategoryComment("recipe overrides", "These settings will fully replace the way some items are made.");
-        recipeOverrideSilicon = config.getBoolean("silicon", "recipe overrides", true, "");
+        recipeOverrideSilicon = config.getBoolean("silicon", "recipe overrides", true, "Make silicon in carb furnace");
+        recipesOverrideGunpowder = config.getBoolean("gunpowder", "recipe overrides", true, "Remove charcoal gunpowder recipe");
 
         config.save();
     }

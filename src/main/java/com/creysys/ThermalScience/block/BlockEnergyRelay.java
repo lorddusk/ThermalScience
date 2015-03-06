@@ -98,35 +98,6 @@ public class BlockEnergyRelay extends BlockContainer {
             }
         }
 
-
-
-        /*if (player.isSneaking()) {
-            ItemStack heldItemStack = player.getHeldItem();
-            if (heldItemStack == null) {
-                TileEntity tileEntity = world.getTileEntity(x, y, z);
-                if (tileEntity instanceof TileEntityEnergyRelay) {
-                    if(!world.isRemote) {
-                        TileEntityEnergyRelay energyRelay = (TileEntityEnergyRelay) tileEntity;
-                        energyRelay.setSideConfig(side);
-                    }
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            } else if (ThermalScienceUtil.isItemWrench(heldItemStack.getItem())) {
-                if (!world.isRemote) {
-                    ThermalScienceUtil.wrenchBlock(world, x, y, z);
-                }
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        if(!world.isRemote) {
-            FMLNetworkHandler.openGui(player, ThermalScience.instance, ThermalScienceGuiID.EnergyRelay.ordinal(), world, x, y, z);
-        }*/
         return true;
     }
 

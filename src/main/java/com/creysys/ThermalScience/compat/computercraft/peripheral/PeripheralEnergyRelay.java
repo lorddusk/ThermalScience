@@ -34,12 +34,12 @@ public class PeripheralEnergyRelay implements IPeripheral {
 
     @Override
     public Object[] callMethod(IComputerAccess iComputerAccess, ILuaContext iLuaContext, int method, Object[] objects) throws LuaException, InterruptedException {
-        switch(method){
+        switch (method) {
             case 0:
                 //listMethods
                 String s = "";
-                for(int i = 0; i < methods.length; i++){
-                    if(i != 0){
+                for (int i = 0; i < methods.length; i++) {
+                    if (i != 0) {
                         s += ", ";
                     }
                     s += methods[i];
@@ -47,36 +47,36 @@ public class PeripheralEnergyRelay implements IPeripheral {
                 return new Object[]{s};
             case 1:
                 //setMaxIn
-                if(objects.length < 1){
+                if (objects.length < 1) {
                     return new Object[]{"Too less arguments!"};
                 }
 
-                if(objects[0] instanceof Double){
-                    ThermalScience.packetHandler.sendPacketToServer(new PacketEnergyRelaySettings(energyRelay.xCoord, energyRelay.yCoord, energyRelay.zCoord, ((Double)objects[0]).intValue(),energyRelay.maxOut , energyRelay.sideConfigs));
-                }
-                else {
+                if (objects[0] instanceof Double) {
+                    ThermalScience.packetHandler.sendPacketToServer(new PacketEnergyRelaySettings(energyRelay.xCoord, energyRelay.yCoord, energyRelay.zCoord, ((Double) objects[0]).intValue(), energyRelay.maxOut, energyRelay.sideConfigs));
+                } else {
                     return new Object[]{"Argument is not a number!"};
                 }
                 break;
             case 2:
                 //setMaxOut
-                if(objects.length < 1){
+                if (objects.length < 1) {
                     return new Object[]{"Too less arguments!"};
                 }
 
-                if(objects[0] instanceof Double){
-                    ThermalScience.packetHandler.sendPacketToServer(new PacketEnergyRelaySettings(energyRelay.xCoord, energyRelay.yCoord, energyRelay.zCoord, energyRelay.maxIn, ((Double)objects[0]).intValue(), energyRelay.sideConfigs));
-                }
-                else {
+                if (objects[0] instanceof Double) {
+                    energyRelay.setMaxOut(((Double) objects[0]).intValue());
+                    //ThermalScience.packetHandler.sendPacketToServer(new PacketEnergyRelaySettings(energyRelay.xCoord, energyRelay.yCoord, energyRelay.zCoord, energyRelay.maxIn, , energyRelay.sideConfigs));
+                } else {
                     return new Object[]{"Argument is not a number!"};
                 }
                 break;
             case 3:
                 //getEnergyStored
-                return new Object[]{energyRelay.energyStored};
+                return new Object[]{energyRelay.getEnergyStored()};
+
             case 4:
                 //getMaxEnergyStored
-                return new Object[]{energyRelay.maxEnergyStored};
+                return new Object[]{energyRelay.getMaxEnergyStored()};
         }
 
         return null;

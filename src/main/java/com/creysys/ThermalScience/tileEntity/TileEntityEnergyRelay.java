@@ -46,11 +46,27 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
     }
 
     public void setMaxIn(int i){
-        maxIn = MathHelper.clamp_int(i, 0, 400);
+        synchronized (this) {
+            maxIn = MathHelper.clamp_int(i, 0, 400);
+        }
     }
 
     public void setMaxOut(int  i){
-        maxOut = MathHelper.clamp_int(i, 0, 400);
+        synchronized (this) {
+            maxOut = MathHelper.clamp_int(i, 0, 400);
+        }
+    }
+
+    public int getEnergyStored() {
+        synchronized (this) {
+            return energyStored;
+        }
+    }
+
+    public int getMaxEnergyStored() {
+        synchronized (this) {
+            return maxEnergyStored;
+        }
     }
 
     public void setSideConfig(int side){
