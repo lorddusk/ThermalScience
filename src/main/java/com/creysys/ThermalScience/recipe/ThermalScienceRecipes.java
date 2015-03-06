@@ -171,7 +171,7 @@ public class ThermalScienceRecipes {
             Item teMaterial = GameRegistry.findItem("ThermalExpansion", "material");
 
             //Machines
-            GameRegistry.addRecipe(new ItemStack(ThermalScience.blockWatermill), "MGM", "GFG", "MGM", 'G', new ItemStack(GameRegistry.findItem("ThermalFoundation", "material"), 1, 137), 'M', ItemMaterial.motor, 'F', basicMachineFrame);
+            GameRegistry.addRecipe(new ItemStack(ThermalScience.blockWatermill), "MGM", "GWG", "MGM", 'G', new ItemStack(GameRegistry.findItem("ThermalFoundation", "material"), 1, 137), 'M', ItemMaterial.motor, 'F', ItemMaterial.wireCopper);
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockCompressor, "MPM", "IFI", "MPM", 'M', ItemMaterial.motor, 'P', Blocks.piston, 'I', Blocks.iron_bars, 'F', basicMachineFrame));
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockWiremill, "MII", "PFT", "MII", 'M', ItemMaterial.motor, 'P', Blocks.piston, 'T', ItemMaterial.tube, 'I', Items.iron_ingot, 'F', basicMachineFrame));
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockCarbothermicFurnace, "III", "ISI", "III", 'I', "ingotInvar", 'S', new ItemStack(GameRegistry.findItem("ThermalExpansion", "Machine"), 1, 3)));
