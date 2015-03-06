@@ -8,4 +8,8 @@ import net.minecraft.tileentity.TileEntity;
 public class TileEntityTeleporterPowerTap extends TileEntity {
 
     public byte facing;
+
+    public TileEntityTeleporterPowerTap(){
+        facing = 0;
+    }
 }
