@@ -69,6 +69,10 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
         }
     }
 
+    public void syncSettings(){
+        ThermalScience.packetHandler.sendPacketToDimension(worldObj.provider.dimensionId, new PacketEnergyRelaySettings(xCoord, yCoord, zCoord, maxIn, maxOut, sideConfigs));
+    }
+
     public void setSideConfig(int side){
 
         if(side < 0 || side >= 6){
@@ -80,7 +84,7 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
             sideConfigs[side] = 0;
         }
 
-        ThermalScience.packetHandler.sendPacketToDimension(worldObj.provider.dimensionId, new PacketEnergyRelaySettings(xCoord, yCoord, zCoord, maxIn, maxOut, sideConfigs));
+        syncSettings();
     }
 
     public void setSideConfigs(int[] sideConfigs){

@@ -34,6 +34,9 @@ public class PeripheralEnergyRelay implements IPeripheral {
 
     @Override
     public Object[] callMethod(IComputerAccess iComputerAccess, ILuaContext iLuaContext, int method, Object[] objects) throws LuaException, InterruptedException {
+
+        System.out.println(energyRelay.getWorldObj().isRemote);
+
         switch (method) {
             case 0:
                 //listMethods
@@ -52,7 +55,8 @@ public class PeripheralEnergyRelay implements IPeripheral {
                 }
 
                 if (objects[0] instanceof Double) {
-                    ThermalScience.packetHandler.sendPacketToServer(new PacketEnergyRelaySettings(energyRelay.xCoord, energyRelay.yCoord, energyRelay.zCoord, ((Double) objects[0]).intValue(), energyRelay.maxOut, energyRelay.sideConfigs));
+                    energyRelay.setMaxIn(((Double) objects[0]).intValue());
+                    energyRelay.syncSettings();
                 } else {
                     return new Object[]{"Argument is not a number!"};
                 }
@@ -65,7 +69,7 @@ public class PeripheralEnergyRelay implements IPeripheral {
 
                 if (objects[0] instanceof Double) {
                     energyRelay.setMaxOut(((Double) objects[0]).intValue());
-                    //ThermalScience.packetHandler.sendPacketToServer(new PacketEnergyRelaySettings(energyRelay.xCoord, energyRelay.yCoord, energyRelay.zCoord, energyRelay.maxIn, , energyRelay.sideConfigs));
+                    energyRelay.syncSettings();
                 } else {
                     return new Object[]{"Argument is not a number!"};
                 }

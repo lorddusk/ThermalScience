@@ -88,8 +88,7 @@ public class PacketEnergyRelaySettings implements IThermalSciencePacket {
             energyRelay.setMaxIn(maxIn);
             energyRelay.setMaxOut(maxOut);
             energyRelay.setSideConfigs(sideConfigs);
-
-            ThermalScience.packetHandler.sendPacketToDimension(player.worldObj.provider.dimensionId, new PacketEnergyRelaySettings(x, y, z, maxIn, maxOut, sideConfigs));
+            energyRelay.syncSettings();
         }
     }
 }
