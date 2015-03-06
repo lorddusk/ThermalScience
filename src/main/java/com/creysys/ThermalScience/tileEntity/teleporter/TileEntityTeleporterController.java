@@ -73,12 +73,39 @@ public class TileEntityTeleporterController extends TileEntity {
                             return false;
                         }
                         continue;
-                    }else if(worldObj.isAirBlock(startX + x, startY + y, startZ + z)){
-                        if(door != -1) {
+                    }else if(worldObj.isAirBlock(startX + x, startY + y, startZ + z)) {
+
+                        if (y != 1 && y != 2) {
                             return false;
                         }
 
-
+                        if (x == 0 && z == 1) {
+                            if (door == -1) {
+                                door = 0;
+                            } else if (door != 0) {
+                                return false;
+                            }
+                        } else if (x == 2 && z == 1) {
+                            if (door == -1) {
+                                door = 1;
+                            } else if (door != 1) {
+                                return false;
+                            }
+                        } else if (x == 1 && z == 0) {
+                            if (door == -1) {
+                                door = 2;
+                            } else if (door != 2) {
+                                return false;
+                            }
+                        } else if (x == 1 && z == 2) {
+                            if (door == -1) {
+                                door = 3;
+                            } else if (door != 3) {
+                                return false;
+                            }
+                        } else {
+                            return false;
+                        }
                     }
 
 
