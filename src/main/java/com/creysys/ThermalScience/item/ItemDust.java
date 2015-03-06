@@ -80,7 +80,7 @@ public class ItemDust extends ItemThermalScience {
     @Override
     public void registerIcons(IIconRegister iconRegister) {
         for(int i = 0; i < icons.length; i++){
-            icons[i] = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":dusts/" + StringUtils.uncapitalize(dusts.get(i)));
+            icons[i] = iconRegister.registerIcon(ThermalScience.modid + ":dusts/" + StringUtils.uncapitalize(dusts.get(i)));
         }
     }
 

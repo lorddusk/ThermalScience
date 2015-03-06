@@ -16,4 +16,8 @@ public class ThermalScienceNBTTags {
     public static final String MaxOut = "maxOut";
     public static final String Active = "active";
     public static final String SideConfigs = "sideConfigs";
+    public static final String XCoord = "xCoord";
+    public static final String YCoord = "yCoord";
+    public static final String ZCoord = "zCoord";
+    public static final String Dim = "dim";
 }

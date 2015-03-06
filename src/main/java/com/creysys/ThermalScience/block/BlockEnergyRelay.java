@@ -49,9 +49,9 @@ public class BlockEnergyRelay extends BlockContainer {
 
     @Override
     public void registerBlockIcons(IIconRegister iconRegister) {
-        iconOff = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":energyRelayOff");
-        iconIn = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":energyRelayIn");
-        iconOut = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":energyRelayOut");
+        iconOff = iconRegister.registerIcon(ThermalScience.modid + ":energyRelayOff");
+        iconIn = iconRegister.registerIcon(ThermalScience.modid + ":energyRelayIn");
+        iconOut = iconRegister.registerIcon(ThermalScience.modid + ":energyRelayOut");
     }
 
 

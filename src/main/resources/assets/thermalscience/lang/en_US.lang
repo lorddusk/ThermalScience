@@ -8,6 +8,10 @@ tile.blockWiremill.name=Wiremill
 tile.blockWatermill.name=Watermill
 tile.blockEnergyRelay.name=Energy Relay
 
+tile.blockTeleporterWall.name=Teleporter Wall
+tile.blockTeleporterController.name=Teleporter Controller
+tile.blockTeleporterPowerTap.name=Teleporter Power Tap
+
 item.itemPortableCompressor.name=Portable Compressor
 
 item.materialTube.name=Tube
@@ -17,3 +21,5 @@ item.materialMotor.name=Motor
 
 item.dustNetherrack.name=Netherrack Dust
 item.dustDirtyNetherrack.name=Dirty Netherrack Dust
+
+item.itemTeleporterDestinationCard.name=Teleporter Destination Card

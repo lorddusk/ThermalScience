@@ -44,7 +44,7 @@ public abstract class GuiMachine extends GuiContainer
         super(container);
 
         this.tileEntity = tileEntity;
-        this.guiTexture = new ResourceLocation(ThermalScience.MODID.toLowerCase(), "textures/gui/" + guiTexture);
+        this.guiTexture = new ResourceLocation(ThermalScience.modid, "textures/gui/" + guiTexture);
 
         xSize = 176;
         ySize = 186;

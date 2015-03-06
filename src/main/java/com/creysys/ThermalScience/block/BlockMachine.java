@@ -84,7 +84,6 @@ public class BlockMachine extends BlockContainer {
                 facing = 2;
                 break;
         }
-        ;
 
         tileEntity.facing = facing;
         world.setBlockMetadataWithNotify(x, y, z, facing, 2);
@@ -111,8 +110,8 @@ public class BlockMachine extends BlockContainer {
 
     @Override
     public void registerBlockIcons(IIconRegister iconRegister) {
-        iconSide = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":machineSide");
-        iconTop = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":machineTop");
+        iconSide = iconRegister.registerIcon(ThermalScience.modid + ":machineSide");
+        iconTop = iconRegister.registerIcon(ThermalScience.modid + ":machineTop");
         iconFrontOff = iconSide;
         iconFrontOn = iconSide;
     }

@@ -16,9 +16,9 @@ import org.lwjgl.opengl.GL11;
  */
 public class RendererEnergyRelay extends TileEntitySpecialRenderer {
 
-    public static final ResourceLocation iconOffRes = new ResourceLocation(ThermalScience.MODID.toLowerCase(), "textures/blocks/energyRelayOff.png");
-    public static final ResourceLocation iconInRes = new ResourceLocation(ThermalScience.MODID.toLowerCase(), "textures/blocks/energyRelayIn.png");
-    public static final ResourceLocation iconOutRes = new ResourceLocation(ThermalScience.MODID.toLowerCase(), "textures/blocks/energyRelayOut.png");
+    public static final ResourceLocation iconOffRes = new ResourceLocation(ThermalScience.modid, "textures/blocks/energyRelayOff.png");
+    public static final ResourceLocation iconInRes = new ResourceLocation(ThermalScience.modid, "textures/blocks/energyRelayIn.png");
+    public static final ResourceLocation iconOutRes = new ResourceLocation(ThermalScience.modid, "textures/blocks/energyRelayOut.png");
 
     @Override
     public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float f) {

@@ -1,12 +1,16 @@
 package com.creysys.ThermalScience;
 
 import com.creysys.ThermalScience.block.*;
+import com.creysys.ThermalScience.block.teleporter.BlockTeleporterController;
+import com.creysys.ThermalScience.block.teleporter.BlockTeleporterPowerTap;
+import com.creysys.ThermalScience.block.teleporter.BlockTeleporterWall;
 import com.creysys.ThermalScience.compat.ThermalScienceCompat;
 import com.creysys.ThermalScience.compat.nei.NEIThermalScienceConfig;
 import com.creysys.ThermalScience.gui.ThermalScienceGuiHandler;
 import com.creysys.ThermalScience.item.ItemDust;
 import com.creysys.ThermalScience.item.ItemMaterial;
 import com.creysys.ThermalScience.item.ItemPortableCompressor;
+import com.creysys.ThermalScience.item.ItemTeleporterDestinationCard;
 import com.creysys.ThermalScience.network.ThermalSciencePacketHandler;
 import com.creysys.ThermalScience.proxy.ServerProxy;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipes;
@@ -30,6 +34,7 @@ import java.util.Iterator;
 public class ThermalScience
 {
     public static final String MODID = "ThermalScience";
+    public static final String modid = MODID.toLowerCase();
     public static final String VERSION = "1.7.10";
     public static final String MODNAME = "Thermal Science";
 
@@ -52,11 +57,21 @@ public class ThermalScience
     public static Block blockWatermill;
     public static BlockEnergyRelay blockEnergyRelay;
 
+    //Teleporter
+    public static BlockTeleporterWall blockTeleporterWall;
+    public static Block blockTeleporterPowerTap;
+    public static Block blockTeleporterController;
+
+
+
+
     //Items
     public static ItemMaterial itemMaterial;
     public static ItemDust itemDust;
 
     public static Item itemPortableCompressor;
+
+    public static Item itemTeleporterDestinationCard;
 
     @EventHandler
     public void preInitialize(FMLPreInitializationEvent event){
@@ -75,7 +90,16 @@ public class ThermalScience
         blockWatermill = new BlockWatermill();
         blockEnergyRelay = new BlockEnergyRelay();
 
+
+        blockTeleporterWall = new BlockTeleporterWall();
+        blockTeleporterPowerTap = new BlockTeleporterPowerTap();
+        blockTeleporterController = new BlockTeleporterController();
+
+
+
         itemPortableCompressor = new ItemPortableCompressor();
+
+        itemTeleporterDestinationCard = new ItemTeleporterDestinationCard();
 
         ThermalScienceRecipes.preInitialize();
     }

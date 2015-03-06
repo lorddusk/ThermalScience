@@ -17,7 +17,7 @@ public class BlockCompressor extends BlockMachine {
     public void registerBlockIcons(IIconRegister iconRegister) {
         super.registerBlockIcons(iconRegister);
 
-        iconFrontOff = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":compressorOff");
-        iconFrontOn = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":compressorOn");
+        iconFrontOff = iconRegister.registerIcon(ThermalScience.modid + ":compressorOff");
+        iconFrontOn = iconRegister.registerIcon(ThermalScience.modid + ":compressorOn");
     }
 }

@@ -17,7 +17,7 @@ public class BlockWiremill extends BlockMachine {
     public void registerBlockIcons(IIconRegister iconRegister) {
         super.registerBlockIcons(iconRegister);
 
-        iconFrontOff = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":wiremillOff");
-        iconFrontOn = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":wiremillOn");
+        iconFrontOff = iconRegister.registerIcon(ThermalScience.modid + ":wiremillOff");
+        iconFrontOn = iconRegister.registerIcon(ThermalScience.modid + ":wiremillOn");
     }
 }

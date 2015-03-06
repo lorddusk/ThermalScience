@@ -17,7 +17,7 @@ public class BlockCentrifuge extends BlockMachine {
     public void registerBlockIcons(IIconRegister iconRegister) {
         super.registerBlockIcons(iconRegister);
 
-        iconFrontOff = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":centrifugeOff");
-        iconFrontOn = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":centrifugeOn");
+        iconFrontOff = iconRegister.registerIcon(ThermalScience.modid + ":centrifugeOff");
+        iconFrontOn = iconRegister.registerIcon(ThermalScience.modid + ":centrifugeOn");
     }
 }

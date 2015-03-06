@@ -70,7 +70,7 @@ public class ItemMaterial extends ItemThermalScience {
     @Override
     public void registerIcons(IIconRegister iconRegister) {
         for(int i = 0; i < icons.length; i++){
-            icons[i] = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":materials/" + StringUtils.uncapitalize(materials.get(i)));
+            icons[i] = iconRegister.registerIcon(ThermalScience.modid + ":materials/" + StringUtils.uncapitalize(materials.get(i)));
         }
     }
 

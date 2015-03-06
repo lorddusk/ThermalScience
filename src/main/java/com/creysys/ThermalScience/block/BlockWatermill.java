@@ -52,8 +52,8 @@ public class BlockWatermill extends BlockContainer {
 
     @Override
     public void registerBlockIcons(IIconRegister iconRegister) {
-        iconSide = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":watermill");
-        iconTop = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":machineTop");
+        iconSide = iconRegister.registerIcon(ThermalScience.modid + ":watermill");
+        iconTop = iconRegister.registerIcon(ThermalScience.modid + ":machineTop");
     }
 
     @Override

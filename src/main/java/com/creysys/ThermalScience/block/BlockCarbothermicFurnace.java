@@ -17,7 +17,7 @@ public class BlockCarbothermicFurnace extends BlockMachine {
     public void registerBlockIcons(IIconRegister iconRegister) {
         super.registerBlockIcons(iconRegister);
 
-        iconFrontOff = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":carbothermicFurnaceOff");
-        iconFrontOn = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":carbothermicFurnaceOn");
+        iconFrontOff = iconRegister.registerIcon(ThermalScience.modid + ":carbothermicFurnaceOff");
+        iconFrontOn = iconRegister.registerIcon(ThermalScience.modid + ":carbothermicFurnaceOn");
     }
 }

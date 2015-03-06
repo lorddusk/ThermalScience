@@ -192,8 +192,8 @@ public class ItemPortableCompressor extends ItemEnergyContainer
 
     @Override
     public void registerIcons(IIconRegister iconRegister) {
-        iconOn = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":portableCompressorOn");
-        iconOff = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":portableCompressorOff");
+        iconOn = iconRegister.registerIcon(ThermalScience.modid + ":portableCompressorOn");
+        iconOff = iconRegister.registerIcon(ThermalScience.modid + ":portableCompressorOff");
     }
 
     @Override

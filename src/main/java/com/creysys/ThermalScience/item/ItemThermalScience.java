@@ -27,6 +27,6 @@ public class ItemThermalScience extends Item {
 
     @Override
     public void registerIcons(IIconRegister iconRegister) {
-        itemIcon = iconRegister.registerIcon(ThermalScience.MODID.toLowerCase() + ":" + name);
+        itemIcon = iconRegister.registerIcon(ThermalScience.modid + ":" + name);
     }
 }

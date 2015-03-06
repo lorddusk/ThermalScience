@@ -16,7 +16,7 @@ import net.minecraft.util.ResourceLocation;
  * Created by Creysys on 13 Feb 15.
  */
 public class GuiEnergyRelay extends GuiScreen {
-    public static final ResourceLocation guiTexture = new ResourceLocation(ThermalScience.MODID.toLowerCase(), "textures/gui/energyRelay.png");;
+    public static final ResourceLocation guiTexture = new ResourceLocation(ThermalScience.modid, "textures/gui/energyRelay.png");;
 
     public TileEntityEnergyRelay tileEntity;
 
