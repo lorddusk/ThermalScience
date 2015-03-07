@@ -9,5 +9,6 @@ public enum ThermalScienceGuiID
     CarbothermicFurnace,
     Centrifuge,
     Wiremill,
-    EnergyRelay
+    EnergyRelay,
+    TeleporterController
 }

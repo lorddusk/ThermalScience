@@ -20,8 +20,10 @@ import net.minecraft.world.World;
  */
 public class BlockTeleporterPowerTap extends BlockContainer {
 
+    public static final int[] faceMap = new int[]{3, 2, 4, 5};
+
     public IIcon icon;
-    public int[] faceMap;
+
 
     public BlockTeleporterPowerTap() {
         super(Material.iron);
@@ -36,8 +38,6 @@ public class BlockTeleporterPowerTap extends BlockContainer {
 
         GameRegistry.registerBlock(this, blockName);
         GameRegistry.registerTileEntity(TileEntityTeleporterController.class, "tileEntityTeleporterPowerTap");
-
-        faceMap = new int[]{3, 2, 4, 5};
     }
 
     @Override

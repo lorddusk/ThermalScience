@@ -2,6 +2,7 @@ package com.creysys.ThermalScience.gui;
 
 import com.creysys.ThermalScience.container.*;
 import com.creysys.ThermalScience.tileEntity.*;
+import com.creysys.ThermalScience.tileEntity.teleporter.TileEntityTeleporterController;
 import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -47,6 +48,12 @@ public class ThermalScienceGuiHandler implements IGuiHandler {
                 if(tileEntity instanceof TileEntityEnergyRelay) {
                     return new ContainerFake();
                 }
+                break;
+            case TeleporterController:
+                if(tileEntity instanceof TileEntityTeleporterController) {
+                    return new ContainerTeleporterController(player.inventory, (TileEntityTeleporterController)tileEntity);
+                }
+                break;
         }
 
         return null;
@@ -88,6 +95,11 @@ public class ThermalScienceGuiHandler implements IGuiHandler {
             case EnergyRelay:
                 if(tileEntity instanceof TileEntityEnergyRelay) {
                     return new GuiEnergyRelay((TileEntityEnergyRelay)tileEntity);
+                }
+                break;
+            case TeleporterController:
+                if(tileEntity instanceof TileEntityTeleporterController) {
+                    return new GuiTeleporterController(player.inventory, (TileEntityTeleporterController)tileEntity);
                 }
                 break;
         }

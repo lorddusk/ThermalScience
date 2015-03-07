@@ -8,6 +8,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +18,12 @@ import java.util.List;
  */
 public class ContainerBasic extends Container
 {
-    public TileEntityMachine tileEntity;
+    public TileEntity tileEntity;
 
     public List<Slot> inputSlots;
     public List<Slot> outputSlots;
 
-    public ContainerBasic(InventoryPlayer inventory, TileEntityMachine tileEntity, int inventoryX, int inventoryY) {
+    public ContainerBasic(InventoryPlayer inventory, TileEntity tileEntity, int inventoryX, int inventoryY) {
         this.tileEntity = tileEntity;
 
         for (int i = 0; i < 9; i++) {
@@ -42,6 +43,13 @@ public class ContainerBasic extends Container
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot)
     {
+        if(!(tileEntity instanceof IInventory)){
+            return null;
+        }
+
+
+        IInventory tileEntityInventory = (IInventory)tileEntity;
+
         if(inventorySlots.get(slot) instanceof Slot){
             Slot from = (Slot)inventorySlots.get(slot);
 
@@ -52,9 +60,9 @@ public class ContainerBasic extends Container
 
             IInventory to;
             if(from.inventory instanceof InventoryPlayer){
-                to = tileEntity;
+                to = tileEntityInventory;
             }
-            else if(from.inventory instanceof TileEntityMachine){
+            else if(from.inventory instanceof IInventory){
                 to = player.inventory;
             }
             else {
@@ -64,11 +72,11 @@ public class ContainerBasic extends Container
             for(int i = 0; i < to.getSizeInventory(); i++){
                 ItemStack toStack = to.getStackInSlot(i);
 
-                if(to instanceof TileEntityMachine && !tileEntity.isItemValidForSlot(i, toStack)){
+                if(to instanceof TileEntityMachine && !tileEntityInventory.isItemValidForSlot(i, toStack)){
                     return null;
                 }
 
-                if(toStack == null){
+                if(toStack == null && to.isItemValidForSlot(i, from.getStack())){
                     to.setInventorySlotContents(i, from.getStack().copy());
                     from.putStack(null);
                     break;

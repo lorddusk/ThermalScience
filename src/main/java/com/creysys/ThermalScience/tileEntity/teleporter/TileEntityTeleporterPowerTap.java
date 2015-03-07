@@ -1,6 +1,7 @@
 package com.creysys.ThermalScience.tileEntity.teleporter;
 
 import cofh.api.energy.IEnergyReceiver;
+import com.creysys.ThermalScience.block.teleporter.BlockTeleporterPowerTap;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -32,9 +33,6 @@ public class TileEntityTeleporterPowerTap extends TileEntity implements IEnergyR
 
     @Override
     public boolean canConnectEnergy(ForgeDirection forgeDirection) {
-        switch (forgeDirection){
-            case DOWN:
-                break;
-        }
+        return BlockTeleporterPowerTap.faceMap[facing] == forgeDirection.ordinal();
     }
 }

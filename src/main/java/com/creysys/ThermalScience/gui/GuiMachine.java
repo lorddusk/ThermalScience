@@ -20,7 +20,7 @@ import java.util.List;
  */
 public abstract class GuiMachine extends GuiContainer
 {
-    private static ResourceLocation energyTexture = new ResourceLocation("cofh", "textures/gui/elements/Energy.png");
+    public static ResourceLocation energyTexture = new ResourceLocation("cofh", "textures/gui/elements/Energy.png");
     private static ResourceLocation arrowRightTexture = new ResourceLocation("cofh", "textures/gui/elements/Progress_Arrow_Right.png");
 
     public ResourceLocation guiTexture;

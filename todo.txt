@@ -1,4 +1,4 @@
-Computercraft support
+Teleporter power tap
 
 
 redstoneAlloyWire, conductiveIronWire, energeticAlloyWire, vibrantAlloyWire

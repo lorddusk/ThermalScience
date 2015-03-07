@@ -1,7 +1,10 @@
 package com.creysys.ThermalScience.block.teleporter;
 
 import com.creysys.ThermalScience.ThermalScience;
+import com.creysys.ThermalScience.gui.ThermalScienceGuiID;
 import com.creysys.ThermalScience.tileEntity.teleporter.TileEntityTeleporterController;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -19,8 +22,9 @@ import net.minecraft.world.World;
  */
 public class BlockTeleporterController extends BlockContainer {
 
+    public static final int[] faceMap = new int[]{3, 2, 4, 5};
+
     public IIcon icon;
-    public int[] faceMap;
 
     public BlockTeleporterController() {
         super(Material.iron);
@@ -35,8 +39,6 @@ public class BlockTeleporterController extends BlockContainer {
 
         GameRegistry.registerBlock(this, blockName);
         GameRegistry.registerTileEntity(TileEntityTeleporterController.class, "tileEntityTeleporterController");
-
-        faceMap = new int[]{3, 2, 4, 5};
     }
 
     @Override
@@ -47,8 +49,7 @@ public class BlockTeleporterController extends BlockContainer {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
         if(!world.isRemote && world.getTileEntity(x,y,z) instanceof TileEntityTeleporterController){
-            TileEntityTeleporterController teleporterController = (TileEntityTeleporterController)world.getTileEntity(x,y,z);
-            teleporterController.checkMultiblock();
+            FMLNetworkHandler.openGui(player, ThermalScience.instance, ThermalScienceGuiID.TeleporterController.ordinal(), world, x, y, z);
         }
 
         return true;
