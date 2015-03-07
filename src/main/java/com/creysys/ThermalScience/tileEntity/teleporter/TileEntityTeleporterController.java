@@ -1,12 +1,16 @@
 package com.creysys.ThermalScience.tileEntity.teleporter;
 
 import cofh.lib.util.helpers.ColorHelper;
+import cofh.lib.util.helpers.StringHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.ThermalScienceUtil;
+import com.creysys.ThermalScience.compat.waila.IWailaBodyProvider;
 import com.creysys.ThermalScience.network.packet.PacketEnergy;
 import com.creysys.ThermalScience.network.packet.PacketTeleporterControllerCheck;
 import com.creysys.ThermalScience.network.sync.ISyncEnergy;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -16,14 +20,17 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 
+import java.util.List;
+
 /**
  * Created by Creysys on 06 Mar 15.
  */
-public class TileEntityTeleporterController extends TileEntity implements IInventory, ISyncEnergy {
+public class TileEntityTeleporterController extends TileEntity implements IInventory, ISyncEnergy, IWailaBodyProvider {
 
     public byte facing;
     public boolean active;
@@ -94,6 +101,7 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
                     int x = compound.getInteger(ThermalScienceNBTTags.XCoord);
                     int y = compound.getInteger(ThermalScienceNBTTags.YCoord);
                     int z = compound.getInteger(ThermalScienceNBTTags.ZCoord);
+                    int yaw = compound.getInteger(ThermalScienceNBTTags.Yaw);
 
                     int cost = 20000;
 
@@ -106,6 +114,7 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
                             player.travelToDimension(dim);
                         }
 
+                        player.rotationYaw = yaw;
                         player.setPositionAndUpdate(x + 0.5f, y, z + 0.5f);
 
                         energyStored -= cost;
@@ -464,5 +473,25 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
     @Override
     public boolean shouldRefresh(Block oldBlock, Block newBlock, int oldMeta, int newMeta, World world, int x, int y, int z) {
         return oldBlock != newBlock;
+    }
+
+    @Override
+    public List<String> getWailaBody(ItemStack itemStack, List<String> list, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+
+        boolean found = false;
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).toLowerCase().contains(" rf")){
+                found = true;
+                break;
+            }
+        }
+
+        if(!found) {
+            list.add(energyStored + " / " + maxEnergyStored + " RF");
+        }
+
+        list.add(statusText);
+
+        return list;
     }
 }

@@ -40,6 +40,16 @@ public class ItemTeleporterDestinationCard extends ItemThermalScience {
         tagCompound.setInteger(ThermalScienceNBTTags.YCoord, y + 1);
         tagCompound.setInteger(ThermalScienceNBTTags.ZCoord, z);
 
+        int yaw = (int)player.rotationYaw;
+
+        if(yaw < 0){
+            yaw += 360;
+        }
+
+        int i = (yaw + 45) / 90;
+
+        tagCompound.setInteger(ThermalScienceNBTTags.Yaw, (i * 90));
+
         return false;
     }
 
@@ -66,6 +76,8 @@ public class ItemTeleporterDestinationCard extends ItemThermalScience {
             tagCompound.setInteger(ThermalScienceNBTTags.XCoord, (int)player.posX);
             tagCompound.setInteger(ThermalScienceNBTTags.YCoord, (int)player.posY);
             tagCompound.setInteger(ThermalScienceNBTTags.ZCoord, (int)player.posZ);
+
+            tagCompound.setInteger(ThermalScienceNBTTags.Yaw, (int)player.rotationYaw);
         }
 
         return stack;

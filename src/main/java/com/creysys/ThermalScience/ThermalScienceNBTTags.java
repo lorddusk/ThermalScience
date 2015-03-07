@@ -23,4 +23,5 @@ public class ThermalScienceNBTTags {
     public static final String Status = "status";
     public static final String Color = "color";
     public static final String Block = "block";
+    public static final String Yaw = "yaw";
 }
