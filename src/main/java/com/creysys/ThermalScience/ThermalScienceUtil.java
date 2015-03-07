@@ -93,6 +93,13 @@ public class ThermalScienceUtil {
                 continue;
             }
 
+            if(item instanceof Item){
+                item = new ItemStack((Item)item);
+            }
+            else if(item instanceof Block){
+                item = new ItemStack((Block)item);
+            }
+
             if (item instanceof ItemStack) {
                 if (areStacksEqual(stacks[i], (ItemStack) item)) {
                     return i;
