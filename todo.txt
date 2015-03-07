@@ -1,4 +1,5 @@
 Teleporter power tap
+fix teleporter
 
 
 redstoneAlloyWire, conductiveIronWire, energeticAlloyWire, vibrantAlloyWire

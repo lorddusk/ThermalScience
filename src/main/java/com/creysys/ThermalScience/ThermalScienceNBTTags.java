@@ -20,4 +20,7 @@ public class ThermalScienceNBTTags {
     public static final String YCoord = "yCoord";
     public static final String ZCoord = "zCoord";
     public static final String Dim = "dim";
+    public static final String Status = "status";
+    public static final String Color = "color";
+    public static final String Block = "block";
 }

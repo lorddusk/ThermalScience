@@ -4,10 +4,7 @@ import cofh.lib.util.helpers.ColorHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceUtil;
 import com.creysys.ThermalScience.container.ContainerTeleporterController;
-import com.creysys.ThermalScience.network.packet.PacketTeleporterControllerCheck;
 import com.creysys.ThermalScience.tileEntity.teleporter.TileEntityTeleporterController;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -32,8 +29,6 @@ public class GuiTeleporterController extends GuiContainer {
     public int mouseX;
     public int mouseY;
 
-    public GuiButton button;
-
     public GuiTeleporterController(InventoryPlayer inventory, TileEntityTeleporterController tileEntity) {
         super(new ContainerTeleporterController(inventory, tileEntity));
 
@@ -43,18 +38,11 @@ public class GuiTeleporterController extends GuiContainer {
         ySize = 150;
     }
 
-    @Override
-    public void initGui() {
-        super.initGui();
-
-        button = new GuiButton(0, guiLeft + xSize - 45, guiTop + 20, 40, 20, "Update");
-    }
-
     public void drawScreen(int mouseX, int mouseY, float p_73863_3_) {
+        super.drawScreen(mouseX, mouseY, p_73863_3_);
+
         this.mouseX = mouseX - (width - xSize) / 2;
         this.mouseY = mouseY - (height - ySize) / 2;
-
-        super.drawScreen(mouseX, mouseY, p_73863_3_);
     }
 
     @Override
@@ -65,8 +53,6 @@ public class GuiTeleporterController extends GuiContainer {
         drawCenteredString(fontRendererObj, "Teleporter Controller", guiLeft + xSize / 2, guiTop + 4, ColorHelper.DYE_WHITE);
         drawEnergy();
         drawEnergyOverlay();
-
-        button.drawButton(Minecraft.getMinecraft(), mouseX + (width - xSize) / 2, mouseY + (height - ySize) / 2);
         drawCenteredString(fontRendererObj, tileEntity.statusText, guiLeft + xSize / 2, guiTop + 50, tileEntity.statusTextColor);
     }
 
@@ -105,13 +91,6 @@ public class GuiTeleporterController extends GuiContainer {
             int y = mouseY;
 
             drawHoveringText(list, x + (width - xSize) / 2, y + (height - ySize) / 2, fontRendererObj);
-        }
-    }
-
-    @Override
-    protected void mouseClicked(int x, int y, int p_73864_3_) {
-        if (button.mousePressed(Minecraft.getMinecraft(), x, y)) {
-            ThermalScience.packetHandler.sendPacketToServer(new PacketTeleporterControllerCheck(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, "", 0));
         }
     }
 }

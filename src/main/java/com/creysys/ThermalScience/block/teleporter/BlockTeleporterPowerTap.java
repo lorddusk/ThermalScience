@@ -37,7 +37,7 @@ public class BlockTeleporterPowerTap extends BlockContainer {
         setCreativeTab(ThermalScience.creativeTab);
 
         GameRegistry.registerBlock(this, blockName);
-        GameRegistry.registerTileEntity(TileEntityTeleporterController.class, "tileEntityTeleporterPowerTap");
+        GameRegistry.registerTileEntity(TileEntityTeleporterPowerTap.class, "tileEntityTeleporterPowerTap");
     }
 
     @Override

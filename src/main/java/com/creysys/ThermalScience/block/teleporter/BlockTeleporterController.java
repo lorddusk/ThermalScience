@@ -24,7 +24,8 @@ public class BlockTeleporterController extends BlockContainer {
 
     public static final int[] faceMap = new int[]{3, 2, 4, 5};
 
-    public IIcon icon;
+    public IIcon iconOff;
+    public IIcon iconOn;
 
     public BlockTeleporterController() {
         super(Material.iron);
@@ -58,7 +59,8 @@ public class BlockTeleporterController extends BlockContainer {
 
     @Override
     public void registerBlockIcons(IIconRegister iconRegister) {
-        icon = iconRegister.registerIcon(ThermalScience.modid + ":teleporter/controller");
+        iconOff = iconRegister.registerIcon(ThermalScience.modid + ":teleporter/controllerOff");
+        iconOn = iconRegister.registerIcon(ThermalScience.modid + ":teleporter/controllerOn");
     }
 
     @Override
@@ -86,8 +88,15 @@ public class BlockTeleporterController extends BlockContainer {
 
     @Override
     public IIcon getIcon(int side, int meta) {
+
+        IIcon frontIcon = iconOff;
+        if(meta >= 10){
+            meta -= 10;
+            frontIcon = iconOn;
+        }
+
         if(meta >= 0 && meta < faceMap.length &&  faceMap[meta] == side){
-            return icon;
+            return frontIcon;
         }
 
         return ThermalScience.blockTeleporterWall.icon;

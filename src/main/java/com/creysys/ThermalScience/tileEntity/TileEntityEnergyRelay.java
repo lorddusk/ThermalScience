@@ -84,6 +84,8 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
             sideConfigs[side] = 0;
         }
 
+        worldObj.notifyBlocksOfNeighborChange(xCoord,yCoord,zCoord, blockType);
+
         syncSettings();
     }
 

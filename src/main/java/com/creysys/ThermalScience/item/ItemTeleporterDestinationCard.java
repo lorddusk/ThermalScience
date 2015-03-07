@@ -16,6 +16,8 @@ import java.util.List;
 public class ItemTeleporterDestinationCard extends ItemThermalScience {
     public ItemTeleporterDestinationCard() {
         super("TeleporterDestinationCard");
+
+        setMaxStackSize(1);
     }
 
     @Override
@@ -35,7 +37,7 @@ public class ItemTeleporterDestinationCard extends ItemThermalScience {
         NBTTagCompound tagCompound = stack.getTagCompound();
         tagCompound.setInteger(ThermalScienceNBTTags.Dim, world.provider.dimensionId);
         tagCompound.setInteger(ThermalScienceNBTTags.XCoord, x);
-        tagCompound.setInteger(ThermalScienceNBTTags.YCoord, y);
+        tagCompound.setInteger(ThermalScienceNBTTags.YCoord, y + 1);
         tagCompound.setInteger(ThermalScienceNBTTags.ZCoord, z);
 
         return false;
