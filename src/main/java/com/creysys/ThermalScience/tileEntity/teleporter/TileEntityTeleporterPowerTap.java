@@ -4,8 +4,12 @@ import cofh.api.energy.IEnergyReceiver;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.block.teleporter.BlockTeleporterPowerTap;
+import com.creysys.ThermalScience.compat.waila.IWailaBodyProvider;
 import com.creysys.ThermalScience.network.packet.PacketEnergy;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -14,10 +18,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import java.util.List;
+
 /**
  * Created by Creysys on 06 Mar 15.
  */
-public class TileEntityTeleporterPowerTap extends TileEntity implements IEnergyReceiver {
+public class TileEntityTeleporterPowerTap extends TileEntity implements IEnergyReceiver, IWailaBodyProvider {
 
     public int maxEnergyReceive;
 
@@ -131,5 +137,22 @@ public class TileEntityTeleporterPowerTap extends TileEntity implements IEnergyR
     @Override
     public boolean shouldRefresh(Block oldBlock, Block newBlock, int oldMeta, int newMeta, World world, int x, int y, int z) {
         return oldBlock != newBlock;
+    }
+
+    @Override
+    public List<String> getWailaBody(ItemStack itemStack, List<String> list, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+
+        if(getTeleporterController() == null){
+            return list;
+        }
+
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).toLowerCase().contains(" rf")){
+                return list;
+            }
+        }
+
+        list.add(getEnergyStored(null) + " / " + getMaxEnergyStored(null) + " RF");
+        return list;
     }
 }

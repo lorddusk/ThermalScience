@@ -26,6 +26,7 @@ import java.util.ArrayList;
  * Created by Creysys on 29.01.2015.
  */
 public class BlockMachine extends BlockContainer {
+
     public Class tileEntityClass;
     public ThermalScienceGuiID guiID;
 
@@ -36,7 +37,7 @@ public class BlockMachine extends BlockContainer {
 
     private int[] faceMap;
 
-    public BlockMachine(String name, Class tileEntityClass, ThermalScienceGuiID guiID) {
+    public BlockMachine(String name, Class<? extends TileEntityMachine> tileEntityClass, ThermalScienceGuiID guiID) {
         super(Material.rock);
 
         setHardness(1F);
@@ -60,7 +61,8 @@ public class BlockMachine extends BlockContainer {
     @Override
     public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
         try {
-            return (TileEntity) tileEntityClass.newInstance();
+            return (TileEntityMachine)tileEntityClass.newInstance();
+
         } catch (Exception ex) {
             return null;
         }

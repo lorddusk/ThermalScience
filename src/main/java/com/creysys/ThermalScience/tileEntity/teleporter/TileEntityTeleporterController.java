@@ -71,7 +71,17 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
     public void updateEntity() {
         if (worldObj.getTotalWorldTime() % 40 == 0) {
             checkMultiblock();
+
+            if(active && (slot == null || !slot.hasTagCompound() || !slot.getTagCompound().hasKey(ThermalScienceNBTTags.Dim))){
+                statusText = "Insert destination card";
+                statusTextColor = ColorHelper.DYE_YELLOW;
+                active = false;
+            }
+
             setActive(active);
+
+
+
             ThermalScience.packetHandler.sendPacketToDimension(worldObj.provider.dimensionId, new PacketTeleporterControllerCheck(xCoord, yCoord, zCoord, statusText, statusTextColor));
         }
 

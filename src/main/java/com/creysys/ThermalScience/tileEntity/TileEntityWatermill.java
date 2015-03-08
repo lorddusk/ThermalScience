@@ -2,14 +2,20 @@ package com.creysys.ThermalScience.tileEntity;
 
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyProvider;
+import com.creysys.ThermalScience.compat.waila.IWailaBodyProvider;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.List;
 
 /**
  * Created by Creysys on 04 Feb 15.
  */
-public class TileEntityWatermill extends TileEntity implements IEnergyProvider {
+public class TileEntityWatermill extends TileEntity implements IEnergyProvider, IWailaBodyProvider {
 
     public static final int rfPerTick = 5;
 
@@ -87,5 +93,17 @@ public class TileEntityWatermill extends TileEntity implements IEnergyProvider {
 
     public void checkWater(){
         active = worldObj.getBlock(xCoord + 1, yCoord, zCoord) == Blocks.water && worldObj.getBlock(xCoord - 1, yCoord, zCoord) == Blocks.water && worldObj.getBlock(xCoord, yCoord, zCoord + 1) == Blocks.water && worldObj.getBlock(xCoord, yCoord, zCoord - 1) == Blocks.water;
+    }
+
+    @Override
+    public List<String> getWailaBody(ItemStack itemStack, List<String> list, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).toLowerCase().contains(" rf")){
+                return list;
+            }
+        }
+
+        list.add(getEnergyStored(null) + " / " + getMaxEnergyStored(null) + " RF");
+        return list;
     }
 }

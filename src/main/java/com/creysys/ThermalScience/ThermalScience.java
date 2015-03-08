@@ -24,6 +24,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
+import li.cil.oc.api.machine.MachineHost;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.monster.EntityEnderman;
@@ -64,8 +65,6 @@ public class ThermalScience
     public static Block blockTeleporterController;
 
 
-
-
     //Items
     public static ItemMaterial itemMaterial;
     public static ItemDust itemDust;
@@ -76,6 +75,7 @@ public class ThermalScience
 
     @EventHandler
     public void preInitialize(FMLPreInitializationEvent event){
+
         ThermalScienceConfig.load(event.getSuggestedConfigurationFile());
 
         creativeTab = new ThermalScienceCreativeTab();

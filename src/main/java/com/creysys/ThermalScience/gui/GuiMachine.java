@@ -84,7 +84,7 @@ public abstract class GuiMachine extends GuiContainer
     }
 
     private void drawEnergy(){
-        drawEnergy(tileEntity.energyStored, tileEntity.maxEnergyStored,guiLeft, guiTop);
+        drawEnergy(tileEntity.energyStored, tileEntity.getMaxEnergyStored(null),guiLeft, guiTop);
     }
 
     public void drawEnergy(int energyStored, int maxEnergyStored,int xOffset, int yOffset){
@@ -98,7 +98,7 @@ public abstract class GuiMachine extends GuiContainer
     }
 
     private void drawEnergyOverlay(){
-        drawEnergyOverlay(mouseX, mouseY, tileEntity.energyStored, tileEntity.maxEnergyStored);
+        drawEnergyOverlay(mouseX, mouseY, tileEntity.energyStored, tileEntity.getMaxEnergyStored(null));
     }
 
     private void drawEnergyOverlay(int mouseX, int mouseY, int energyStored, int maxEnergyStored){

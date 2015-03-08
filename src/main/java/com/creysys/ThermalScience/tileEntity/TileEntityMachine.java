@@ -31,9 +31,12 @@ import java.util.List;
  */
 public abstract class TileEntityMachine extends TileEntity implements IEnergyReceiver, ISidedInventory, IWailaBodyProvider, ISyncEnergy
 {
+    public static final String[] mapTiers = new String[]{"Basic", "Hardened", "Reinforced", "Resonant"};
+    public static final int[] mapMaxEnergyStored = new int[]{80000,400000,2000000,10000000};
+    public static final int[] mapMaxEnergyReceive = new int[]{80,400,2000,10000};
+
+
     public int energyStored;
-    public int maxEnergyStored;
-    public int maxEnergyReceive;
 
     public int craftingEnergy;
     public int craftingEnergyNeeded;
@@ -47,8 +50,6 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
     public TileEntityMachine(int maxEnergyStored, int maxEnergyReceive)
     {
         energyStored = 0;
-        this.maxEnergyStored = maxEnergyStored;
-        this.maxEnergyReceive = maxEnergyReceive;
 
         craftingEnergy = 0;
         craftingEnergyNeeded = 0;
@@ -211,7 +212,7 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
             }
 
             ThermalScience.packetHandler.sendPacketToDimension(worldObj.provider.dimensionId, new PacketMachineProgress(xCoord, yCoord, zCoord, craftingEnergyNeeded, craftingEnergy));
-            ThermalScienceUtil.syncEnergy(worldObj, xCoord, yCoord, zCoord, energyStored, maxEnergyStored);
+            ThermalScienceUtil.syncEnergy(worldObj, xCoord, yCoord, zCoord, energyStored, mapMaxEnergyStored[blockMetadata]);
 
             updateCrafting(true);
         }
@@ -274,7 +275,7 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
     }
 
     public int getCraftingSpeed(){
-        return maxEnergyReceive / 2;
+        return mapMaxEnergyReceive[blockMetadata];
     }
 
     public abstract  List<ThermalScienceRecipe> getRecipes();
@@ -291,7 +292,7 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
             }
         }
 
-        list.add(energyStored + " / " + maxEnergyStored + " RF");
+        list.add(energyStored + " / " + getMaxEnergyStored(null) + " RF");
         return list;
     }
 
@@ -308,14 +309,14 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
     @Override
     public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
 
-        maxReceive = Math.min(maxReceive, maxEnergyReceive);
+        maxReceive = Math.min(maxReceive, mapMaxEnergyReceive[blockMetadata]);
 
-        int receive = MathHelper.clamp_int(maxEnergyStored - energyStored, 0, maxReceive);
+        int receive = MathHelper.clamp_int(getMaxEnergyStored(null) - energyStored, 0, maxReceive);
 
         if(!simulate && receive > 0) {
             energyStored += receive;
 
-            ThermalScienceUtil.syncEnergy(worldObj, xCoord, yCoord, zCoord, energyStored, maxEnergyStored);
+            ThermalScienceUtil.syncEnergy(worldObj, xCoord, yCoord, zCoord, energyStored, getMaxEnergyStored(null));
         }
 
         return receive;
@@ -333,7 +334,7 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
 
     @Override
     public int getMaxEnergyStored(ForgeDirection from) {
-        return maxEnergyStored;
+        return mapMaxEnergyStored[blockMetadata];
     }
 
     @Override

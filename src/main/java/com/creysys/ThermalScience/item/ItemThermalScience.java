@@ -4,6 +4,7 @@ import com.creysys.ThermalScience.ThermalScience;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by Creysys on 08 Feb 15.
@@ -27,6 +28,6 @@ public class ItemThermalScience extends Item {
 
     @Override
     public void registerIcons(IIconRegister iconRegister) {
-        itemIcon = iconRegister.registerIcon(ThermalScience.modid + ":" + name);
+        itemIcon = iconRegister.registerIcon(ThermalScience.modid + ":" + StringUtils.uncapitalize(name));
     }
 }

@@ -1,12 +1,15 @@
-Teleporter power tap
-fix teleporter
+Machine upgrades!!!
+-Recipes
+-Use metadata as tier specifier
+    -Remove metadata usage
+    -Add TESR
+
+
+OpenComputers suppoer
 
 
 redstoneAlloyWire, conductiveIronWire, energeticAlloyWire, vibrantAlloyWire
 
-Teleporter?
 Void world provider?
 
 Time space manipulator
-
-Machine upgrades
