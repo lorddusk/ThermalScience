@@ -18,15 +18,17 @@ public class PacketMachineProgress implements IThermalSciencePacket {
 
     public int craftingEnergyNeeded;
     public int craftingEnergy;
+    public boolean active;
 
     public PacketMachineProgress(){}
-    public PacketMachineProgress(int x, int y, int z, int craftingEnergyNeeded, int craftingEnergy){
+    public PacketMachineProgress(int x, int y, int z, int craftingEnergyNeeded, int craftingEnergy, boolean active){
         this.x = x;
         this.y = y;
         this.z = z;
 
         this.craftingEnergyNeeded = craftingEnergyNeeded;
         this.craftingEnergy = craftingEnergy;
+        this.active = active;
     }
 
     @Override
@@ -37,6 +39,7 @@ public class PacketMachineProgress implements IThermalSciencePacket {
 
         buffer.writeInt(craftingEnergyNeeded);
         buffer.writeInt(craftingEnergy);
+        buffer.writeBoolean(active);
     }
 
     @Override
@@ -47,16 +50,19 @@ public class PacketMachineProgress implements IThermalSciencePacket {
 
         craftingEnergyNeeded = buffer.readInt();
         craftingEnergy = buffer.readInt();
+        active = buffer.readBoolean();
     }
 
     @Override
     public void executeClientSide(EntityPlayer player) {
         TileEntity tileEntity = player.worldObj.getTileEntity(x, y, z);
 
-        if(tileEntity instanceof TileEntityMachine){
-            TileEntityMachine machine = (TileEntityMachine)tileEntity;
+        if(tileEntity instanceof TileEntityMachine) {
+            TileEntityMachine machine = (TileEntityMachine) tileEntity;
             machine.craftingEnergyNeeded = craftingEnergyNeeded;
             machine.craftingEnergy = craftingEnergy;
+            machine.active = active;
+            player.worldObj.markBlockRangeForRenderUpdate(x, y, z, x, y, z);
         }
     }
 

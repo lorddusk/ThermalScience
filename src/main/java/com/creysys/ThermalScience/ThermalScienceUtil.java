@@ -282,10 +282,6 @@ public class ThermalScienceUtil {
         tessellator.draw();
     }
 
-    public static void setTexture(String texture) {
-        setTexture(new ResourceLocation(texture));
-    }
-
     public static void setTexture(ResourceLocation texture) {
         Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
     }
@@ -341,5 +337,64 @@ public class ThermalScienceUtil {
     public static ItemStack setStack(ItemStack stack, int stacks){
         stack.stackSize = stacks;
         return stack;
+    }
+
+    public static void renderBlockFace(int face, double x, double y, double z){
+
+        GL11.glPushMatrix();
+        GL11.glTranslated(x, y, z);
+        GL11.glDisable(GL11.GL_LIGHTING);
+
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
+
+        switch(face){
+            case 0:
+                //-Y
+                tessellator.addVertexWithUV(1, 0, 1, 0, 0);
+                tessellator.addVertexWithUV(0, 0, 1, 0, 1);
+                tessellator.addVertexWithUV(0, 0, 0, 1, 1);
+                tessellator.addVertexWithUV(1, 0, 0, 1, 0);
+                break;
+            case 1:
+                //+Y
+                tessellator.addVertexWithUV(1, 1, 1, 0, 0);
+                tessellator.addVertexWithUV(1, 1, 0, 1, 0);
+                tessellator.addVertexWithUV(0, 1, 0, 1, 1);
+                tessellator.addVertexWithUV(0, 1, 1, 0, 1);
+                break;
+            case 2:
+                //-X
+                tessellator.addVertexWithUV(0, 0, 0, 1, 1);
+                tessellator.addVertexWithUV(0, 1, 0, 1, 0);
+                tessellator.addVertexWithUV(1, 1, 0, 0, 0);
+                tessellator.addVertexWithUV(1, 0, 0, 0, 1);
+                break;
+            case 3:
+                //+X
+                tessellator.addVertexWithUV(0, 0, 1, 1, 1);
+                tessellator.addVertexWithUV(1, 0, 1, 0, 1);
+                tessellator.addVertexWithUV(1, 1, 1, 0, 0);
+                tessellator.addVertexWithUV(0, 1, 1, 1, 0);
+                break;
+            case 4:
+                //-Z
+                tessellator.addVertexWithUV(0, 0, 1, 1, 1);
+                tessellator.addVertexWithUV(0, 1, 1, 1, 0);
+                tessellator.addVertexWithUV(0, 1, 0, 0, 0);
+                tessellator.addVertexWithUV(0, 0, 0, 0, 1);
+                break;
+            case 5:
+                //+Z
+                tessellator.addVertexWithUV(1, 0, 1, 1, 1);
+                tessellator.addVertexWithUV(1, 0, 0, 0, 1);
+                tessellator.addVertexWithUV(1, 1, 0, 0, 0);
+                tessellator.addVertexWithUV(1, 1, 1, 1, 0);
+                break;
+        }
+        tessellator.draw();
+
+        GL11.glEnable(GL11.GL_LIGHTING);
+        GL11.glPopMatrix();
     }
 }

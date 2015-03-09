@@ -3,6 +3,7 @@ package com.creysys.ThermalScience.item;
 import cofh.lib.util.helpers.ColorHelper;
 import cofh.lib.util.helpers.StringHelper;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
+import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public class ItemTeleporterDestinationCard extends ItemThermalScience {
     public ItemTeleporterDestinationCard() {
-        super("TeleporterDestinationCard");
+        super("TeleporterDestinationCard", ThermalScienceTextures.teleporterDestinationCard);
 
         setMaxStackSize(1);
     }

@@ -1,10 +1,10 @@
 package com.creysys.ThermalScience.tileEntity.teleporter;
 
 import cofh.lib.util.helpers.ColorHelper;
-import cofh.lib.util.helpers.StringHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
-import com.creysys.ThermalScience.ThermalScienceUtil;
+import com.creysys.ThermalScience.client.ISidedTextureProvider;
+import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.compat.waila.IWailaBodyProvider;
 import com.creysys.ThermalScience.network.packet.PacketEnergy;
 import com.creysys.ThermalScience.network.packet.PacketTeleporterControllerCheck;
@@ -20,10 +20,8 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.StringUtils;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 
 import java.util.List;
 

@@ -4,6 +4,8 @@ import cofh.api.energy.IEnergyReceiver;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.block.teleporter.BlockTeleporterPowerTap;
+import com.creysys.ThermalScience.client.ISidedTextureProvider;
+import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.compat.waila.IWailaBodyProvider;
 import com.creysys.ThermalScience.network.packet.PacketEnergy;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -15,6 +17,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 

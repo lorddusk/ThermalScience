@@ -1,6 +1,7 @@
 package com.creysys.ThermalScience.block.teleporter;
 
 import com.creysys.ThermalScience.ThermalScience;
+import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
 import com.creysys.ThermalScience.tileEntity.teleporter.TileEntityTeleporterController;
 import com.creysys.ThermalScience.tileEntity.teleporter.TileEntityTeleporterPowerTap;
@@ -13,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /**
@@ -21,9 +23,6 @@ import net.minecraft.world.World;
 public class BlockTeleporterPowerTap extends BlockContainer {
 
     public static final int[] faceMap = new int[]{3, 2, 4, 5};
-
-    public IIcon icon;
-
 
     public BlockTeleporterPowerTap() {
         super(Material.iron);
@@ -35,6 +34,7 @@ public class BlockTeleporterPowerTap extends BlockContainer {
         String blockName = "blockTeleporterPowerTap";
         setBlockName(blockName);
         setCreativeTab(ThermalScience.creativeTab);
+        setBlockTextureName(ThermalScienceTextures.teleporterPowerTap.icon);
 
         GameRegistry.registerBlock(this, blockName);
         GameRegistry.registerTileEntity(TileEntityTeleporterPowerTap.class, "tileEntityTeleporterPowerTap");
@@ -46,39 +46,45 @@ public class BlockTeleporterPowerTap extends BlockContainer {
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister iconRegister) {
-        icon = iconRegister.registerIcon(ThermalScience.modid + ":teleporter/powerTap");
-    }
-
-    @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
         int var6 = MathHelper.floor_double((double) (entity.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
         TileEntityTeleporterPowerTap tileEntity = (TileEntityTeleporterPowerTap) world.getTileEntity(x, y, z);
 
-        byte facing = 0;
+        byte facing = 3;
 
         switch (var6) {
             case 0:
-                facing = 1;
+                facing = 2;
                 break;
             case 1:
-                facing = 3;
+                facing = 5;
                 break;
             case 3:
-                facing = 2;
+                facing = 4;
                 break;
         }
 
         tileEntity.facing = facing;
-        world.setBlockMetadataWithNotify(x, y, z, facing, 2);
     }
 
     @Override
     public IIcon getIcon(int side, int meta) {
-        if(meta >= 0 && meta < faceMap.length &&  faceMap[meta] == side){
-            return icon;
+
+        if (side == 3) {
+            return blockIcon;
         }
 
-        return ThermalScience.blockTeleporterWall.icon;
+        return ThermalScience.blockTeleporterWall.getIcon(side, meta);
+    }
+
+    @Override
+    public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side) {
+        TileEntityTeleporterPowerTap powerTap = (TileEntityTeleporterPowerTap) blockAccess.getTileEntity(x, y, z);
+
+        if (side == powerTap.facing) {
+            return blockIcon;
+        }
+
+        return ThermalScience.blockTeleporterWall.getIcon(side, 0);
     }
 }

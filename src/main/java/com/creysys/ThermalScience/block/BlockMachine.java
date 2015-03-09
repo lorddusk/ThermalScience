@@ -2,8 +2,10 @@ package com.creysys.ThermalScience.block;
 
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceUtil;
+import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.gui.ThermalScienceGuiID;
 import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
+import com.creysys.ThermalScience.tileEntity.teleporter.TileEntityTeleporterController;
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
@@ -18,6 +20,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -32,6 +35,7 @@ public class BlockMachine extends BlockContainer {
 
     public IIcon iconSide;
     public IIcon iconTop;
+
     public IIcon iconFrontOff;
     public IIcon iconFrontOn;
 
@@ -62,7 +66,6 @@ public class BlockMachine extends BlockContainer {
     public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
         try {
             return (TileEntityMachine)tileEntityClass.newInstance();
-
         } catch (Exception ex) {
             return null;
         }
@@ -73,22 +76,23 @@ public class BlockMachine extends BlockContainer {
         int var6 = MathHelper.floor_double((double) (entity.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
         TileEntityMachine tileEntity = (TileEntityMachine) world.getTileEntity(x, y, z);
 
-        byte facing = 0;
+        byte facing = 3;
 
         switch (var6) {
             case 0:
-                facing = 1;
+                facing = 2;
                 break;
             case 1:
-                facing = 3;
+                facing = 5;
                 break;
             case 3:
-                facing = 2;
+                facing = 4;
                 break;
         }
 
         tileEntity.facing = facing;
-        world.setBlockMetadataWithNotify(x, y, z, facing, 2);
+
+        world.setBlockMetadataWithNotify(x, y, z, stack.getItemDamage(), 2);
     }
 
     @Override
@@ -112,29 +116,30 @@ public class BlockMachine extends BlockContainer {
 
     @Override
     public void registerBlockIcons(IIconRegister iconRegister) {
-        iconSide = iconRegister.registerIcon(ThermalScience.modid + ":machineSide");
-        iconTop = iconRegister.registerIcon(ThermalScience.modid + ":machineTop");
+        iconSide = iconRegister.registerIcon(ThermalScienceTextures.machineSide.icon);
+        iconTop = iconRegister.registerIcon(ThermalScienceTextures.machineTop.icon);
         iconFrontOff = iconSide;
         iconFrontOn = iconSide;
     }
 
     @Override
     public IIcon getIcon(int side, int meta) {
-        if(side == 0 || side == 1){
-            return iconTop;
+        if (side == 3) {
+            return iconFrontOff;
         }
 
-        IIcon frontIcon = iconFrontOff;
-        if(meta >= 10){
-            meta -= 10;
-            frontIcon = iconFrontOn;
+        return side <= 1 ? iconTop : iconSide;
+    }
+
+    @Override
+    public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side) {
+        TileEntityMachine machine = (TileEntityMachine)blockAccess.getTileEntity(x,y,z);
+
+        if(side == machine.facing){
+            return machine.active ? iconFrontOn : iconFrontOff;
         }
 
-        if(meta >= 0 && meta < faceMap.length &&  faceMap[meta] == side){
-            return frontIcon;
-        }
-
-        return iconSide;
+        return side <= 1 ? iconTop : iconSide;
     }
 
     @Override

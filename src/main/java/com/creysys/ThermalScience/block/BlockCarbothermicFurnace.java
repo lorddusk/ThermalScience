@@ -1,6 +1,7 @@
 package com.creysys.ThermalScience.block;
 
 import com.creysys.ThermalScience.ThermalScience;
+import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.gui.ThermalScienceGuiID;
 import com.creysys.ThermalScience.tileEntity.TileEntityCarbothermicFurnace;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -17,7 +18,7 @@ public class BlockCarbothermicFurnace extends BlockMachine {
     public void registerBlockIcons(IIconRegister iconRegister) {
         super.registerBlockIcons(iconRegister);
 
-        iconFrontOff = iconRegister.registerIcon(ThermalScience.modid + ":carbothermicFurnaceOff");
-        iconFrontOn = iconRegister.registerIcon(ThermalScience.modid + ":carbothermicFurnaceOn");
+        iconFrontOff = iconRegister.registerIcon(ThermalScienceTextures.carboThermicFurnaceOff.icon);
+        iconFrontOn = iconRegister.registerIcon(ThermalScienceTextures.carboThermicFurnaceOn.icon);
     }
 }

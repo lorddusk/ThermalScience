@@ -75,6 +75,7 @@ public class PacketEnergyRelaySettings implements IThermalSciencePacket {
             energyRelay.setMaxIn(maxIn);
             energyRelay.setMaxOut(maxOut);
             energyRelay.setSideConfigs(sideConfigs);
+            player.worldObj.markBlockRangeForRenderUpdate(x, y, z, x,y, z);
         }
     }
 

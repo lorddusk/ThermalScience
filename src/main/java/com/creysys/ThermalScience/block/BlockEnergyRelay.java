@@ -2,6 +2,7 @@ package com.creysys.ThermalScience.block;
 
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceUtil;
+import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.gui.ThermalScienceGuiID;
 import com.creysys.ThermalScience.tileEntity.TileEntityEnergyRelay;
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
@@ -49,14 +50,29 @@ public class BlockEnergyRelay extends BlockContainer {
 
     @Override
     public void registerBlockIcons(IIconRegister iconRegister) {
-        iconOff = iconRegister.registerIcon(ThermalScience.modid + ":energyRelayOff");
-        iconIn = iconRegister.registerIcon(ThermalScience.modid + ":energyRelayIn");
-        iconOut = iconRegister.registerIcon(ThermalScience.modid + ":energyRelayOut");
+        iconOff = iconRegister.registerIcon(ThermalScienceTextures.energyRelayOff.icon);
+        iconIn = iconRegister.registerIcon(ThermalScienceTextures.energyRelayIn.icon);
+        iconOut = iconRegister.registerIcon(ThermalScienceTextures.energyRelayOut.icon);
     }
 
 
     @Override
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_) {
+    public IIcon getIcon(int side, int meta) {
+        return iconOff;
+    }
+
+    @Override
+    public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side) {
+        TileEntityEnergyRelay energyRelay = (TileEntityEnergyRelay)blockAccess.getTileEntity(x,y,z);
+
+        switch(energyRelay.sideConfigs[side])
+        {
+            case 1:
+                return iconIn;
+            case 2:
+                return iconOut;
+        }
+
         return iconOff;
     }
 
@@ -99,20 +115,5 @@ public class BlockEnergyRelay extends BlockContainer {
         }
 
         return true;
-    }
-
-    @Override
-    public boolean renderAsNormalBlock() {
-        return false;
-    }
-
-    @Override
-    public boolean isOpaqueCube() {
-        return false;
-    }
-
-    @Override
-    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_) {
-        return false;
     }
 }

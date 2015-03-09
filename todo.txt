@@ -5,8 +5,11 @@ Machine upgrades!!!
     -Add TESR
 
 
-OpenComputers suppoer
 
+
+OpenComputers support
+
+Teleporter linking mechanic
 
 redstoneAlloyWire, conductiveIronWire, energeticAlloyWire, vibrantAlloyWire
 

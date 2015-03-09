@@ -73,18 +73,18 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
         ThermalScience.packetHandler.sendPacketToDimension(worldObj.provider.dimensionId, new PacketEnergyRelaySettings(xCoord, yCoord, zCoord, maxIn, maxOut, sideConfigs));
     }
 
-    public void setSideConfig(int side){
+    public void setSideConfig(int side) {
 
-        if(side < 0 || side >= 6){
+        if (side < 0 || side >= 6) {
             return;
         }
 
         sideConfigs[side]++;
-        if(sideConfigs[side] >= 3){
+        if (sideConfigs[side] >= 3) {
             sideConfigs[side] = 0;
         }
 
-        worldObj.notifyBlocksOfNeighborChange(xCoord,yCoord,zCoord, blockType);
+        worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, blockType);
 
         syncSettings();
     }

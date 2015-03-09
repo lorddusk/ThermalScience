@@ -4,6 +4,7 @@ package com.creysys.ThermalScience.gui;
 import cofh.lib.util.helpers.ColorHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceUtil;
+import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.container.ContainerBasic;
 import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
 import net.minecraft.client.gui.FontRenderer;
@@ -20,9 +21,6 @@ import java.util.List;
  */
 public abstract class GuiMachine extends GuiContainer
 {
-    public static ResourceLocation energyTexture = new ResourceLocation("cofh", "textures/gui/elements/Energy.png");
-    private static ResourceLocation arrowRightTexture = new ResourceLocation("cofh", "textures/gui/elements/Progress_Arrow_Right.png");
-
     public ResourceLocation guiTexture;
 
     public TileEntityMachine tileEntity;
@@ -40,11 +38,11 @@ public abstract class GuiMachine extends GuiContainer
     public int mouseX;
     public int mouseY;
 
-    public GuiMachine(TileEntityMachine tileEntity, String guiTexture, ContainerBasic container) {
+    public GuiMachine(TileEntityMachine tileEntity, ResourceLocation guiTexture, ContainerBasic container) {
         super(container);
 
         this.tileEntity = tileEntity;
-        this.guiTexture = new ResourceLocation(ThermalScience.modid, "textures/gui/" + guiTexture);
+        this.guiTexture = guiTexture;
 
         xSize = 176;
         ySize = 186;
@@ -74,7 +72,7 @@ public abstract class GuiMachine extends GuiContainer
     }
 
     public void drawProgress(int progress, int xOffset, int yOffset){
-        ThermalScienceUtil.setTexture(arrowRightTexture);
+        ThermalScienceUtil.setTexture(ThermalScienceTextures.guiProgressArrowRight);
         ThermalScienceUtil.drawTexturedModalRect(xOffset + arrowX, yOffset + arrowY, 0, 0, arrowWidth, arrowHeight, 48, 16);
 
         if (progress > 0) {
@@ -88,7 +86,7 @@ public abstract class GuiMachine extends GuiContainer
     }
 
     public void drawEnergy(int energyStored, int maxEnergyStored,int xOffset, int yOffset){
-        ThermalScienceUtil.setTexture(energyTexture);
+        ThermalScienceUtil.setTexture(ThermalScienceTextures.guiEnergy);
         ThermalScienceUtil.drawTexturedModalRect(xOffset + energyX, yOffset + energyY, 1, 0, energyWidth, energyHeight, 32, 64);
 
         if(energyStored > 0) {

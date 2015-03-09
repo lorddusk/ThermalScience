@@ -3,6 +3,7 @@ package com.creysys.ThermalScience.gui;
 import cofh.lib.util.helpers.ColorHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceUtil;
+import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.gui.element.GuiNumberField;
 import com.creysys.ThermalScience.network.packet.PacketEnergyRelaySettings;
 import com.creysys.ThermalScience.tileEntity.TileEntityEnergyRelay;
@@ -16,8 +17,6 @@ import net.minecraft.util.ResourceLocation;
  * Created by Creysys on 13 Feb 15.
  */
 public class GuiEnergyRelay extends GuiScreen {
-    public static final ResourceLocation guiTexture = new ResourceLocation(ThermalScience.modid, "textures/gui/energyRelay.png");;
-
     public TileEntityEnergyRelay tileEntity;
 
     public int guiX;
@@ -45,8 +44,6 @@ public class GuiEnergyRelay extends GuiScreen {
         guiX = (width - guiWidth) / 2;
         guiY = (height - guiHeight) / 2;
 
-        ScaledResolution scale = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-
         inField = new GuiNumberField(mc.fontRenderer, guiX + 10, guiY + 10, 60, 20);
         outField = new GuiNumberField(mc.fontRenderer, guiX + guiWidth - 70, guiY + 10, 60,20);
 
@@ -54,8 +51,8 @@ public class GuiEnergyRelay extends GuiScreen {
     }
 
     public void sendSettings(){
-        int maxIn = 0;
-        int maxOut = 0;
+        int maxIn;
+        int maxOut;
 
         try {
             maxIn = Integer.parseInt(inField.getText());
@@ -111,7 +108,7 @@ public class GuiEnergyRelay extends GuiScreen {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float p_73863_3_) {
-        ThermalScienceUtil.setTexture(guiTexture);
+        ThermalScienceUtil.setTexture(ThermalScienceTextures.guiEnergyRelay);
         ThermalScienceUtil.drawTexturedModalRect(guiX, guiY, 0, 0, guiWidth, guiHeight);
 
         inField.drawTextBox();

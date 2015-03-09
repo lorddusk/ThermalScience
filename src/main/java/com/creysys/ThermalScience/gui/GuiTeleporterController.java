@@ -3,6 +3,7 @@ package com.creysys.ThermalScience.gui;
 import cofh.lib.util.helpers.ColorHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceUtil;
+import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.container.ContainerTeleporterController;
 import com.creysys.ThermalScience.tileEntity.teleporter.TileEntityTeleporterController;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -16,8 +17,6 @@ import java.util.List;
  * Created by Creysys on 07 Mar 15.
  */
 public class GuiTeleporterController extends GuiContainer {
-
-    public static final ResourceLocation texture = new ResourceLocation(ThermalScience.modid, "textures/gui/teleporterController.png");
 
     public TileEntityTeleporterController tileEntity;
 
@@ -47,7 +46,7 @@ public class GuiTeleporterController extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
-        ThermalScienceUtil.setTexture(texture);
+        ThermalScienceUtil.setTexture(ThermalScienceTextures.guiTeleporterController);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
         drawCenteredString(fontRendererObj, "Teleporter Controller", guiLeft + xSize / 2, guiTop + 4, ColorHelper.DYE_WHITE);
@@ -61,7 +60,7 @@ public class GuiTeleporterController extends GuiContainer {
     }
 
     public void drawEnergy(int energyStored, int maxEnergyStored,int xOffset, int yOffset){
-        ThermalScienceUtil.setTexture(GuiMachine.energyTexture);
+        ThermalScienceUtil.setTexture(ThermalScienceTextures.guiEnergy);
         ThermalScienceUtil.drawTexturedModalRect(xOffset + energyX, yOffset + energyY, 1, 0, energyWidth, energyHeight, 32, 64);
 
         if(energyStored > 0) {

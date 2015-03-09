@@ -1,5 +1,6 @@
 package com.creysys.ThermalScience.gui;
 
+import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.container.ContainerCarbothermicFurnace;
 import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -9,7 +10,7 @@ import net.minecraft.entity.player.InventoryPlayer;
  */
 public class GuiCarbothermicFurnace extends GuiMachine {
     public GuiCarbothermicFurnace(InventoryPlayer inventory, TileEntityMachine tileEntity) {
-        super(tileEntity, "carbothermicFurnace.png", new ContainerCarbothermicFurnace(inventory, tileEntity));
+        super(tileEntity, ThermalScienceTextures.guiCarbothermicFurnace, new ContainerCarbothermicFurnace(inventory, tileEntity));
 
         arrowX = 82;
 

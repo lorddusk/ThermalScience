@@ -1,5 +1,6 @@
 package com.creysys.ThermalScience.gui;
 
+import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.container.ContainerCompressor;
 import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -9,7 +10,7 @@ import net.minecraft.entity.player.InventoryPlayer;
  */
 public class GuiCompressor extends GuiMachine {
     public GuiCompressor(InventoryPlayer inventory, TileEntityMachine tileEntity) {
-        super(tileEntity, "compressor.png", new ContainerCompressor(inventory, tileEntity));
+        super(tileEntity, ThermalScienceTextures.guiCompressor, new ContainerCompressor(inventory, tileEntity));
 
         xSize = 175;
         ySize = 150;

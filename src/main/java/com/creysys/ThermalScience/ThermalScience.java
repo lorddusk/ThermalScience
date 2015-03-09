@@ -51,10 +51,10 @@ public class ThermalScience
     public static CreativeTabs creativeTab;
 
     //Blocks
-    public static Block blockCompressor;
-    public static Block blockCarbothermicFurnace;
-    public static Block blockCentrifuge;
-    public static Block blockWiremill;
+    public static BlockMachine blockCompressor;
+    public static BlockMachine blockCarbothermicFurnace;
+    public static BlockMachine blockCentrifuge;
+    public static BlockMachine blockWiremill;
 
     public static Block blockWatermill;
     public static BlockEnergyRelay blockEnergyRelay;

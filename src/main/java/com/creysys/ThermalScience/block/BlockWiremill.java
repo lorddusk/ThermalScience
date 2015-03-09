@@ -1,6 +1,7 @@
 package com.creysys.ThermalScience.block;
 
 import com.creysys.ThermalScience.ThermalScience;
+import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.gui.ThermalScienceGuiID;
 import com.creysys.ThermalScience.tileEntity.TileEntityWiremill;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -17,7 +18,7 @@ public class BlockWiremill extends BlockMachine {
     public void registerBlockIcons(IIconRegister iconRegister) {
         super.registerBlockIcons(iconRegister);
 
-        iconFrontOff = iconRegister.registerIcon(ThermalScience.modid + ":wiremillOff");
-        iconFrontOn = iconRegister.registerIcon(ThermalScience.modid + ":wiremillOn");
+        iconFrontOff = iconRegister.registerIcon(ThermalScienceTextures.wiremillOff.icon);
+        iconFrontOn = iconRegister.registerIcon(ThermalScienceTextures.wiremillOn.icon);
     }
 }

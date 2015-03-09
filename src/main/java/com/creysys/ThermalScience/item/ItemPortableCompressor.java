@@ -5,6 +5,7 @@ import cofh.lib.util.helpers.StringHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.ThermalScienceUtil;
+import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipes;
 import com.creysys.ThermalScience.recipe.recipe.RecipeCompressor;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -192,8 +193,8 @@ public class ItemPortableCompressor extends ItemEnergyContainer
 
     @Override
     public void registerIcons(IIconRegister iconRegister) {
-        iconOn = iconRegister.registerIcon(ThermalScience.modid + ":portableCompressorOn");
-        iconOff = iconRegister.registerIcon(ThermalScience.modid + ":portableCompressorOff");
+        iconOn = iconRegister.registerIcon(ThermalScienceTextures.portableCompressorOn.icon);
+        iconOff = iconRegister.registerIcon(ThermalScienceTextures.portableCompressorOff.icon);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.creysys.ThermalScience.block;
 
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceUtil;
+import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.tileEntity.TileEntityWatermill;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
@@ -19,9 +20,6 @@ import net.minecraft.world.World;
  */
 public class BlockWatermill extends BlockContainer {
 
-    public IIcon iconSide;
-    public IIcon iconTop;
-
     public BlockWatermill() {
         super(Material.rock);
 
@@ -32,6 +30,7 @@ public class BlockWatermill extends BlockContainer {
         String blockName = "blockWatermill";
         setBlockName(blockName);
         setCreativeTab(ThermalScience.creativeTab);
+        setBlockTextureName(ThermalScienceTextures.watermill.icon);
 
         GameRegistry.registerBlock(this, blockName);
         GameRegistry.registerTileEntity(TileEntityWatermill.class, "tileEntityWatermill");
@@ -51,18 +50,12 @@ public class BlockWatermill extends BlockContainer {
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister iconRegister) {
-        iconSide = iconRegister.registerIcon(ThermalScience.modid + ":watermill");
-        iconTop = iconRegister.registerIcon(ThermalScience.modid + ":machineTop");
-    }
-
-    @Override
     public IIcon getIcon(int side, int meta) {
         if(side > 1){
-            return iconSide;
+            return blockIcon;
         }
 
-        return iconTop;
+        return ThermalScience.blockCentrifuge.iconTop;
     }
 
     @Override

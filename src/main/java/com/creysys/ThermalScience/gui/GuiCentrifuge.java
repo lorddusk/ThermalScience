@@ -1,5 +1,6 @@
 package com.creysys.ThermalScience.gui;
 
+import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.container.ContainerCentrifuge;
 import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -9,7 +10,7 @@ import net.minecraft.entity.player.InventoryPlayer;
  */
 public class GuiCentrifuge extends GuiMachine {
     public GuiCentrifuge(InventoryPlayer inventory, TileEntityMachine tileEntity) {
-        super(tileEntity, "centrifuge.png", new ContainerCentrifuge(inventory, tileEntity));
+        super(tileEntity, ThermalScienceTextures.guiCentrifuge, new ContainerCentrifuge(inventory, tileEntity));
 
         xSize = 175;
         ySize = 142;
