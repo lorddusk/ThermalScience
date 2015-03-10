@@ -2,9 +2,8 @@ package com.creysys.ThermalScience.block.teleporter;
 
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
-import com.creysys.ThermalScience.gui.ThermalScienceGuiID;
+import com.creysys.ThermalScience.client.gui.ThermalScienceGuiID;
 import com.creysys.ThermalScience.tileEntity.teleporter.TileEntityTeleporterController;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.BlockContainer;
@@ -23,8 +22,6 @@ import net.minecraft.world.World;
  * Created by Creysys on 06 Mar 15.
  */
 public class BlockTeleporterController extends BlockContainer {
-
-    public static final int[] faceMap = new int[]{3, 2, 4, 5};
 
     public static IIcon iconOff;
     public static IIcon iconOn;

@@ -1,15 +1,12 @@
-package com.creysys.ThermalScience.gui;
+package com.creysys.ThermalScience.client.gui.guiScreen;
 
 
 import cofh.lib.util.helpers.ColorHelper;
-import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.container.ContainerBasic;
 import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 

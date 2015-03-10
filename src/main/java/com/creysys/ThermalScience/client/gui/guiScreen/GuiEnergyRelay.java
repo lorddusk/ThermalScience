@@ -1,17 +1,15 @@
-package com.creysys.ThermalScience.gui;
+package com.creysys.ThermalScience.client.gui.guiScreen;
 
 import cofh.lib.util.helpers.ColorHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
-import com.creysys.ThermalScience.gui.element.GuiNumberField;
+import com.creysys.ThermalScience.client.gui.element.GuiNumberField;
 import com.creysys.ThermalScience.network.packet.PacketEnergyRelaySettings;
 import com.creysys.ThermalScience.tileEntity.TileEntityEnergyRelay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.util.ResourceLocation;
 
 /**
  * Created by Creysys on 13 Feb 15.

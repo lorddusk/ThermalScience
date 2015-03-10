@@ -11,6 +11,7 @@ import com.creysys.ThermalScience.recipe.recipe.RecipeCompressor;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -139,6 +140,13 @@ public class ThermalScienceRecipes {
         addRecipe(recipes, new ThermalScienceRecipe(input, output, energy));
     }
 
+    public static void addUpgradableMachineRecipes(Block machine, Item tfMaterial) {
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(machine, 1, 1), "IGI", "_M_", "I_I", 'I', "ingotInvar", 'G', new ItemStack(tfMaterial, 1, 135), 'M', new ItemStack(machine, 1, 0)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(machine, 1, 2), "IGI", "_M_", "I_I", 'I', "blockGlassHardened", 'G', new ItemStack(tfMaterial, 1, 138), 'M', new ItemStack(machine, 1, 1)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(machine, 1, 3), "IGI", "_M_", "I_I", 'I', "ingotSilver", 'G', new ItemStack(tfMaterial, 1, 140), 'M', new ItemStack(machine, 1, 2)));
+    }
+
+
     public static void addCompressorRecipe(Object[] input, Object[] output, int energy, boolean portable) {
         addRecipe(compressorRecipes, new RecipeCompressor(input, output, energy, portable));
     }
@@ -170,13 +178,24 @@ public class ThermalScienceRecipes {
             Item teMaterial = GameRegistry.findItem("ThermalExpansion", "material");
             Item teCapacitor = GameRegistry.findItem("ThermalExpansion", "capacitor");
 
+            Item tfMaterial = GameRegistry.findItem("ThermalFoundation", "material");
+
             //Machines
-            GameRegistry.addRecipe(new ItemStack(ThermalScience.blockWatermill), "MGM", "GWG", "MGM", 'G', new ItemStack(GameRegistry.findItem("ThermalFoundation", "material"), 1, 137), 'M', ItemMaterial.motor, 'W', ItemMaterial.wireCopper);
+            GameRegistry.addRecipe(new ItemStack(ThermalScience.blockWatermill), "MGM", "GWG", "MGM", 'G', new ItemStack(tfMaterial, 1, 128), 'M', ItemMaterial.motor, 'W', ItemMaterial.wireCopper);
+
+
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockCompressor, "MPM", "IFI", "MPM", 'M', ItemMaterial.motor, 'P', Blocks.piston, 'I', Blocks.iron_bars, 'F', teMachineFrame));
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockWiremill, "MII", "PFT", "MII", 'M', ItemMaterial.motor, 'P', Blocks.piston, 'T', ItemMaterial.tube, 'I', Items.iron_ingot, 'F', teMachineFrame));
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockCarbothermicFurnace, "III", "ISI", "III", 'I', "ingotInvar", 'S', new ItemStack(GameRegistry.findItem("ThermalExpansion", "Machine"), 1, 3)));
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockCentrifuge, "IMI", "BFB", "IMI", 'I', "ingotInvar", 'M', ItemMaterial.motor, 'B', Items.bucket, 'F', teMachineFrame));
             GameRegistry.addRecipe(new ItemStack(ThermalScience.blockEnergyRelay), "ICI", "TWR","ICI", 'C', new ItemStack(teMaterial, 1, 3), 'T', new ItemStack(teMaterial, 1, 2), 'R', new ItemStack(teMaterial, 1, 1), 'W', ItemMaterial.wireCopper, 'I', Items.iron_ingot);
+
+            addUpgradableMachineRecipes(ThermalScience.blockCompressor, tfMaterial);
+            addUpgradableMachineRecipes(ThermalScience.blockWiremill, tfMaterial);
+            addUpgradableMachineRecipes(ThermalScience.blockCarbothermicFurnace, tfMaterial);
+            addUpgradableMachineRecipes(ThermalScience.blockCentrifuge, tfMaterial);
+            addUpgradableMachineRecipes(ThermalScience.blockEnergyRelay, tfMaterial);
+
 
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockTeleporterController, "ICI", "EFE", "IEI", 'I', "ingotInvar", 'C', new ItemStack(teCapacitor, 1, 5), 'E', "ingotEnderium", 'F', new ItemStack(teMachineFrame, 1, 3)));
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockTeleporterPowerTap, "IEI", "ECE", "IEI", 'I', "ingotInvar", 'E', "ingotEnderium", 'C', new ItemStack(teMaterial, 1, 1)));

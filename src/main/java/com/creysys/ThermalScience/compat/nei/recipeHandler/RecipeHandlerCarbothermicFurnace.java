@@ -1,6 +1,6 @@
 package com.creysys.ThermalScience.compat.nei.recipeHandler;
 
-import com.creysys.ThermalScience.gui.GuiCarbothermicFurnace;
+import com.creysys.ThermalScience.client.gui.guiScreen.GuiCarbothermicFurnace;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipes;
 
 /**

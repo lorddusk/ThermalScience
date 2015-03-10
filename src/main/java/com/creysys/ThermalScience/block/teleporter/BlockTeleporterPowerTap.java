@@ -21,9 +21,6 @@ import net.minecraft.world.World;
  * Created by Creysys on 06 Mar 15.
  */
 public class BlockTeleporterPowerTap extends BlockContainer {
-
-    public static final int[] faceMap = new int[]{3, 2, 4, 5};
-
     public BlockTeleporterPowerTap() {
         super(Material.iron);
 

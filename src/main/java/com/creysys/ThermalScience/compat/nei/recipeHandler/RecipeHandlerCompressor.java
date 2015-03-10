@@ -1,6 +1,6 @@
 package com.creysys.ThermalScience.compat.nei.recipeHandler;
 
-import com.creysys.ThermalScience.gui.GuiCompressor;
+import com.creysys.ThermalScience.client.gui.guiScreen.GuiCompressor;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipes;
 
 /**

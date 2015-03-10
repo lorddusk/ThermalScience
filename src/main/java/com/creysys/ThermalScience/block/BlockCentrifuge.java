@@ -1,8 +1,7 @@
 package com.creysys.ThermalScience.block;
 
-import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
-import com.creysys.ThermalScience.gui.ThermalScienceGuiID;
+import com.creysys.ThermalScience.client.gui.ThermalScienceGuiID;
 import com.creysys.ThermalScience.tileEntity.TileEntityCentrifuge;
 import net.minecraft.client.renderer.texture.IIconRegister;
 

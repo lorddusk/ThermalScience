@@ -1,4 +1,4 @@
-package com.creysys.ThermalScience.gui;
+package com.creysys.ThermalScience.client.gui.guiScreen;
 
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.container.ContainerCarbothermicFurnace;

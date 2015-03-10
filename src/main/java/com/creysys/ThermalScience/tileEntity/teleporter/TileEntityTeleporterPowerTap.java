@@ -94,7 +94,7 @@ public class TileEntityTeleporterPowerTap extends TileEntity implements IEnergyR
     @Override
     public boolean canConnectEnergy(ForgeDirection forgeDirection) {
         TileEntityTeleporterController teleporterController = getTeleporterController();
-        return teleporterController != null && teleporterController.active && BlockTeleporterPowerTap.faceMap[facing] == forgeDirection.ordinal();
+        return teleporterController != null && teleporterController.active && facing == forgeDirection.ordinal();
     }
 
     public void writeCustomToNBT(NBTTagCompound compound){

@@ -3,18 +3,23 @@ package com.creysys.ThermalScience.block;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
-import com.creysys.ThermalScience.gui.ThermalScienceGuiID;
+import com.creysys.ThermalScience.client.gui.IItemTooltipProvider;
+import com.creysys.ThermalScience.client.gui.ThermalScienceGuiID;
+import com.creysys.ThermalScience.item.ItemBlockMeta;
 import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
-import com.creysys.ThermalScience.tileEntity.teleporter.TileEntityTeleporterController;
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlockWithMetadata;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -24,11 +29,12 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Creysys on 29.01.2015.
  */
-public class BlockMachine extends BlockContainer {
+public class BlockMachine extends BlockContainer implements IItemTooltipProvider{
 
     public Class tileEntityClass;
     public ThermalScienceGuiID guiID;
@@ -38,8 +44,6 @@ public class BlockMachine extends BlockContainer {
 
     public IIcon iconFrontOff;
     public IIcon iconFrontOn;
-
-    private int[] faceMap;
 
     public BlockMachine(String name, Class<? extends TileEntityMachine> tileEntityClass, ThermalScienceGuiID guiID) {
         super(Material.rock);
@@ -56,11 +60,11 @@ public class BlockMachine extends BlockContainer {
         setBlockName(blockName);
         setCreativeTab(ThermalScience.creativeTab);
 
-        GameRegistry.registerBlock(this, blockName);
+        GameRegistry.registerBlock(this, ItemBlockMeta.class, blockName);
         GameRegistry.registerTileEntity(tileEntityClass, "tileEntity" + name);
-
-        faceMap = new int[]{3, 2, 4, 5};
     }
+
+
 
     @Override
     public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
@@ -96,7 +100,7 @@ public class BlockMachine extends BlockContainer {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float f1, float f2, float f3) {
         if (player.isSneaking()) {
             ItemStack heldItemStack = player.getHeldItem();
             if (heldItemStack != null && ThermalScienceUtil.isItemWrench(heldItemStack.getItem())) {
@@ -192,5 +196,22 @@ public class BlockMachine extends BlockContainer {
             }
 
         super.breakBlock(world, x, y, z, block, meta);
+    }
+
+    @Override
+    public void getSubBlocks(Item item, CreativeTabs tab, List list) {
+        for(int i = 0; i < 4; i++){
+            list.add(new ItemStack(item, 1 , i));
+        }
+    }
+
+    @Override
+    public int damageDropped(int meta) {
+        return meta;
+    }
+
+    @Override
+    public void addTooltip(List<String> list, ItemStack stack) {
+        list.add("Tier: " + TileEntityMachine.mapTiers[stack.getItemDamage()]);
     }
 }

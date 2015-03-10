@@ -1,5 +1,6 @@
 package com.creysys.ThermalScience.proxy;
 
+import com.creysys.ThermalScience.client.gui.ThermalScienceTooltipHandler;
 import com.creysys.ThermalScience.client.renderer.RendererEnergyRelay;
 import com.creysys.ThermalScience.client.renderer.RendererSidedTexture;
 import com.creysys.ThermalScience.tileEntity.TileEntityEnergyRelay;
@@ -21,6 +22,8 @@ public class ClientProxy extends ServerProxy
     @Override
     public void initialize() {
         registerRenderers();
+
+        ThermalScienceTooltipHandler.register();
     }
 
     public void registerRenderers(){

@@ -1,5 +1,6 @@
-package com.creysys.ThermalScience.gui;
+package com.creysys.ThermalScience.client.gui;
 
+import com.creysys.ThermalScience.client.gui.guiScreen.*;
 import com.creysys.ThermalScience.container.*;
 import com.creysys.ThermalScience.tileEntity.*;
 import com.creysys.ThermalScience.tileEntity.teleporter.TileEntityTeleporterController;

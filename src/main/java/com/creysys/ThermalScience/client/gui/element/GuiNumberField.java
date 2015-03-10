@@ -1,4 +1,4 @@
-package com.creysys.ThermalScience.gui.element;
+package com.creysys.ThermalScience.client.gui.element;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiTextField;
