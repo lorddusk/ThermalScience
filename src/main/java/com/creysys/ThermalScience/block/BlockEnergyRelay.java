@@ -3,23 +3,32 @@ package com.creysys.ThermalScience.block;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
+import com.creysys.ThermalScience.client.gui.IItemTooltipProvider;
 import com.creysys.ThermalScience.client.gui.ThermalScienceGuiID;
+import com.creysys.ThermalScience.item.ItemBlockMeta;
 import com.creysys.ThermalScience.tileEntity.TileEntityEnergyRelay;
+import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 /**
  * Created by Creysys on 13 Feb 15.
  */
-public class BlockEnergyRelay extends BlockContainer {
+public class BlockEnergyRelay extends BlockContainer implements IItemTooltipProvider{
 
     public IIcon iconOff;
     public IIcon iconIn;
@@ -37,7 +46,7 @@ public class BlockEnergyRelay extends BlockContainer {
         setBlockName(blockName);
         setCreativeTab(ThermalScience.creativeTab);
 
-        GameRegistry.registerBlock(this, blockName);
+        GameRegistry.registerBlock(this, ItemBlockMeta.class,blockName);
         GameRegistry.registerTileEntity(TileEntityEnergyRelay.class, "tileEntityEnergyRelay");
     }
 
@@ -72,6 +81,11 @@ public class BlockEnergyRelay extends BlockContainer {
         }
 
         return iconOff;
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack) {
+        world.setBlockMetadataWithNotify(x, y, z, stack.getItemDamage(), 2);
     }
 
     @Override
@@ -113,5 +127,22 @@ public class BlockEnergyRelay extends BlockContainer {
         }
 
         return true;
+    }
+
+    @Override
+    public void addTooltip(List<String> list, ItemStack stack) {
+        list.add("Tier: " + TileEntityMachine.mapTiers[stack.getItemDamage()]);
+    }
+
+    @Override
+    public void getSubBlocks(Item item, CreativeTabs tab, List list) {
+        for(int i =0;i<4;i++) {
+            list.add(new ItemStack(item, 1, i));
+        }
+    }
+
+    @Override
+    public int damageDropped(int meta) {
+        return super.damageDropped(meta);
     }
 }

@@ -230,6 +230,9 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
                 }
             }
         }
+
+        markDirty();
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
 
     public boolean canCraft(ItemStack[] stacks){

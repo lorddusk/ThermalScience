@@ -196,7 +196,6 @@ public class ThermalScienceRecipes {
             addUpgradableMachineRecipes(ThermalScience.blockCentrifuge, tfMaterial);
             addUpgradableMachineRecipes(ThermalScience.blockEnergyRelay, tfMaterial);
 
-
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockTeleporterController, "ICI", "EFE", "IEI", 'I', "ingotInvar", 'C', new ItemStack(teCapacitor, 1, 5), 'E', "ingotEnderium", 'F', new ItemStack(teMachineFrame, 1, 3)));
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockTeleporterPowerTap, "IEI", "ECE", "IEI", 'I', "ingotInvar", 'E', "ingotEnderium", 'C', new ItemStack(teMaterial, 1, 1)));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ThermalScience.blockTeleporterWall, 4), "IEI", "EIE", "IEI", 'I', "ingotInvar", 'E', "ingotEnderium"));

@@ -6,6 +6,7 @@ import cofh.lib.util.helpers.StringHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.ThermalScienceUtil;
+import com.creysys.ThermalScience.client.gui.IItemTooltipProvider;
 import com.creysys.ThermalScience.compat.waila.IWailaBodyProvider;
 import com.creysys.ThermalScience.network.packet.PacketEnergyRelaySettings;
 import com.creysys.ThermalScience.network.sync.ISyncEnergy;
@@ -28,8 +29,6 @@ import java.util.List;
  * Created by Creysys on 13 Feb 15.
  */
 public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler, IWailaBodyProvider, ISyncEnergy {
-
-    public int maxEnergyStored;
     public int energyStored;
     public int maxOut;
     public int maxIn;
@@ -37,7 +36,6 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
     public int[] sideConfigs;
 
     public TileEntityEnergyRelay() {
-        maxEnergyStored = 10000;
         energyStored = 0;
         maxOut = 100;
         maxIn = 100;
@@ -45,15 +43,19 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
         sideConfigs = new int[6];
     }
 
+    public int getMaxBandwith(){
+        return TileEntityMachine.mapMaxEnergyReceive[getBlockMetadata()];
+    }
+
     public void setMaxIn(int i){
         synchronized (this) {
-            maxIn = MathHelper.clamp_int(i, 0, 400);
+            maxIn = MathHelper.clamp_int(i, 0, getMaxBandwith());
         }
     }
 
     public void setMaxOut(int  i){
         synchronized (this) {
-            maxOut = MathHelper.clamp_int(i, 0, 400);
+            maxOut = MathHelper.clamp_int(i, 0, getMaxBandwith());
         }
     }
 
@@ -65,7 +67,7 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
 
     public int getMaxEnergyStored() {
         synchronized (this) {
-            return maxEnergyStored;
+            return TileEntityMachine.mapMaxEnergyStored[getBlockMetadata()];
         }
     }
 
@@ -85,7 +87,6 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
         }
 
         worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, blockType);
-
         syncSettings();
     }
 
@@ -116,10 +117,10 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
 
         int canExtract = Math.min(Math.min(energyStored, maxOut), i);
 
-        if(!b){
+        if(!b) {
             energyStored -= canExtract;
 
-            ThermalScienceUtil.syncEnergy(worldObj,xCoord,yCoord,zCoord,energyStored,maxEnergyStored);
+            ThermalScienceUtil.syncEnergy(worldObj, xCoord, yCoord, zCoord, energyStored, getMaxEnergyStored());
         }
 
         return canExtract;
@@ -132,12 +133,12 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
             return 0;
         }
 
-        int canReceive = Math.min(Math.min(maxEnergyStored - energyStored, maxIn), i);
+        int canReceive = Math.min(Math.min(getMaxEnergyStored() - energyStored, maxIn), i);
 
         if(!b){
             energyStored += canReceive;
 
-            ThermalScienceUtil.syncEnergy(worldObj, xCoord, yCoord, zCoord, energyStored, maxEnergyStored);
+            ThermalScienceUtil.syncEnergy(worldObj, xCoord, yCoord, zCoord, energyStored, getMaxEnergyStored());
         }
 
         return canReceive;
@@ -150,7 +151,7 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
 
     @Override
     public int getMaxEnergyStored(ForgeDirection forgeDirection) {
-        return maxEnergyStored;
+        return getMaxEnergyStored();
     }
 
     @Override
@@ -229,7 +230,7 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
         }
 
         if(b) {
-            list.add(energyStored + " / " + maxEnergyStored + " RF");
+            list.add(energyStored + " / " + getMaxEnergyStored() + " RF");
         }
 
         String sideMode = StringHelper.GRAY + "Deactivated";
@@ -242,6 +243,7 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
                 break;
         }
 
+        list.add("Tier: " + TileEntityMachine.mapTiers[getBlockMetadata()]);
         list.add(StringHelper.WHITE + "Current Side: " + sideMode);
 
         return list;
