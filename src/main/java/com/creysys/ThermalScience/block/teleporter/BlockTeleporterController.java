@@ -4,6 +4,7 @@ import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.client.gui.ThermalScienceGuiID;
 import com.creysys.ThermalScience.tileEntity.teleporter.TileEntityTeleporterController;
+import com.creysys.ThermalScience.util.DXYZ;
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.BlockContainer;
@@ -36,6 +37,8 @@ public class BlockTeleporterController extends BlockContainer {
         String blockName = "blockTeleporterController";
         setBlockName(blockName);
         setCreativeTab(ThermalScience.creativeTab);
+
+        TileEntityTeleporterController.load();
 
         GameRegistry.registerBlock(this, blockName);
         GameRegistry.registerTileEntity(TileEntityTeleporterController.class, "tileEntityTeleporterController");
@@ -82,6 +85,12 @@ public class BlockTeleporterController extends BlockContainer {
         }
 
         tileEntity.facing = facing;
+
+        if(!world.isRemote) {
+            tileEntity.controllerId = TileEntityTeleporterController.mapController.size();
+            TileEntityTeleporterController.setControllerById(tileEntity.controllerId, new DXYZ(world.provider.dimensionId, x, y, z));
+            TileEntityTeleporterController.save();
+        }
     }
 
 

@@ -4,7 +4,7 @@ import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import cofh.lib.util.helpers.ColorHelper;
-import com.creysys.ThermalScience.ThermalScienceUtil;
+import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.gui.guiScreen.GuiMachine;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipe;
 import net.minecraft.inventory.Slot;

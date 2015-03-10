@@ -1,6 +1,6 @@
 package com.creysys.ThermalScience.recipe;
 
-import com.creysys.ThermalScience.ThermalScienceUtil;
+import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

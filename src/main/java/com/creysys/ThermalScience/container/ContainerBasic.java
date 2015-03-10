@@ -1,6 +1,6 @@
 package com.creysys.ThermalScience.container;
 
-import com.creysys.ThermalScience.ThermalScienceUtil;
+import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

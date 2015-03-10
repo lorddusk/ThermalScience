@@ -1,14 +1,13 @@
 package com.creysys.ThermalScience.block;
 
 import com.creysys.ThermalScience.ThermalScience;
-import com.creysys.ThermalScience.ThermalScienceUtil;
+import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.tileEntity.TileEntityWatermill;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;

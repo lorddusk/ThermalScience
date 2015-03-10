@@ -16,15 +16,17 @@ public class PacketTeleporterControllerCheck implements IThermalSciencePacket {
     public int x;
     public int y;
     public int z;
+    public boolean active;
     public String statusText;
     public int statusTextColor;
 
     public PacketTeleporterControllerCheck(){}
 
-    public PacketTeleporterControllerCheck(int x,int y, int z, String statusText, int statusTextColor){
+    public PacketTeleporterControllerCheck(int x,int y, int z, boolean active,String statusText, int statusTextColor) {
         this.x = x;
         this.y = y;
         this.z = z;
+        this.active = active;
         this.statusText = statusText;
         this.statusTextColor = statusTextColor;
     }
@@ -34,6 +36,8 @@ public class PacketTeleporterControllerCheck implements IThermalSciencePacket {
         buffer.writeInt(x);
         buffer.writeInt(y);
         buffer.writeInt(z);
+
+        buffer.writeBoolean(active);
 
         byte[] bytes = statusText.getBytes();
         buffer.writeInt(bytes.length);
@@ -48,6 +52,8 @@ public class PacketTeleporterControllerCheck implements IThermalSciencePacket {
         y = buffer.readInt();
         z = buffer.readInt();
 
+        active = buffer.readBoolean();
+
         statusText = new String(buffer.readBytes(buffer.readInt()).array());
 
         statusTextColor = buffer.readInt();
@@ -57,22 +63,16 @@ public class PacketTeleporterControllerCheck implements IThermalSciencePacket {
     public void executeClientSide(EntityPlayer player) {
         TileEntity tileEntity = player.worldObj.getTileEntity(x,y,z);
 
-        if(tileEntity instanceof TileEntityTeleporterController){
-            TileEntityTeleporterController teleporterController = (TileEntityTeleporterController)tileEntity;
+        if(tileEntity instanceof TileEntityTeleporterController) {
+            TileEntityTeleporterController teleporterController = (TileEntityTeleporterController) tileEntity;
+            teleporterController.active = active;
             teleporterController.statusText = statusText;
             teleporterController.statusTextColor = statusTextColor;
+            player.worldObj.markBlockRangeForRenderUpdate(x, y, z, x, y, z);
         }
     }
 
     @Override
     public void executeServerSide(EntityPlayer player) {
-        TileEntity tileEntity = player.worldObj.getTileEntity(x, y, z);
-
-        if (tileEntity instanceof TileEntityTeleporterController) {
-            TileEntityTeleporterController teleporterController = (TileEntityTeleporterController) tileEntity;
-            teleporterController.checkMultiblock();
-
-            ThermalScience.packetHandler.sendPacketToDimension(player.worldObj.provider.dimensionId, new PacketTeleporterControllerCheck(x, y, z, teleporterController.statusText, teleporterController.statusTextColor));
-        }
     }
 }

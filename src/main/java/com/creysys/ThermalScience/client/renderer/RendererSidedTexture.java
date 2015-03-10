@@ -1,6 +1,6 @@
 package com.creysys.ThermalScience.client.renderer;
 
-import com.creysys.ThermalScience.ThermalScienceUtil;
+import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.ISidedTextureProvider;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;

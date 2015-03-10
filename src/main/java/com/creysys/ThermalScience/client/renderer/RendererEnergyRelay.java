@@ -1,16 +1,10 @@
 package com.creysys.ThermalScience.client.renderer;
 
-import com.creysys.ThermalScience.ThermalScience;
-import com.creysys.ThermalScience.ThermalScienceUtil;
-import com.creysys.ThermalScience.block.BlockEnergyRelay;
+import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.tileEntity.TileEntityEnergyRelay;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
 
 /**
  * Created by Creysys on 21 Feb 15.

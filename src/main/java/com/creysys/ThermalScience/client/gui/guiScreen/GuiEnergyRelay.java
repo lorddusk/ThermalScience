@@ -2,7 +2,7 @@ package com.creysys.ThermalScience.client.gui.guiScreen;
 
 import cofh.lib.util.helpers.ColorHelper;
 import com.creysys.ThermalScience.ThermalScience;
-import com.creysys.ThermalScience.ThermalScienceUtil;
+import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.client.gui.element.GuiNumberField;
 import com.creysys.ThermalScience.network.packet.PacketEnergyRelaySettings;

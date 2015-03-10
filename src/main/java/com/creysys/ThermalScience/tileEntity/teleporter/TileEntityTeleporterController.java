@@ -3,8 +3,8 @@ package com.creysys.ThermalScience.tileEntity.teleporter;
 import cofh.lib.util.helpers.ColorHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
-import com.creysys.ThermalScience.client.ISidedTextureProvider;
-import com.creysys.ThermalScience.client.ThermalScienceTextures;
+import com.creysys.ThermalScience.util.DXYZ;
+import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.compat.waila.IWailaBodyProvider;
 import com.creysys.ThermalScience.network.packet.PacketEnergy;
 import com.creysys.ThermalScience.network.packet.PacketTeleporterControllerCheck;
@@ -20,18 +20,83 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Creysys on 06 Mar 15.
  */
+
+
+//TODO: fix bugs worldobj is null
+
+
 public class TileEntityTeleporterController extends TileEntity implements IInventory, ISyncEnergy, IWailaBodyProvider {
+
+    public static List<DXYZ> mapController;
+
+    public static void load() {
+        File file = new File(ThermalScienceUtil.getSaveFolder(), "teleporterControllers.bin");
+
+        mapController = new ArrayList<DXYZ>();
+        if (file.exists()) {
+            try {
+                DataInputStream in = new DataInputStream(new FileInputStream(file));
+                int size = in.readInt();
+                for (int i = 0; i < size; i++) {
+                    mapController.add(new DXYZ(in.readInt(), in.readInt(), in.readInt(), in.readInt()));
+                }
+                in.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        save();
+    }
+
+    public static void save(){
+        File file = new File(ThermalScienceUtil.getSaveFolder(), "teleporterControllers.bin");
+
+        try {
+            file.createNewFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
+        try {
+            DataOutputStream out = new DataOutputStream(new FileOutputStream(file));
+            out.writeInt(mapController.size());
+            for(int i = 0; i < mapController.size(); i++){
+                DXYZ dxyz = mapController.get(i);
+                out.writeInt(dxyz.d);
+                out.writeInt(dxyz.x);
+                out.writeInt(dxyz.y);
+                out.writeInt(dxyz.z);
+            }
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void setControllerById(int id, DXYZ dxyz){
+        if(mapController.size() <= id){
+            mapController.add(dxyz);
+        }
+        else {
+            mapController.set(id, dxyz);
+        }
+    }
+
 
     public byte facing;
     public boolean active;
+    public int controllerId;
 
     public int startX;
     public int startY;
@@ -50,6 +115,8 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
     public int statusTextColor;
 
     public TileEntityTeleporterController(){
+        this.controllerId = -1;
+
         facing = 0;
         active = false;
 
@@ -67,20 +134,21 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
 
     @Override
     public void updateEntity() {
+
+        if(worldObj.isRemote){
+            return;
+        }
+
         if (worldObj.getTotalWorldTime() % 40 == 0) {
             checkMultiblock();
 
             if(active && (slot == null || !slot.hasTagCompound() || !slot.getTagCompound().hasKey(ThermalScienceNBTTags.Dim))){
                 statusText = "Insert destination card";
                 statusTextColor = ColorHelper.DYE_YELLOW;
-                active = false;
             }
 
-            setActive(active);
 
-
-
-            ThermalScience.packetHandler.sendPacketToDimension(worldObj.provider.dimensionId, new PacketTeleporterControllerCheck(xCoord, yCoord, zCoord, statusText, statusTextColor));
+            ThermalScience.packetHandler.sendPacketToDimension(worldObj.provider.dimensionId, new PacketTeleporterControllerCheck(xCoord, yCoord, zCoord, active, statusText, statusTextColor));
         }
 
         if (active) {
@@ -105,42 +173,42 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
 
                 if (posX == startX + 1 && (int) player.posY == startY + 1 && posZ == startZ + 1) {
                     NBTTagCompound compound = slot.getTagCompound();
-                    int dim = compound.getInteger(ThermalScienceNBTTags.Dim);
-                    int x = compound.getInteger(ThermalScienceNBTTags.XCoord);
-                    int y = compound.getInteger(ThermalScienceNBTTags.YCoord);
-                    int z = compound.getInteger(ThermalScienceNBTTags.ZCoord);
-                    int yaw = compound.getInteger(ThermalScienceNBTTags.Yaw);
 
-                    int cost = 20000;
+                    if (compound.hasKey(ThermalScienceNBTTags.Dim) && compound.hasKey(ThermalScienceNBTTags.XCoord) && compound.hasKey(ThermalScienceNBTTags.YCoord) && compound.hasKey(ThermalScienceNBTTags.ZCoord)) {
+                        int dim = compound.getInteger(ThermalScienceNBTTags.Dim);
+                        int x = compound.getInteger(ThermalScienceNBTTags.XCoord);
+                        int y = compound.getInteger(ThermalScienceNBTTags.YCoord);
+                        int z = compound.getInteger(ThermalScienceNBTTags.ZCoord);
+                        int yaw = compound.getInteger(ThermalScienceNBTTags.Yaw);
 
-                    if (player.dimension != dim) {
-                        cost *= 2;
-                    }
+                        int cost = 20000;
 
-                    if(energyStored > cost) {
                         if (player.dimension != dim) {
-                            player.travelToDimension(dim);
+                            cost *= 2;
                         }
 
-                        player.rotationYaw = yaw;
-                        player.setPositionAndUpdate(x + 0.5f, y, z + 0.5f);
+                        if (energyStored > cost) {
+                            if (player.dimension != dim) {
+                                player.travelToDimension(dim);
+                            }
 
-                        energyStored -= cost;
-                        ThermalScience.packetHandler.sendPacketToDimension(worldObj.provider.dimensionId, new PacketEnergy(xCoord, yCoord, zCoord, energyStored));
+                            player.rotationYaw = yaw;
+                            player.setPositionAndUpdate(x + 0.5f, y, z + 0.5f);
+
+                            energyStored -= cost;
+                            ThermalScience.packetHandler.sendPacketToDimension(worldObj.provider.dimensionId, new PacketEnergy(xCoord, yCoord, zCoord, energyStored));
+                        }
+                    }
+                    else if(compound.hasKey(ThermalScienceNBTTags.Id)){
+                        int id = compound.getInteger(ThermalScienceNBTTags.Id);
+
+                        if(id != controllerId){
+
+                        }
                     }
                 }
             }
         }
-    }
-
-    public void setActive(boolean active){
-        int meta = (int)facing;
-
-        if(active){
-            meta += 10;
-        }
-
-        worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta, 2);
     }
 
     public void checkMultiblock(){
@@ -339,6 +407,7 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
     public void writeCustomToNBT(NBTTagCompound compound){
         compound.setByte(ThermalScienceNBTTags.Facing, facing);
         compound.setBoolean(ThermalScienceNBTTags.Active, active);
+        compound.setInteger(ThermalScienceNBTTags.Id, controllerId);
 
         compound.setInteger(ThermalScienceNBTTags.XCoord, startX);
         compound.setInteger(ThermalScienceNBTTags.YCoord, startY);
@@ -367,6 +436,11 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
     public void readCustomFromNBT(NBTTagCompound compound){
         facing = compound.getByte(ThermalScienceNBTTags.Facing);
         active = compound.getBoolean(ThermalScienceNBTTags.Active);
+        controllerId = compound.getInteger(ThermalScienceNBTTags.Id);
+
+        if(controllerId > -1) {
+            setControllerById(controllerId, new DXYZ(worldObj.provider.dimensionId, xCoord, yCoord, zCoord));
+        }
 
         startX = compound.getInteger(ThermalScienceNBTTags.XCoord);
         startY = compound.getInteger(ThermalScienceNBTTags.YCoord);
@@ -438,6 +512,13 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
     @Override
     public void setInventorySlotContents(int p_70299_1_, ItemStack stack) {
         slot = stack;
+
+        if(slot != null && !slot.hasTagCompound()){
+            NBTTagCompound tagCompound = new NBTTagCompound();
+            tagCompound.setInteger(ThermalScienceNBTTags.Id, controllerId);
+
+            slot.setTagCompound(tagCompound);
+        }
     }
 
     @Override
@@ -470,7 +551,7 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
 
     @Override
     public boolean isItemValidForSlot(int i1, ItemStack stack) {
-        return stack != null && stack.getItem() == ThermalScience.itemTeleporterDestinationCard && stack.hasTagCompound() && stack.getTagCompound().hasKey(ThermalScienceNBTTags.Dim);
+        return stack != null && stack.getItem() == ThermalScience.itemTeleporterDestinationCard;
     }
 
     @Override
@@ -498,6 +579,7 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
             list.add(energyStored + " / " + maxEnergyStored + " RF");
         }
 
+        list.add("Controller Id: " + controllerId);
         list.add(statusText);
 
         return list;

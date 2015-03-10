@@ -1,15 +1,9 @@
-Machine upgrades!!!
--Recipes
--Use metadata as tier specifier
-    -Remove metadata usage
-    -Add TESR
-
-
-
+Funky locomotion support
+Teleporter linking mechanic
 
 OpenComputers support
 
-Teleporter linking mechanic
+UU replica
 
 redstoneAlloyWire, conductiveIronWire, energeticAlloyWire, vibrantAlloyWire
 

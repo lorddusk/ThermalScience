@@ -16,6 +16,6 @@ public class SlotTeleporterController extends Slot {
 
     @Override
     public boolean isItemValid(ItemStack stack) {
-        return stack != null && stack.getItem() == ThermalScience.itemTeleporterDestinationCard && stack.hasTagCompound() && stack.getTagCompound().hasKey(ThermalScienceNBTTags.Dim);
+        return stack != null && stack.getItem() == ThermalScience.itemTeleporterDestinationCard;
     }
 }

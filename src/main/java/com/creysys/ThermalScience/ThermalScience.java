@@ -13,6 +13,7 @@ import com.creysys.ThermalScience.item.ItemTeleporterDestinationCard;
 import com.creysys.ThermalScience.network.ThermalSciencePacketHandler;
 import com.creysys.ThermalScience.proxy.ServerProxy;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipes;
+import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
@@ -71,7 +72,6 @@ public class ThermalScience
 
     @EventHandler
     public void preInitialize(FMLPreInitializationEvent event){
-
         ThermalScienceConfig.load(event.getSuggestedConfigurationFile());
 
         creativeTab = new ThermalScienceCreativeTab();

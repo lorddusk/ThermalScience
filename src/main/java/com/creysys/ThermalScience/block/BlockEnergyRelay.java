@@ -1,7 +1,7 @@
 package com.creysys.ThermalScience.block;
 
 import com.creysys.ThermalScience.ThermalScience;
-import com.creysys.ThermalScience.ThermalScienceUtil;
+import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.client.gui.IItemTooltipProvider;
 import com.creysys.ThermalScience.client.gui.ThermalScienceGuiID;

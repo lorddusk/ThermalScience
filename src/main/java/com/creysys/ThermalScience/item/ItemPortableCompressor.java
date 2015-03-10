@@ -4,7 +4,7 @@ import cofh.api.energy.ItemEnergyContainer;
 import cofh.lib.util.helpers.StringHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
-import com.creysys.ThermalScience.ThermalScienceUtil;
+import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipes;
 import com.creysys.ThermalScience.recipe.recipe.RecipeCompressor;

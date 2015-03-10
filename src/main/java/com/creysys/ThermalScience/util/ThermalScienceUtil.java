@@ -1,5 +1,7 @@
-package com.creysys.ThermalScience;
+package com.creysys.ThermalScience.util;
 
+import com.creysys.ThermalScience.ThermalScience;
+import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.network.packet.PacketEnergy;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipe;
 import cpw.mods.fml.common.event.FMLInterModComms;
@@ -22,6 +24,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.oredict.OreDictionary;
 import org.lwjgl.opengl.GL11;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -396,5 +399,12 @@ public class ThermalScienceUtil {
 
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
+    }
+
+    public static File getSaveFolder() {
+        File file = new File("world", "thermalScience");
+        file.mkdir();
+
+        return file;
     }
 }

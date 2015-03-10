@@ -92,15 +92,14 @@ public class ItemTeleporterDestinationCard extends ItemThermalScience {
                 list.add(StringHelper.RED + "Dimension: " + tagCompound.getInteger(ThermalScienceNBTTags.Dim));
                 list.add(StringHelper.PURPLE + "X: " + tagCompound.getInteger(ThermalScienceNBTTags.XCoord) + "; Y: " + tagCompound.getInteger(ThermalScienceNBTTags.YCoord) + "; Z: " + tagCompound.getInteger(ThermalScienceNBTTags.ZCoord));
             }
+            else if(tagCompound.hasKey(ThermalScienceNBTTags.Id)){
+                list.add(StringHelper.RED + "Controller Id: " + tagCompound.getInteger(ThermalScienceNBTTags.Id));
+            }
         }
     }
 
     @Override
     public boolean hasEffect(ItemStack stack, int pass) {
-        if(stack.hasTagCompound()){
-            return stack.getTagCompound().hasKey(ThermalScienceNBTTags.Dim);
-        }
-
-        return false;
+        return stack.hasTagCompound();
     }
 }
