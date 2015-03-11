@@ -38,8 +38,6 @@ public class BlockTeleporterController extends BlockContainer {
         setBlockName(blockName);
         setCreativeTab(ThermalScience.creativeTab);
 
-        TileEntityTeleporterController.load();
-
         GameRegistry.registerBlock(this, blockName);
         GameRegistry.registerTileEntity(TileEntityTeleporterController.class, "tileEntityTeleporterController");
     }
@@ -85,12 +83,6 @@ public class BlockTeleporterController extends BlockContainer {
         }
 
         tileEntity.facing = facing;
-
-        if(!world.isRemote) {
-            tileEntity.controllerId = TileEntityTeleporterController.mapController.size();
-            TileEntityTeleporterController.setControllerById(tileEntity.controllerId, new DXYZ(world.provider.dimensionId, x, y, z));
-            TileEntityTeleporterController.save();
-        }
     }
 
 

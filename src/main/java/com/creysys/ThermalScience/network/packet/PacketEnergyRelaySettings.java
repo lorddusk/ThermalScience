@@ -19,21 +19,18 @@ public class PacketEnergyRelaySettings implements IThermalSciencePacket {
 
     public int maxIn;
     public int maxOut;
-    public int[] sideConfigs;
 
     public PacketEnergyRelaySettings(){
 
     }
 
-    public PacketEnergyRelaySettings(int x,int y,int z,int maxIn, int maxOut, int[] sideConfigs) {
+    public PacketEnergyRelaySettings(int x,int y,int z,int maxIn, int maxOut) {
         this.x = x;
         this.y = y;
         this.z = z;
 
-
         this.maxIn = maxIn;
         this.maxOut = maxOut;
-        this.sideConfigs = sideConfigs;
     }
 
     @Override
@@ -44,10 +41,6 @@ public class PacketEnergyRelaySettings implements IThermalSciencePacket {
 
         buffer.writeInt(maxIn);
         buffer.writeInt(maxOut);
-
-        for(int i = 0; i < sideConfigs.length; i++){
-            buffer.writeInt(sideConfigs[i]);
-        }
     }
 
     @Override
@@ -58,25 +51,10 @@ public class PacketEnergyRelaySettings implements IThermalSciencePacket {
 
         maxIn = buffer.readInt();
         maxOut = buffer.readInt();
-
-        sideConfigs = new int[6];
-        for(int i = 0; i < sideConfigs.length; i++){
-            sideConfigs[i] = buffer.readInt();
-        }
     }
 
     @Override
     public void executeClientSide(EntityPlayer player) {
-        TileEntity tileEntity = player.worldObj.getTileEntity(x,y,z);
-
-        if(tileEntity instanceof TileEntityEnergyRelay){
-            TileEntityEnergyRelay energyRelay = (TileEntityEnergyRelay)tileEntity;
-
-            energyRelay.setMaxIn(maxIn);
-            energyRelay.setMaxOut(maxOut);
-            energyRelay.setSideConfigs(sideConfigs);
-            player.worldObj.markBlockRangeForRenderUpdate(x, y, z, x,y, z);
-        }
     }
 
     @Override
@@ -88,8 +66,7 @@ public class PacketEnergyRelaySettings implements IThermalSciencePacket {
 
             energyRelay.setMaxIn(maxIn);
             energyRelay.setMaxOut(maxOut);
-            energyRelay.setSideConfigs(sideConfigs);
-            energyRelay.syncSettings();
+            player.worldObj.markBlockForUpdate(x, y, z);
         }
     }
 }

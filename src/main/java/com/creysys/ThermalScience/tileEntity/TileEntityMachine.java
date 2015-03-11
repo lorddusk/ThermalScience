@@ -2,11 +2,9 @@ package com.creysys.ThermalScience.tileEntity;
 
 import cofh.api.energy.IEnergyReceiver;
 import cofh.lib.util.helpers.StringHelper;
-import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.compat.waila.IWailaBodyProvider;
-import com.creysys.ThermalScience.network.packet.PacketMachineProgress;
 import com.creysys.ThermalScience.network.sync.ISyncEnergy;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipe;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -185,7 +183,7 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
 
                 active = true;
 
-                ThermalScience.packetHandler.sendPacketToDimension(worldObj.provider.dimensionId, new PacketMachineProgress(xCoord, yCoord, zCoord, craftingEnergyNeeded, craftingEnergy, active));
+                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             }
 
         } else if(craftingOutputs != null){
@@ -206,8 +204,7 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
                 active = false;
             }
 
-            ThermalScience.packetHandler.sendPacketToDimension(worldObj.provider.dimensionId, new PacketMachineProgress(xCoord, yCoord, zCoord, craftingEnergyNeeded, craftingEnergy, active));
-            ThermalScienceUtil.syncEnergy(worldObj, xCoord, yCoord, zCoord, energyStored, mapMaxEnergyStored[getBlockMetadata()]);
+            worldObj.markBlockForUpdate(xCoord,yCoord,zCoord);
 
             updateCrafting(true);
         }
@@ -361,6 +358,7 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
         readCustomFromNBT(pkt.func_148857_g());
+        worldObj.markBlockRangeForRenderUpdate(xCoord, yCoord, zCoord, xCoord, yCoord, zCoord);
     }
 
     @Override

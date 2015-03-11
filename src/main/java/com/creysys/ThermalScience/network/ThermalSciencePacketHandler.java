@@ -3,8 +3,6 @@ package com.creysys.ThermalScience.network;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.network.packet.PacketEnergy;
 import com.creysys.ThermalScience.network.packet.PacketEnergyRelaySettings;
-import com.creysys.ThermalScience.network.packet.PacketMachineProgress;
-import com.creysys.ThermalScience.network.packet.PacketTeleporterControllerCheck;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.FMLEmbeddedChannel;
 import cpw.mods.fml.common.network.FMLOutboundHandler;
@@ -35,9 +33,7 @@ public class ThermalSciencePacketHandler extends MessageToMessageCodec<FMLProxyP
         channels = NetworkRegistry.INSTANCE.newChannel(ThermalScience.MODID, this);
 
         packets.add(PacketEnergy.class);
-        packets.add(PacketMachineProgress.class);
         packets.add(PacketEnergyRelaySettings.class);
-        packets.add(PacketTeleporterControllerCheck.class);
 
         Collections.sort(packets, new Comparator<Class<? extends IThermalSciencePacket>>() {
             @Override

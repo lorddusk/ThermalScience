@@ -20,6 +20,7 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldSavedData;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.List;
@@ -70,12 +71,7 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
         }
     }
 
-    public void syncSettings(){
-        ThermalScience.packetHandler.sendPacketToDimension(worldObj.provider.dimensionId, new PacketEnergyRelaySettings(xCoord, yCoord, zCoord, maxIn, maxOut, sideConfigs));
-    }
-
     public void setSideConfig(int side) {
-
         if (side < 0 || side >= 6) {
             return;
         }
@@ -86,7 +82,7 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
         }
 
         worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, blockType);
-        syncSettings();
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
 
     public void setSideConfigs(int[] sideConfigs){
@@ -203,6 +199,7 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
         readCustomFromNBT(pkt.func_148857_g());
+        worldObj.markBlockRangeForRenderUpdate(xCoord, yCoord, zCoord, xCoord, yCoord, zCoord);
     }
 
     @Override

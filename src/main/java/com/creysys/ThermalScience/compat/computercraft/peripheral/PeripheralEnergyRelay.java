@@ -56,7 +56,7 @@ public class PeripheralEnergyRelay implements IPeripheral {
 
                 if (objects[0] instanceof Double) {
                     energyRelay.setMaxIn(((Double) objects[0]).intValue());
-                    energyRelay.syncSettings();
+                    energyRelay.getWorldObj().markBlockForUpdate(energyRelay.xCoord,energyRelay.yCoord,energyRelay.zCoord);
                 } else {
                     return new Object[]{"Argument is not a number!"};
                 }
@@ -69,7 +69,7 @@ public class PeripheralEnergyRelay implements IPeripheral {
 
                 if (objects[0] instanceof Double) {
                     energyRelay.setMaxOut(((Double) objects[0]).intValue());
-                    energyRelay.syncSettings();
+                    energyRelay.getWorldObj().markBlockForUpdate(energyRelay.xCoord,energyRelay.yCoord,energyRelay.zCoord);
                 } else {
                     return new Object[]{"Argument is not a number!"};
                 }

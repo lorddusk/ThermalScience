@@ -60,7 +60,7 @@ public class GuiEnergyRelay extends GuiScreen {
             return;
         }
 
-        ThermalScience.packetHandler.sendPacketToServer(new PacketEnergyRelaySettings(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, maxIn, maxOut, tileEntity.sideConfigs));
+        ThermalScience.packetHandler.sendPacketToServer(new PacketEnergyRelaySettings(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, maxIn, maxOut));
     }
 
     public void loadSettings() {

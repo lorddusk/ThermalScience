@@ -1,6 +1,7 @@
-package com.creysys.ThermalScience.client.gui;
+package com.creysys.ThermalScience.event.handler;
 
 import com.creysys.ThermalScience.ThermalScienceConfig;
+import com.creysys.ThermalScience.client.gui.IItemTooltipProvider;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -13,13 +14,9 @@ import net.minecraftforge.oredict.OreDictionary;
 /**
  * Created by Creysys on 10 Mar 15.
  */
-public class ThermalScienceTooltipHandler {
-    public static void register(){
-        MinecraftForge.EVENT_BUS.register(new ThermalScienceTooltipHandler());
-    }
-
+public class HandlerTooltip {
     @SubscribeEvent
-    public void addTooltip(ItemTooltipEvent event) {
+    public void onAddTooltip(ItemTooltipEvent event) {
         ItemStack stack = event.itemStack;
         if(stack == null){
             return;
