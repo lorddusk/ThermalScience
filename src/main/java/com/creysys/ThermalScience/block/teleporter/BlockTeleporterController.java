@@ -5,8 +5,10 @@ import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.client.gui.ThermalScienceGuiID;
 import com.creysys.ThermalScience.tileEntity.teleporter.TileEntityTeleporterController;
 import com.creysys.ThermalScience.util.DXYZ;
+import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -49,13 +51,26 @@ public class BlockTeleporterController extends BlockContainer {
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
-        if(!world.isRemote && world.getTileEntity(x,y,z) instanceof TileEntityTeleporterController){
+        if(world.isRemote){
+            return true;
+        }
+
+        if(player.isSneaking() && player.getHeldItem() != null && ThermalScienceUtil.isItemWrench(player.getHeldItem().getItem())){
+            ThermalScienceUtil.wrenchBlock(world,player,x,y,z);
+        }
+        else if(world.getTileEntity(x,y,z) instanceof TileEntityTeleporterController){
             FMLNetworkHandler.openGui(player, ThermalScience.instance, ThermalScienceGuiID.TeleporterController.ordinal(), world, x, y, z);
         }
 
         return true;
     }
 
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
+        ThermalScienceUtil.dropBlockContents(world, x, y, z);
+
+        super.breakBlock(world, x, y, z, block, meta);
+    }
 
     @Override
     public void registerBlockIcons(IIconRegister iconRegister) {

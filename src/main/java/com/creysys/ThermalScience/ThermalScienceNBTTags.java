@@ -27,4 +27,5 @@ public class ThermalScienceNBTTags {
     public static final String Id = "tsId";
     public static final String Count = "count";
     public static final String Controller = "controller";
+    public static final String Door = "door";
 }

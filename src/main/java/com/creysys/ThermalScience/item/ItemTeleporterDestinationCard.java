@@ -56,7 +56,6 @@ public class ItemTeleporterDestinationCard extends ItemThermalScience {
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-
         if(world.isRemote){
             return stack;
         }

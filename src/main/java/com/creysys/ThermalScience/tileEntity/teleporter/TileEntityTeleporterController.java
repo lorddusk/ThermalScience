@@ -8,6 +8,7 @@ import com.creysys.ThermalScience.util.DXYZ;
 import com.creysys.ThermalScience.compat.waila.IWailaBodyProvider;
 import com.creysys.ThermalScience.network.packet.PacketEnergy;
 import com.creysys.ThermalScience.network.sync.ISyncEnergy;
+import com.creysys.ThermalScience.util.IContentDropper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.block.Block;
@@ -31,7 +32,7 @@ import java.util.List;
 
 //TODO: set yaw
 
-public class TileEntityTeleporterController extends TileEntity implements IInventory, ISyncEnergy, IWailaBodyProvider {
+public class TileEntityTeleporterController extends TileEntity implements IInventory, ISyncEnergy, IWailaBodyProvider, IContentDropper {
 
     public static int addController(DXYZ pos){
         ThermalScienceWorldData.instance.mapControllerPositions.add(pos);
@@ -55,6 +56,7 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
     public int startX;
     public int startY;
     public int startZ;
+    public int door;
 
     public int powerTapX;
     public int powerTapY;
@@ -75,6 +77,7 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
 
         facing = 0;
         active = false;
+        door = -1;
 
         energyStored = 0;
         maxEnergyStored = 1000000;
@@ -151,6 +154,7 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
                 if (posX == startX + 1 && (int) player.posY == startY + 1 && posZ == startZ + 1) {
                     NBTTagCompound compound = slot.getTagCompound();
 
+                    //Teleport to coordinates
                     if (compound.hasKey(ThermalScienceNBTTags.Dim) && compound.hasKey(ThermalScienceNBTTags.XCoord) && compound.hasKey(ThermalScienceNBTTags.YCoord) && compound.hasKey(ThermalScienceNBTTags.ZCoord)) {
                         int dim = compound.getInteger(ThermalScienceNBTTags.Dim);
                         int x = compound.getInteger(ThermalScienceNBTTags.XCoord);
@@ -176,6 +180,8 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
                             ThermalScience.packetHandler.sendPacketToDimension(worldObj.provider.dimensionId, new PacketEnergy(xCoord, yCoord, zCoord, energyStored));
                         }
                     }
+
+                    //Teleport to teleporter
                     else if(compound.hasKey(ThermalScienceNBTTags.Id)){
                         int id = compound.getInteger(ThermalScienceNBTTags.Id);
                         if(id != controllerId) {
@@ -203,6 +209,24 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
                                         }
 
                                         remoteController.checkingPlayers.add(player);
+
+                                        float yaw = player.rotationYaw;
+                                        switch(remoteController.door){
+                                            case 10:
+                                                yaw = 90;
+                                                break;
+                                            case 11:
+                                                yaw = -90;
+                                                break;
+                                            case 12:
+                                                yaw = 180;
+                                                break;
+                                            case 13:
+                                                yaw = 0;
+                                                break;
+                                        }
+
+                                        player.rotationYaw = yaw;
                                         player.setPositionAndUpdate(remoteController.startX + 1.5f, remoteController.startY + 1, remoteController.startZ + 1.5f);
 
                                         energyStored -= cost;
@@ -282,9 +306,8 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
 
 
         boolean hasController = false;
-
+        door = -1;
         boolean hasPowerTap = false;
-        int door = -1;
         for(int x = 0; x < 3; x++){
             for(int y = 0; y < 4; y++){
                 for(int z = 0; z < 3; z++){
@@ -320,7 +343,7 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
                                 statusTextColor = ColorHelper.DYE_RED;
                                 return;
                             } else {
-                                door = 10;
+                                door = 11;
                             }
                         } else if (x == 1 && z == 0) {
                             if (door == -1) {
@@ -330,7 +353,7 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
                                 statusTextColor = ColorHelper.DYE_RED;
                                 return;
                             } else {
-                                door = 10;
+                                door = 12;
                             }
                         } else if (x == 1 && z == 2) {
                             if (door == -1) {
@@ -340,7 +363,7 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
                                 statusTextColor = ColorHelper.DYE_RED;
                                 return;
                             } else {
-                                door = 10;
+                                door = 13;
                             }
                         } else {
                             statusText = "Invalid structure!";
@@ -392,7 +415,7 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
             statusTextColor = ColorHelper.DYE_RED;
             return;
         }
-        if(door != 10){
+        if(door < 10){
             statusText = "Entrance is missing!";
             statusTextColor = ColorHelper.DYE_RED;
             return;
@@ -418,6 +441,7 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
         compound.setInteger(ThermalScienceNBTTags.XCoord, startX);
         compound.setInteger(ThermalScienceNBTTags.YCoord, startY);
         compound.setInteger(ThermalScienceNBTTags.ZCoord, startZ);
+        compound.setInteger(ThermalScienceNBTTags.Door, door);
 
         if(active){
             NBTTagCompound powerTapCompound = new NBTTagCompound();
@@ -447,6 +471,7 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
         startX = compound.getInteger(ThermalScienceNBTTags.XCoord);
         startY = compound.getInteger(ThermalScienceNBTTags.YCoord);
         startZ = compound.getInteger(ThermalScienceNBTTags.ZCoord);
+        door = compound.getInteger(ThermalScienceNBTTags.Door);
 
         if(active && compound.hasKey(ThermalScienceNBTTags.Block)){
             NBTTagCompound powerTapCompound = compound.getCompoundTag(ThermalScienceNBTTags.Block);
@@ -592,6 +617,16 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
             list.add("Controller Id: " + controllerId);
         }
         list.add(statusText);
+
+        return list;
+    }
+
+    @Override
+    public ArrayList<ItemStack> getDrops() {
+        ArrayList<ItemStack> list = new ArrayList<ItemStack>();
+        if(slot != null){
+            list.add(slot);
+        }
 
         return list;
     }

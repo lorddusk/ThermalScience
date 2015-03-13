@@ -1,6 +1,10 @@
 package com.creysys.ThermalScience.block;
 
+import cofh.lib.util.helpers.StringHelper;
 import com.creysys.ThermalScience.ThermalScience;
+import com.creysys.ThermalScience.ThermalScienceNBTTags;
+import com.creysys.ThermalScience.util.IContentDropper;
+import com.creysys.ThermalScience.util.IWrenchable;
 import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.client.gui.IItemTooltipProvider;
@@ -32,7 +36,7 @@ import java.util.List;
 /**
  * Created by Creysys on 29.01.2015.
  */
-public class BlockMachine extends BlockContainer implements IItemTooltipProvider{
+public class BlockMachine extends BlockContainer implements IItemTooltipProvider, IWrenchable{
 
     public Class tileEntityClass;
     public ThermalScienceGuiID guiID;
@@ -94,21 +98,25 @@ public class BlockMachine extends BlockContainer implements IItemTooltipProvider
 
         tileEntity.facing = facing;
 
+        if(stack.hasTagCompound() && stack.getTagCompound().hasKey(ThermalScienceNBTTags.EnergyStored)){
+            tileEntity.energyStored = stack.getTagCompound().getInteger(ThermalScienceNBTTags.EnergyStored);
+        }
+
         world.setBlockMetadataWithNotify(x, y, z, stack.getItemDamage(), 2);
     }
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float f1, float f2, float f3) {
+        if (world.isRemote) {
+            return true;
+        }
+
         if (player.isSneaking()) {
             ItemStack heldItemStack = player.getHeldItem();
             if (heldItemStack != null && ThermalScienceUtil.isItemWrench(heldItemStack.getItem())) {
-                if (!world.isRemote) {
-                    ThermalScienceUtil.wrenchBlock(world, x, y, z);
-                }
-            } else {
-                return false;
+                ThermalScienceUtil.wrenchBlock(world, player, x, y, z, this);
             }
-        } else if (!world.isRemote) {
+        } else {
             FMLNetworkHandler.openGui(player, ThermalScience.instance, guiID.ordinal(), world, x, y, z);
         }
 
@@ -145,54 +153,8 @@ public class BlockMachine extends BlockContainer implements IItemTooltipProvider
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int meta)
-    {
-            TileEntity tileEntity = world.getTileEntity(x, y, z);
-
-            if (tileEntity instanceof TileEntityMachine)
-            {
-                TileEntityMachine tileEntityMachine = (TileEntityMachine)tileEntity;
-                ArrayList<ItemStack> drops = tileEntityMachine.getDrops();
-
-                for (int i = 0; i < drops.size(); i++)
-                {
-                    ItemStack itemStack = drops.get(i);
-
-                    if (itemStack != null)
-                    {
-                        float f = world.rand.nextFloat() * 0.8F + 0.1F;
-                        float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
-                        float f2 = world.rand.nextFloat() * 0.8F + 0.1F;
-
-                        while (itemStack.stackSize > 0)
-                        {
-                            int j1 = world.rand.nextInt(21) + 10;
-
-                            if (j1 > itemStack.stackSize)
-                            {
-                                j1 = itemStack.stackSize;
-                            }
-
-                            itemStack.stackSize -= j1;
-                            EntityItem entityItem = new EntityItem(world, (double)((float)x + f), (double)((float)y + f1), (double)((float)z + f2), new ItemStack(itemStack.getItem(), j1, itemStack.getItemDamage()));
-
-                            if (itemStack.hasTagCompound())
-                            {
-                                entityItem.getEntityItem().setTagCompound((NBTTagCompound)itemStack.getTagCompound().copy());
-                            }
-
-                            float f3 = 0.05F;
-                            entityItem.motionX = (double)((float)world.rand.nextGaussian() * f3);
-                            entityItem.motionY = (double)((float)world.rand.nextGaussian() * f3 + 0.2F);
-                            entityItem.motionZ = (double)((float)world.rand.nextGaussian() * f3);
-                            world.spawnEntityInWorld(entityItem);
-                        }
-                    }
-                }
-
-                world.func_147453_f(x, y, z, block);
-            }
-
+    public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
+        ThermalScienceUtil.dropBlockContents(world, x, y, z);
         super.breakBlock(world, x, y, z, block, meta);
     }
 
@@ -211,5 +173,34 @@ public class BlockMachine extends BlockContainer implements IItemTooltipProvider
     @Override
     public void addTooltip(List<String> list, ItemStack stack) {
         list.add("Tier: " + TileEntityMachine.mapTiers[stack.getItemDamage()]);
+        list.add(StringHelper.TEAL + StringHelper.UNDERLINE + "Energy");
+        int energyStored = 0;
+        if(stack.hasTagCompound() && stack.getTagCompound().hasKey(ThermalScienceNBTTags.EnergyStored)){
+            energyStored = stack.getTagCompound().getInteger(ThermalScienceNBTTags.EnergyStored);
+        }
+        list.add(StringHelper.WHITE + "  Stored: " + StringHelper.RED + energyStored + StringHelper.WHITE + "/" + StringHelper.RED + TileEntityMachine.mapMaxEnergyStored[stack.getItemDamage()] + StringHelper.WHITE + " RF");
+        list.add(StringHelper.WHITE + "  Usage: " + StringHelper.RED + TileEntityMachine.mapMaxEnergyReceive[stack.getItemDamage()] / 2 + StringHelper.WHITE + " RF/t");
+    }
+
+    @Override
+    public ItemStack onWrenched(ItemStack stack, TileEntity tileEntity) {
+        if(tileEntity instanceof TileEntityMachine){
+            TileEntityMachine machine = (TileEntityMachine)tileEntity;
+
+            NBTTagCompound compound;
+            if(stack.hasTagCompound()){
+                compound = stack.getTagCompound();
+            }
+            else {
+                compound = new NBTTagCompound();
+            }
+
+            compound.setInteger(ThermalScienceNBTTags.EnergyStored, machine.energyStored);
+
+            stack.setTagCompound(compound);
+        }
+
+
+        return stack;
     }
 }

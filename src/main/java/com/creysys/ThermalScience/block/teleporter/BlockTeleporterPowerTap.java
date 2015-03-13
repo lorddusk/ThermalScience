@@ -5,11 +5,13 @@ import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
 import com.creysys.ThermalScience.tileEntity.teleporter.TileEntityTeleporterController;
 import com.creysys.ThermalScience.tileEntity.teleporter.TileEntityTeleporterPowerTap;
+import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
@@ -72,6 +74,19 @@ public class BlockTeleporterPowerTap extends BlockContainer {
         }
 
         return ThermalScience.blockTeleporterWall.getIcon(side, meta);
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float f1, float f2, float f3) {
+        if(world.isRemote){
+            return true;
+        }
+
+        if(player.isSneaking() && player.getHeldItem() != null && ThermalScienceUtil.isItemWrench(player.getHeldItem().getItem())){
+            ThermalScienceUtil.wrenchBlock(world,player,x,y,z);
+        }
+
+        return true;
     }
 
     @Override

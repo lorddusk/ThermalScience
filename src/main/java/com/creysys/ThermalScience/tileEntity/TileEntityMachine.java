@@ -3,6 +3,7 @@ package com.creysys.ThermalScience.tileEntity;
 import cofh.api.energy.IEnergyReceiver;
 import cofh.lib.util.helpers.StringHelper;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
+import com.creysys.ThermalScience.util.IContentDropper;
 import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.compat.waila.IWailaBodyProvider;
 import com.creysys.ThermalScience.network.sync.ISyncEnergy;
@@ -28,12 +29,11 @@ import java.util.List;
 /**
  * Created by Creysys on 29.01.2015.
  */
-public abstract class TileEntityMachine extends TileEntity implements IEnergyReceiver, ISidedInventory, IWailaBodyProvider, ISyncEnergy
+public abstract class TileEntityMachine extends TileEntity implements IEnergyReceiver, ISidedInventory, IWailaBodyProvider, ISyncEnergy, IContentDropper
 {
     public static final String[] mapTiers = new String[]{StringHelper.WHITE + "Basic", StringHelper.WHITE + "Hardened", StringHelper.YELLOW + "Reinforced", StringHelper.BRIGHT_BLUE + "Resonant"};
-    public static final int[] mapMaxEnergyStored = new int[]{80000,400000,2000000,10000000};
-    public static final int[] mapMaxEnergyReceive = new int[]{80,400,2000,10000};
-
+    public static final int[] mapMaxEnergyStored = new int[]{16000,40000,160000,400000};
+    public static final int[] mapMaxEnergyReceive = new int[]{80,200,800,2000};
 
     public int energyStored;
 
@@ -62,7 +62,7 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
         slots = new ItemStack[getSizeInventory()];
     }
 
-
+    @Override
     public ArrayList<ItemStack> getDrops(){
         ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 
@@ -270,7 +270,7 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
     }
 
     public int getCraftingSpeed(){
-        return mapMaxEnergyReceive[getBlockMetadata()];
+        return mapMaxEnergyReceive[getBlockMetadata()] / 2;
     }
 
     public abstract  List<ThermalScienceRecipe> getRecipes();

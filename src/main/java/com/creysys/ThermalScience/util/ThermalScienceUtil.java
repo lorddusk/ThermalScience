@@ -4,12 +4,17 @@ import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.network.packet.PacketEnergy;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipe;
+import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
 import cpw.mods.fml.common.event.FMLInterModComms;
+import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -18,6 +23,7 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
@@ -41,6 +47,7 @@ public class ThermalScienceUtil {
         addWrench("ThermalExpansion", "wrench");
         addWrench("EnderIO", "itemYetaWrench");
         addWrench("BuildCraft|Core", "wrenchItem");
+        addWrench("funkylocomotion", "wrench");
     }
 
     public static void addWrench(String mod, String id) {
@@ -249,18 +256,31 @@ public class ThermalScienceUtil {
         return ret;
     }
 
-    public static void wrenchBlock(World world, int x, int y, int z) {
+    public static void wrenchBlock(World world, EntityPlayer player, int x,int y,int z) {
+        wrenchBlock(world, player, x, y, z, null);
+    }
+
+    public static void wrenchBlock(World world, EntityPlayer player, int x, int y, int z, IWrenchable wrenchable) {
         Block block = world.getBlock(x, y, z);
 
-        if (!world.isRemote && world.getGameRules().getGameRuleBooleanValue("doTileDrops") && !world.restoringBlockSnapshots)
-        {
+        if (world.getGameRules().getGameRuleBooleanValue("doTileDrops") && !world.restoringBlockSnapshots) {
             float f = 0.7F;
             double d0 = (double) (world.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
             double d1 = (double) (world.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
             double d2 = (double) (world.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
-            EntityItem itemEntity = new EntityItem(world, (double) x + d0, (double) y + d1, (double) z + d2, new ItemStack(block));
-            itemEntity.delayBeforeCanPickup = 10;
-            world.spawnEntityInWorld(itemEntity);
+
+            ItemStack stack = new ItemStack(block, 1 , block.damageDropped(world.getBlockMetadata(x,y,z)));
+            if (wrenchable != null) {
+                stack = wrenchable.onWrenched(stack, world.getTileEntity(x, y, z));
+            }
+
+            if (player.inventory.addItemStackToInventory(stack)) {
+                player.inventoryContainer.detectAndSendChanges();
+            } else {
+                EntityItem itemEntity = new EntityItem(world, (double) x + d0, (double) y + d1, (double) z + d2, stack);
+                itemEntity.delayBeforeCanPickup = 0;
+                world.spawnEntityInWorld(itemEntity);
+            }
 
             block.breakBlock(world, x, y, z, block, world.getBlockMetadata(x, y, z));
         }
@@ -401,10 +421,49 @@ public class ThermalScienceUtil {
         GL11.glPopMatrix();
     }
 
-    public static File getSaveFolder() {
-        File file = new File("world", "thermalScience");
-        file.mkdir();
+    public static void dropBlockContents(World world, int x, int y, int z){
 
-        return file;
+        TileEntity tileEntity = world.getTileEntity(x,y,z);
+        if(!(tileEntity instanceof IContentDropper)){
+            return;
+        }
+
+        ArrayList<ItemStack> drops = ((IContentDropper)tileEntity).getDrops();
+
+        for (int i = 0; i < drops.size(); i++)
+        {
+            ItemStack itemStack = drops.get(i);
+
+            if (itemStack != null)
+            {
+                float f = world.rand.nextFloat() * 0.8F + 0.1F;
+                float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
+                float f2 = world.rand.nextFloat() * 0.8F + 0.1F;
+
+                while (itemStack.stackSize > 0)
+                {
+                    int j1 = world.rand.nextInt(21) + 10;
+
+                    if (j1 > itemStack.stackSize)
+                    {
+                        j1 = itemStack.stackSize;
+                    }
+
+                    itemStack.stackSize -= j1;
+                    EntityItem entityItem = new EntityItem(world, (double)((float)x + f), (double)((float)y + f1), (double)((float)z + f2), new ItemStack(itemStack.getItem(), j1, itemStack.getItemDamage()));
+
+                    if (itemStack.hasTagCompound())
+                    {
+                        entityItem.getEntityItem().setTagCompound((NBTTagCompound)itemStack.getTagCompound().copy());
+                    }
+
+                    float f3 = 0.05F;
+                    entityItem.motionX = (double)((float)world.rand.nextGaussian() * f3);
+                    entityItem.motionY = (double)((float)world.rand.nextGaussian() * f3 + 0.2F);
+                    entityItem.motionZ = (double)((float)world.rand.nextGaussian() * f3);
+                    world.spawnEntityInWorld(entityItem);
+                }
+            }
+        }
     }
 }

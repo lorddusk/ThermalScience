@@ -44,7 +44,7 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
     }
 
     public int getMaxBandwith(){
-        return TileEntityMachine.mapMaxEnergyReceive[getBlockMetadata()];
+        return (int)Math.round(Math.pow(TileEntityMachine.mapMaxEnergyReceive[getBlockMetadata()], 1.447) / 1000) * 1000;
     }
 
     public void setMaxIn(int i){
@@ -67,7 +67,7 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
 
     public int getMaxEnergyStored() {
         synchronized (this) {
-            return TileEntityMachine.mapMaxEnergyStored[getBlockMetadata()];
+            return getMaxBandwith();
         }
     }
 
@@ -83,10 +83,6 @@ public class TileEntityEnergyRelay extends TileEntity implements IEnergyHandler,
 
         worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, blockType);
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-    }
-
-    public void setSideConfigs(int[] sideConfigs){
-        this.sideConfigs = sideConfigs;
     }
 
     public void readCustomFromNBT(NBTTagCompound tag){

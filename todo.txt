@@ -1,15 +1,15 @@
-generate controller id when place card
-
-
-Funky locomotion support
-Teleporter linking mechanic
-
+DIFFERENT WIRES
+Machine rebalance
+compressed stone
+machine circuits
+insulated wire
+redstone alloy
 OpenComputers support
 
 UU replica
 
 redstoneAlloyWire, conductiveIronWire, energeticAlloyWire, vibrantAlloyWire
 
+gravitational tank
 Void world provider?
-
 Time space manipulator

@@ -63,7 +63,7 @@ public class BlockWatermill extends BlockContainer {
             ItemStack heldItemStack = player.getHeldItem();
             if (heldItemStack != null && ThermalScienceUtil.isItemWrench(heldItemStack.getItem())) {
                 if (!world.isRemote) {
-                    ThermalScienceUtil.wrenchBlock(world, x, y, z);
+                    ThermalScienceUtil.wrenchBlock(world, player, x, y, z);
                 }
                 return true;
             }
