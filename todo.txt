@@ -4,6 +4,8 @@ machine circuits
 redstone alloy
 OpenComputers support
 
+remove teleporter on tick check -> on block place/removal
+
 UU replica
 
 gravitational tank

@@ -176,6 +176,8 @@ public class ItemPortableCompressor extends ItemEnergyContainer
                         stack.getTagCompound().setInteger(ThermalScienceNBTTags.EnergyStored, energyStored);
 
                         updateDamage(stack);
+                        player.inventoryContainer.detectAndSendChanges();
+
 
                         break;
                     }
@@ -186,6 +188,8 @@ public class ItemPortableCompressor extends ItemEnergyContainer
                     for(int i = 1; i < indices.size(); i++){
                         player.inventory.setInventorySlotContents(indices.get(i), null);
                     }
+
+                    player.inventoryContainer.detectAndSendChanges();
                 }
             }
         }
@@ -283,6 +287,7 @@ public class ItemPortableCompressor extends ItemEnergyContainer
     }
 
     public int countItems(InventoryPlayer inventory, ArrayList<Integer> indices) {
+
         int amount = 0;
 
         for (int i = 0; i < indices.size(); i++) {

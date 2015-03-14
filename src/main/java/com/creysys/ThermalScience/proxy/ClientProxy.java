@@ -1,6 +1,9 @@
 package com.creysys.ThermalScience.proxy;
 
+import com.creysys.ThermalScience.client.renderer.RendererGravitationalTank;
 import com.creysys.ThermalScience.event.ThermalScienceEventHandler;
+import com.creysys.ThermalScience.tileEntity.TileEntityGravitationalTank;
+import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import io.netty.channel.ChannelHandlerContext;
@@ -20,6 +23,7 @@ public class ClientProxy extends ServerProxy
     }
 
     public void registerRenderers(){
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGravitationalTank.class, new RendererGravitationalTank());
     }
 
     @Override

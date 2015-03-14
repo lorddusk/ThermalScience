@@ -149,6 +149,7 @@ public class ThermalScienceRecipes {
         //Add these recipes after all items have been registered
         addCompressorOreRecipes();
         addModRecipes();
+        ItemPortableCompressor.registerRecipes();
 
         //Tweaks
         if(ThermalScienceConfig.recipesOverrideGunpowder) {
@@ -195,8 +196,6 @@ public class ThermalScienceRecipes {
                 }
             }
         }
-
-        ItemPortableCompressor.registerRecipes();
     }
 
     public static void addModRecipes(){
@@ -274,7 +273,7 @@ public class ThermalScienceRecipes {
                     input = new ItemStack(item, 9, i - 1);
                 }
 
-                addCompressorRecipe(new Object[]{input}, new Object[]{new ItemStack(item, 1, i)}, 1000, true);
+                addCompressorRecipe(new Object[]{input}, new Object[]{new ItemStack(item, 1, i)}, 420, true);
             }
         }
 

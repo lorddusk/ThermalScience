@@ -56,6 +56,8 @@ public class ThermalScience
     public static Block blockWatermill;
     public static BlockEnergyRelay blockEnergyRelay;
 
+    public static Block blockGravitationalTank;
+
     //Teleporter
     public static BlockTeleporterWall blockTeleporterWall;
     public static Block blockTeleporterPowerTap;
@@ -87,6 +89,7 @@ public class ThermalScience
         blockWatermill = new BlockWatermill();
         blockEnergyRelay = new BlockEnergyRelay();
 
+        blockGravitationalTank = new BlockGravitationalTank();
 
         blockTeleporterWall = new BlockTeleporterWall();
         blockTeleporterPowerTap = new BlockTeleporterPowerTap();

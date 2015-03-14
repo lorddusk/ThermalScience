@@ -48,7 +48,7 @@ public class BlockMachine extends BlockContainer implements IItemTooltipProvider
     public IIcon iconFrontOn;
 
     public BlockMachine(String name, Class<? extends TileEntityMachine> tileEntityClass, ThermalScienceGuiID guiID) {
-        super(Material.rock);
+        super(Material.iron);
 
         setHardness(1F);
         setResistance(1F);
