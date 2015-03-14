@@ -2,6 +2,7 @@ package com.creysys.ThermalScience.block;
 
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.tileEntity.TileEntityGravitationalTank;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
@@ -23,7 +24,7 @@ public class BlockGravitationalTank extends BlockContainer {
         setBlockName(blockName);
         setCreativeTab(ThermalScience.creativeTab);
 
-        //GameRegistry.registerBlock(this, blockName);
+        GameRegistry.registerBlock(this, blockName);
     }
 
     @Override
