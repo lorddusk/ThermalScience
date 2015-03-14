@@ -20,4 +20,9 @@ public class BlockCentrifuge extends BlockMachine {
         iconFrontOff = iconRegister.registerIcon(ThermalScienceTextures.centrifugeOff.icon);
         iconFrontOn = iconRegister.registerIcon(ThermalScienceTextures.centrifugeOn.icon);
     }
+
+    @Override
+    public int getCraftingSpeed(int meta) {
+        return super.getCraftingSpeed(meta) / 4;
+    }
 }

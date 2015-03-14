@@ -10,9 +10,6 @@ import java.util.List;
  * Created by Creysys on 1/31/2015.
  */
 public class TileEntityCentrifuge extends TileEntityMachine{
-    public TileEntityCentrifuge() {
-        super(100000, 80);
-    }
 
     @Override
     public List<ThermalScienceRecipe> getRecipes() {
@@ -37,6 +34,11 @@ public class TileEntityCentrifuge extends TileEntityMachine{
     @Override
     public int[] getCraftingOutputSlots() {
         return new int[]{1,2,3,4};
+    }
+
+    @Override
+    public int getCraftingSpeed() {
+        return super.getCraftingSpeed() / 4;
     }
 
     @Override

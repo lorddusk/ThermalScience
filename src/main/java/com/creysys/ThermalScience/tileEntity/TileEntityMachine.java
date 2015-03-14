@@ -47,7 +47,7 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
 
     public ItemStack[] slots;
 
-    public TileEntityMachine(int maxEnergyStored, int maxEnergyReceive)
+    public TileEntityMachine()
     {
         energyStored = 0;
 

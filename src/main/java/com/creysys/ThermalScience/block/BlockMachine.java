@@ -66,7 +66,9 @@ public class BlockMachine extends BlockContainer implements IItemTooltipProvider
         GameRegistry.registerTileEntity(tileEntityClass, "tileEntity" + name);
     }
 
-
+    public int getCraftingSpeed(int meta){
+        return TileEntityMachine.mapMaxEnergyReceive[meta] / 2;
+    }
 
     @Override
     public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
@@ -179,7 +181,7 @@ public class BlockMachine extends BlockContainer implements IItemTooltipProvider
             energyStored = stack.getTagCompound().getInteger(ThermalScienceNBTTags.EnergyStored);
         }
         list.add(StringHelper.WHITE + "  Stored: " + StringHelper.RED + energyStored + StringHelper.WHITE + "/" + StringHelper.RED + TileEntityMachine.mapMaxEnergyStored[stack.getItemDamage()] + StringHelper.WHITE + " RF");
-        list.add(StringHelper.WHITE + "  Usage: " + StringHelper.RED + TileEntityMachine.mapMaxEnergyReceive[stack.getItemDamage()] / 2 + StringHelper.WHITE + " RF/t");
+        list.add(StringHelper.WHITE + "  Usage: " + StringHelper.RED + getCraftingSpeed(stack.getItemDamage()) + StringHelper.WHITE + " RF/t");
     }
 
     @Override

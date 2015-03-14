@@ -1,6 +1,5 @@
 package com.creysys.ThermalScience.item;
 
-import cofh.lib.util.helpers.ColorHelper;
 import cofh.lib.util.helpers.StringHelper;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;

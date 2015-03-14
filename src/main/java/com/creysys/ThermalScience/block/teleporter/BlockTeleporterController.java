@@ -1,10 +1,14 @@
 package com.creysys.ThermalScience.block.teleporter;
 
 import com.creysys.ThermalScience.ThermalScience;
+import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
+import com.creysys.ThermalScience.client.gui.IItemTooltipProvider;
 import com.creysys.ThermalScience.client.gui.ThermalScienceGuiID;
+import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
 import com.creysys.ThermalScience.tileEntity.teleporter.TileEntityTeleporterController;
 import com.creysys.ThermalScience.util.DXYZ;
+import com.creysys.ThermalScience.util.IWrenchable;
 import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -15,16 +19,19 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 /**
  * Created by Creysys on 06 Mar 15.
  */
-public class BlockTeleporterController extends BlockContainer {
+public class BlockTeleporterController extends BlockContainer implements IWrenchable, IItemTooltipProvider {
 
     public static IIcon iconOff;
     public static IIcon iconOn;
@@ -51,14 +58,13 @@ public class BlockTeleporterController extends BlockContainer {
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
-        if(world.isRemote){
+        if (world.isRemote) {
             return true;
         }
 
-        if(player.isSneaking() && player.getHeldItem() != null && ThermalScienceUtil.isItemWrench(player.getHeldItem().getItem())){
-            ThermalScienceUtil.wrenchBlock(world,player,x,y,z);
-        }
-        else if(world.getTileEntity(x,y,z) instanceof TileEntityTeleporterController){
+        if (player.isSneaking() && player.getHeldItem() != null && ThermalScienceUtil.isItemWrench(player.getHeldItem().getItem())) {
+            ThermalScienceUtil.wrenchBlock(world, player, x, y, z, this);
+        } else if (world.getTileEntity(x, y, z) instanceof TileEntityTeleporterController) {
             FMLNetworkHandler.openGui(player, ThermalScience.instance, ThermalScienceGuiID.TeleporterController.ordinal(), world, x, y, z);
         }
 
@@ -98,6 +104,10 @@ public class BlockTeleporterController extends BlockContainer {
         }
 
         tileEntity.facing = facing;
+
+        if(stack.hasTagCompound() && stack.getTagCompound().hasKey(ThermalScienceNBTTags.Id)){
+            tileEntity.controllerId = stack.getTagCompound().getInteger(ThermalScienceNBTTags.Id);
+        }
     }
 
 
@@ -120,5 +130,35 @@ public class BlockTeleporterController extends BlockContainer {
         }
 
         return ThermalScience.blockTeleporterWall.getIcon(side, 0);
+    }
+
+    @Override
+    public ItemStack onWrenched(ItemStack stack, TileEntity tileEntity) {
+
+        if(tileEntity instanceof TileEntityTeleporterController){
+            TileEntityTeleporterController controller = (TileEntityTeleporterController)tileEntity;
+
+            if(controller.controllerId != -1) {
+                NBTTagCompound compound;
+                if (stack.hasTagCompound()) {
+                    compound = stack.getTagCompound();
+                } else {
+                    compound = new NBTTagCompound();
+                }
+
+                compound.setInteger(ThermalScienceNBTTags.Id, controller.controllerId);
+
+                stack.setTagCompound(compound);
+            }
+        }
+
+        return stack;
+    }
+
+    @Override
+    public void addTooltip(List<String> list, ItemStack stack) {
+        if(stack.hasTagCompound() && stack.getTagCompound().hasKey(ThermalScienceNBTTags.Id)) {
+            list.add("Controller Id: " + stack.getTagCompound().getInteger(ThermalScienceNBTTags.Id));
+        }
     }
 }

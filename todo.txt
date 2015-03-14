@@ -1,14 +1,10 @@
-DIFFERENT WIRES
 Machine rebalance
 compressed stone
 machine circuits
-insulated wire
 redstone alloy
 OpenComputers support
 
 UU replica
-
-redstoneAlloyWire, conductiveIronWire, energeticAlloyWire, vibrantAlloyWire
 
 gravitational tank
 Void world provider?

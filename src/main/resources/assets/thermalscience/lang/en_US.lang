@@ -15,9 +15,40 @@ tile.blockTeleporterPowerTap.name=Teleporter Power Tap
 item.itemPortableCompressor.name=Portable Compressor
 
 item.materialTube.name=Tube
-item.materialWireCopper.name=Copper Wire
 item.materialCoil.name=Coil
 item.materialMotor.name=Motor
+
+item.materialWireCopper.name=Copper Wire
+item.materialWireTin.name=Tin Wire
+item.materialWireIron.name=Iron Wire
+item.materialWireGold.name=Gold Wire
+item.materialWireSilver.name=Silver Wire
+item.materialWireLead.name=Lead Wire
+item.materialWireNickel.name=Nickel Wire
+item.materialWirePlatinum.name=Platinum Wire
+item.materialWireMithril.name=Mithril Wire
+item.materialWireElectrum.name=Electrum Wire
+item.materialWireInvar.name=Invar Wire
+item.materialWireBronze.name=Bronze Wire
+item.materialWireSignalum.name=Signalum Wire
+item.materialWireLumium.name=Lumium Wire
+item.materialWireEnderium.name=Enderium Wire
+
+item.materialInsulatedWireCopper.name=Insulated Copper Wire
+item.materialInsulatedWireTin.name=Insulated Tin Wire
+item.materialInsulatedWireIron.name=Insulated Iron Wire
+item.materialInsulatedWireGold.name=Insulated Gold Wire
+item.materialInsulatedWireSilver.name=Insulated Silver Wire
+item.materialInsulatedWireLead.name=Insulated Lead Wire
+item.materialInsulatedWireNickel.name=Insulated Nickel Wire
+item.materialInsulatedWirePlatinum.name=Insulated Platinum Wire
+item.materialInsulatedWireMithril.name=Insulated Mithril Wire
+item.materialInsulatedWireElectrum.name=Insulated Electrum Wire
+item.materialInsulatedWireInvar.name=Insulated Invar Wire
+item.materialInsulatedWireBronze.name=Insulated Bronze Wire
+item.materialInsulatedWireSignalum.name=Insulated Signalum Wire
+item.materialInsulatedWireLumium.name=Insulated Lumium Wire
+item.materialInsulatedWireEnderium.name=Insulated Enderium Wire
 
 item.dustNetherrack.name=Netherrack Dust
 item.dustDirtyNetherrack.name=Dirty Netherrack Dust

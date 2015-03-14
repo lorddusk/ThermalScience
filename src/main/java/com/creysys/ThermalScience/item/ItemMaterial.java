@@ -21,6 +21,38 @@ public class ItemMaterial extends ItemThermalScience {
     public static ItemStack coil;
     public static ItemStack motor;
 
+    public static ItemStack wireTin;
+    public static ItemStack wireIron;
+    public static ItemStack wireGold;
+    public static ItemStack wireSilver;
+    public static ItemStack wireLead;
+    public static ItemStack wireNickel;
+    public static ItemStack wirePlatinum;
+    public static ItemStack wireMithril;
+    public static ItemStack wireElectrum;
+    public static ItemStack wireInvar;
+    public static ItemStack wireBronze;
+    public static ItemStack wireSignalum;
+    public static ItemStack wireLumium;
+    public static ItemStack wireEnderium;
+
+    public static ItemStack insulatedWireCopper;
+    public static ItemStack insulatedWireTin;
+    public static ItemStack insulatedWireIron;
+    public static ItemStack insulatedWireGold;
+    public static ItemStack insulatedWireSilver;
+    public static ItemStack insulatedWireLead;
+    public static ItemStack insulatedWireNickel;
+    public static ItemStack insulatedWirePlatinum;
+    public static ItemStack insulatedWireMithril;
+    public static ItemStack insulatedWireElectrum;
+    public static ItemStack insulatedWireInvar;
+    public static ItemStack insulatedWireBronze;
+    public static ItemStack insulatedWireSignalum;
+    public static ItemStack insulatedWireLumium;
+    public static ItemStack insulatedWireEnderium;
+
+
     public List<String> materials;
     public IIcon[] icons;
 
@@ -42,6 +74,36 @@ public class ItemMaterial extends ItemThermalScience {
         wireCopper = registerMaterial("WireCopper");
         coil = registerMaterial("Coil");
         motor = registerMaterial("Motor");
+        wireTin = registerMaterial("WireTin");
+        wireIron = registerMaterial("WireIron");
+        wireGold = registerMaterial("WireGold");
+        wireSilver = registerMaterial("WireSilver");
+        wireLead = registerMaterial("WireLead");
+        wireNickel = registerMaterial("WireNickel");
+        wirePlatinum = registerMaterial("WirePlatinum");
+        wireMithril = registerMaterial("WireMithril");
+        wireElectrum = registerMaterial("WireElectrum");
+        wireInvar = registerMaterial("WireInvar");
+        wireBronze = registerMaterial("WireBronze");
+        wireSignalum = registerMaterial("WireSignalum");
+        wireLumium = registerMaterial("WireLumium");
+        wireEnderium = registerMaterial("WireEnderium");
+
+        insulatedWireCopper = registerMaterial("InsulatedWireCopper");
+        insulatedWireTin = registerMaterial("InsulatedWireTin");
+        insulatedWireIron = registerMaterial("InsulatedWireIron");
+        insulatedWireGold = registerMaterial("InsulatedWireGold");
+        insulatedWireSilver = registerMaterial("InsulatedWireSilver");
+        insulatedWireLead = registerMaterial("InsulatedWireLead");
+        insulatedWireNickel = registerMaterial("InsulatedWireNickel");
+        insulatedWirePlatinum = registerMaterial("InsulatedWirePlatinum");
+        insulatedWireMithril = registerMaterial("InsulatedWireMithril");
+        insulatedWireElectrum = registerMaterial("InsulatedWireElectrum");
+        insulatedWireInvar = registerMaterial("InsulatedWireInvar");
+        insulatedWireBronze = registerMaterial("InsulatedWireBronze");
+        insulatedWireSignalum = registerMaterial("InsulatedWireSignalum");
+        insulatedWireLumium = registerMaterial("InsulatedWireLumium");
+        insulatedWireEnderium = registerMaterial("InsulatedWireEnderium");
     }
 
     public ItemStack registerMaterial(String name){

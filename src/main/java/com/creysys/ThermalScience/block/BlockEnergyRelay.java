@@ -3,7 +3,6 @@ package com.creysys.ThermalScience.block;
 import cofh.lib.util.helpers.StringHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
-import com.creysys.ThermalScience.item.ISpecialItemRenderer;
 import com.creysys.ThermalScience.util.IWrenchable;
 import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
@@ -33,7 +32,7 @@ import java.util.List;
 /**
  * Created by Creysys on 13 Feb 15.
  */
-public class BlockEnergyRelay extends BlockContainer implements IItemTooltipProvider, IWrenchable, ISpecialItemRenderer{
+public class BlockEnergyRelay extends BlockContainer implements IItemTooltipProvider, IWrenchable{
 
     public IIcon iconOff;
     public IIcon iconIn;
@@ -71,11 +70,6 @@ public class BlockEnergyRelay extends BlockContainer implements IItemTooltipProv
     @Override
     public IIcon getIcon(int side, int meta) {
         return iconOff;
-    }
-
-    @Override
-    public IIcon getIcon(ItemStack stack) {
-        return null;
     }
 
     @Override

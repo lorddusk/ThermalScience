@@ -11,10 +11,6 @@ import java.util.List;
  */
 public class TileEntityCarbothermicFurnace extends TileEntityMachine {
 
-    public TileEntityCarbothermicFurnace() {
-        super(100000, 80);
-    }
-
     @Override
     public int getSizeInventory() {
         return 3;

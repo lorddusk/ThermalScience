@@ -12,12 +12,6 @@ import java.util.List;
  */
 public class TileEntityCompressor extends TileEntityMachine {
 
-    private ItemStack[] itemStacks;
-
-    public TileEntityCompressor()
-    {
-        super(100000, 320);
-    }
     @Override
     public int getSizeInventory() {
         return 2;

@@ -10,9 +10,6 @@ import java.util.List;
  * Created by Creysys on 08 Feb 15.
  */
 public class TileEntityWiremill extends TileEntityMachine {
-    public TileEntityWiremill() {
-        super(100000, 80);
-    }
 
     @Override
     public List<ThermalScienceRecipe> getRecipes() {

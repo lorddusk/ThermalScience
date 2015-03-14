@@ -86,7 +86,7 @@ public class BlockTeleporterPowerTap extends BlockContainer {
             ThermalScienceUtil.wrenchBlock(world,player,x,y,z);
         }
 
-        return true;
+        return false;
     }
 
     @Override

@@ -49,7 +49,6 @@ public class ThermalScienceRecipes {
 
             //Remove old silicon recipe
             //Doesnt work yet disable in config too
-
             if(ThermalScienceConfig.recipeOverrideSilicon) {
                 ThermalScienceUtil.removeEnderIORecipe("sagmill", "EnderIO", "Silicon");
                 ThermalScienceUtil.removeEnderIORecipe("sagmill", "EnderIO", "SiliconRedSand");
@@ -59,9 +58,26 @@ public class ThermalScienceRecipes {
 
     public static void initialize() {
         //Materials
+        //Insulated wires
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ItemMaterial.insulatedWireCopper, ItemMaterial.wireCopper, "itemRubber"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ItemMaterial.insulatedWireTin, ItemMaterial.wireTin, "itemRubber"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ItemMaterial.insulatedWireIron, ItemMaterial.wireIron, "itemRubber"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ItemMaterial.insulatedWireGold, ItemMaterial.wireGold, "itemRubber"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ItemMaterial.insulatedWireSilver, ItemMaterial.wireSilver, "itemRubber"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ItemMaterial.insulatedWireLead, ItemMaterial.wireLead, "itemRubber"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ItemMaterial.insulatedWireNickel, ItemMaterial.wireNickel, "itemRubber"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ItemMaterial.insulatedWirePlatinum, ItemMaterial.wirePlatinum, "itemRubber"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ItemMaterial.insulatedWireMithril, ItemMaterial.wireMithril, "itemRubber"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ItemMaterial.insulatedWireElectrum, ItemMaterial.wireElectrum, "itemRubber"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ItemMaterial.insulatedWireInvar, ItemMaterial.wireInvar, "itemRubber"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ItemMaterial.insulatedWireBronze, ItemMaterial.wireBronze, "itemRubber"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ItemMaterial.insulatedWireSignalum, ItemMaterial.wireSignalum, "itemRubber"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ItemMaterial.insulatedWireLumium, ItemMaterial.wireLumium, "itemRubber"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ItemMaterial.insulatedWireEnderium, ItemMaterial.wireEnderium, "itemRubber"));
+
         GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.tube, "RIR", "___", "RIR", 'I', "ingotInvar", 'R', Items.iron_ingot));
         GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.wireCopper, "CC", 'C', "ingotCopper"));
-        GameRegistry.addRecipe(ThermalScienceUtil.setStack(ItemMaterial.coil, 4), "WWW", "W_W", "WWW", 'W', ItemMaterial.wireCopper);
+        GameRegistry.addRecipe(ThermalScienceUtil.setStack(ItemMaterial.coil, 4), "WWW", "W_W", "WWW", 'W', ItemMaterial.insulatedWireCopper);
         GameRegistry.addRecipe(ItemMaterial.motor, "CIC", 'C', ItemMaterial.coil, 'I', Items.iron_ingot);
 
         //Tweaks
@@ -69,35 +85,35 @@ public class ThermalScienceRecipes {
 
         //Carbothermic Furnace
         //Ore Processing
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreIron", Items.coal}, new Object[]{"ingotIron,2"}, 3000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreGold", Items.coal}, new Object[]{"ingotGold,2"}, 3000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreAdamantium", Items.coal}, new Object[]{"ingotAdamantium,2"}, 3000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreAluminium", Items.coal}, new Object[]{"ingotAluminium,2"}, 3000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreCopper", Items.coal}, new Object[]{"ingotCopper,2"}, 3000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreLead", Items.coal}, new Object[]{"ingotLead,2"}, 3000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreSilver", Items.coal}, new Object[]{"ingotSilver,2"}, 3000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreTin", Items.coal}, new Object[]{"ingotTin,2"}, 3000);
+        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreIron", Items.coal}, new Object[]{"ingotIron,2"}, 7000);
+        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreGold", Items.coal}, new Object[]{"ingotGold,2"}, 7000);
+        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreAdamantium", Items.coal}, new Object[]{"ingotAdamantium,2"}, 7000);
+        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreAluminium", Items.coal}, new Object[]{"ingotAluminium,2"}, 7000);
+        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreCopper", Items.coal}, new Object[]{"ingotCopper,2"}, 7000);
+        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreLead", Items.coal}, new Object[]{"ingotLead,2"}, 7000);
+        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreSilver", Items.coal}, new Object[]{"ingotSilver,2"}, 7000);
+        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreTin", Items.coal}, new Object[]{"ingotTin,2"}, 7000);
 
 
         //Centrifuge
-        addRecipe(centrifugeRecipes, new Object[]{Items.magma_cream}, new Object[]{Items.blaze_powder, Items.slime_ball}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{Items.ender_eye}, new Object[]{Items.ender_pearl, Items.blaze_powder}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{Items.blaze_powder}, new Object[]{new ItemStack(Items.redstone,2), Items.glowstone_dust}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{new ItemStack(Blocks.soul_sand, 4)}, new Object[]{new ItemStack(Blocks.sand, 2), "dustSaltpeter"}, 10000);
+        addRecipe(centrifugeRecipes, new Object[]{Items.magma_cream}, new Object[]{Items.blaze_powder, Items.slime_ball}, 30000);
+        addRecipe(centrifugeRecipes, new Object[]{Items.ender_eye}, new Object[]{Items.ender_pearl, Items.blaze_powder}, 30000);
+        addRecipe(centrifugeRecipes, new Object[]{Items.blaze_powder}, new Object[]{new ItemStack(Items.redstone,2), Items.glowstone_dust}, 30000);
+        addRecipe(centrifugeRecipes, new Object[]{new ItemStack(Blocks.soul_sand, 4)}, new Object[]{new ItemStack(Blocks.sand, 2), "dustSaltpeter"}, 30000);
         addRecipe(centrifugeRecipes, new Object[]{"dustDirtyNetherrack,2"}, new Object[]{"dustNetherrack,2", "dustSulfur"}, 10000);
         addRecipe(centrifugeRecipes, new Object[]{"dustNetherrack,16"}, new Object[]{Items.redstone, "dustSulfur,4", "dustCoal", "nuggetGold"}, 80000);
         addRecipe(centrifugeRecipes, new Object[]{new ItemStack(Items.gunpowder, 2)}, new Object[]{"dustCoal", "dustSaltpeter,2", "dustSulfur"}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{new ItemStack(Items.glowstone_dust, 16)}, new Object[]{new ItemStack(Items.redstone, 8), "dustGold,8"}, 1000000);
+        addRecipe(centrifugeRecipes, new Object[]{new ItemStack(Items.glowstone_dust, 16)}, new Object[]{new ItemStack(Items.redstone, 8), "dustGold,8"}, 240000);
 
 
         //Alloy Seperating
-        addRecipe(centrifugeRecipes, new Object[]{"dustBrass,4"}, new Object[]{"dustCopper,3", "dustZinc"}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustBronze,4"}, new Object[]{"dustCopper,3", "dustTin"}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustElectrum,2"}, new Object[]{"dustSilver", "dustGold"}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustAluminiumBrass,4"}, new Object[]{"dustAluminium,3", "dustCopper"}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustAlumite,6"}, new Object[]{"dustObsidian,2", "dustIron,4", "dustAluminium,10"}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustManyullyn"}, new Object[]{"dustCobalt", "dustArdite"}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustInvar,3"}, new Object[]{"dustIron,2", "dustNickel"}, 10000);
+        addRecipe(centrifugeRecipes, new Object[]{"dustBrass,4"}, new Object[]{"dustCopper,3", "dustZinc"}, 18000);
+        addRecipe(centrifugeRecipes, new Object[]{"dustBronze,4"}, new Object[]{"dustCopper,3", "dustTin"}, 18000);
+        addRecipe(centrifugeRecipes, new Object[]{"dustElectrum,2"}, new Object[]{"dustSilver", "dustGold"}, 18000);
+        addRecipe(centrifugeRecipes, new Object[]{"dustAluminiumBrass,4"}, new Object[]{"dustAluminium,3", "dustCopper"}, 18000);
+        addRecipe(centrifugeRecipes, new Object[]{"dustAlumite,6"}, new Object[]{"dustObsidian,2", "dustIron,4", "dustAluminium,10"}, 18000);
+        addRecipe(centrifugeRecipes, new Object[]{"dustManyullyn"}, new Object[]{"dustCobalt", "dustArdite"}, 18000);
+        addRecipe(centrifugeRecipes, new Object[]{"dustInvar,3"}, new Object[]{"dustIron,2", "dustNickel"}, 18000);
 
         //Compressor
         addCompressorRecipe(new Object[]{new ItemStack(Items.blaze_powder, 5)}, new Object[]{Items.blaze_rod}, 3200, false);
@@ -113,6 +129,20 @@ public class ThermalScienceRecipes {
 
         //Wiremill
         addRecipe(wiremillRecipes, new Object[]{"ingotCopper"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireCopper, 2)}, 8000);
+        addRecipe(wiremillRecipes, new Object[]{"ingotTin"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireTin, 2)}, 4000);
+        addRecipe(wiremillRecipes, new Object[]{"ingotIron"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireIron, 2)}, 1000);
+        addRecipe(wiremillRecipes, new Object[]{"ingotGold"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireGold, 2)}, 50000);
+        addRecipe(wiremillRecipes, new Object[]{"ingotSilver"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireSilver, 2)}, 40000);
+        addRecipe(wiremillRecipes, new Object[]{"ingotLead"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireLead, 2)}, 8000);
+        addRecipe(wiremillRecipes, new Object[]{"ingotNickel"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireNickel, 2)}, 8000);
+        addRecipe(wiremillRecipes, new Object[]{"ingotPlatinum"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wirePlatinum, 2)}, 60000);
+        addRecipe(wiremillRecipes, new Object[]{"ingotMithril"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireMithril, 2)}, 50000);
+        addRecipe(wiremillRecipes, new Object[]{"ingotElectrum"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireElectrum, 2)}, 8000);
+        addRecipe(wiremillRecipes, new Object[]{"ingotInvar"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireInvar, 2)}, 8000);
+        addRecipe(wiremillRecipes, new Object[]{"ingotBronze"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireBronze, 2)}, 20000);
+        addRecipe(wiremillRecipes, new Object[]{"ingotSignalum"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireSignalum, 2)}, 8000);
+        addRecipe(wiremillRecipes, new Object[]{"ingotLumium"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireLumium, 2)}, 8000);
+        addRecipe(wiremillRecipes, new Object[]{"ingotEnderium"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireEnderium, 2)}, 200000);
     }
 
     public static void postInitialize() {
@@ -141,7 +171,7 @@ public class ThermalScienceRecipes {
 
     public static void addUpgradableMachineRecipes(Block machine, Item tfMaterial) {
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(machine, 1, 1), "IGI", "_M_", "I_I", 'I', "ingotInvar", 'G', new ItemStack(tfMaterial, 1, 135), 'M', new ItemStack(machine, 1, 0)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(machine, 1, 2), "IGI", "_M_", "I_I", 'I', "blockGlassHardened", 'G', new ItemStack(tfMaterial, 1, 138), 'M', new ItemStack(machine, 1, 1)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(machine, 1, 2), "IGI", "_M_", "IDI", 'I', "blockGlassHardened", 'G', new ItemStack(tfMaterial, 1, 138), 'M', new ItemStack(machine, 1, 1), 'D', Items.diamond));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(machine, 1, 3), "IGI", "_M_", "I_I", 'I', "ingotSilver", 'G', new ItemStack(tfMaterial, 1, 140), 'M', new ItemStack(machine, 1, 2)));
     }
 
@@ -180,14 +210,14 @@ public class ThermalScienceRecipes {
             Item tfMaterial = GameRegistry.findItem("ThermalFoundation", "material");
 
             //Machines
-            GameRegistry.addRecipe(new ItemStack(ThermalScience.blockWatermill), "MGM", "GWG", "MGM", 'G', new ItemStack(tfMaterial, 1, 128), 'M', ItemMaterial.motor, 'W', ItemMaterial.wireCopper);
+            GameRegistry.addRecipe(new ItemStack(ThermalScience.blockWatermill), "MGM", "GTG", "MGM", 'G', new ItemStack(tfMaterial, 1, 128), 'M', ItemMaterial.motor, 'T', new ItemStack(teMaterial, 1, 2));
 
 
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockCompressor, "MPM", "IFI", "MPM", 'M', ItemMaterial.motor, 'P', Blocks.piston, 'I', Blocks.iron_bars, 'F', teMachineFrame));
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockWiremill, "MII", "PFT", "MII", 'M', ItemMaterial.motor, 'P', Blocks.piston, 'T', ItemMaterial.tube, 'I', Items.iron_ingot, 'F', teMachineFrame));
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockCarbothermicFurnace, "III", "ISI", "III", 'I', "ingotInvar", 'S', new ItemStack(GameRegistry.findItem("ThermalExpansion", "Machine"), 1, 3)));
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockCentrifuge, "IMI", "BFB", "IMI", 'I', "ingotInvar", 'M', ItemMaterial.motor, 'B', Items.bucket, 'F', teMachineFrame));
-            GameRegistry.addRecipe(new ItemStack(ThermalScience.blockEnergyRelay), "ICI", "TWR","ICI", 'C', new ItemStack(teMaterial, 1, 3), 'T', new ItemStack(teMaterial, 1, 2), 'R', new ItemStack(teMaterial, 1, 1), 'W', ItemMaterial.wireCopper, 'I', Items.iron_ingot);
+            GameRegistry.addRecipe(new ItemStack(ThermalScience.blockEnergyRelay), "ICI", "TWR","ICI", 'C', new ItemStack(teMaterial, 1, 3), 'T', new ItemStack(teMaterial, 1, 2), 'R', new ItemStack(teMaterial, 1, 1), 'W', ItemMaterial.insulatedWireSilver, 'I', Items.iron_ingot);
 
             addUpgradableMachineRecipes(ThermalScience.blockCompressor, tfMaterial);
             addUpgradableMachineRecipes(ThermalScience.blockWiremill, tfMaterial);
@@ -252,7 +282,7 @@ public class ThermalScienceRecipes {
             Item eioMaterial = GameRegistry.findItem("EnderIO", "itemMaterial");
 
             if (eioMaterial != null) {
-                addRecipe(carbothermicFurnaceRecipes, new Object[]{Items.coal, Blocks.sand}, new Object[]{eioMaterial}, 2000);
+                addRecipe(carbothermicFurnaceRecipes, new Object[]{Items.coal, Blocks.sand}, new Object[]{eioMaterial}, 16000);
             }
         }
     }

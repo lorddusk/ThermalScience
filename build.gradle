@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.10-1.1a"
+version = "1.7.10-1.1b"
 group = "com.creysys.ThermalScience" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "ThermalScience"
 
@@ -57,9 +57,6 @@ dependencies {
 
 	compile "mcp.mobius.waila:Waila:1.5.8a_1.7.10"
     compile "li.cil.oc:OpenComputers:MC1.7.10-1.5.+:api"
-	
-	compile files ("lib/CoFHLib-[1.7.10]1.0.0B7-dev-29.jar")
-	compile files ("lib/ComputerCraft1.73.jar")
 }
 
 processResources
