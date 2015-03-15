@@ -25,6 +25,7 @@ public class BlockGravitationalTank extends BlockContainer {
         setCreativeTab(ThermalScience.creativeTab);
 
         GameRegistry.registerBlock(this, blockName);
+        GameRegistry.registerTileEntity(TileEntityGravitationalTank.class, "tileEntityGravitationalTank");
     }
 
     @Override
@@ -33,7 +34,12 @@ public class BlockGravitationalTank extends BlockContainer {
     }
 
     @Override
-    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_) {
+    public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int meta) {
+        return false;
+    }
+
+    @Override
+    public boolean isOpaqueCube() {
         return false;
     }
 }

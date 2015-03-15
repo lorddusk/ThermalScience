@@ -1,5 +1,7 @@
 package com.creysys.ThermalScience;
 
+import net.minecraft.nbt.NBTBase;
+
 /**
  * Created by Creysys on 1/31/2015.
  */
@@ -28,4 +30,5 @@ public class ThermalScienceNBTTags {
     public static final String Count = "count";
     public static final String Controller = "controller";
     public static final String Door = "door";
+    public static final String Fluid = "fluid";
 }
