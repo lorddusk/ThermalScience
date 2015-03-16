@@ -6,9 +6,14 @@ import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.container.ContainerBasic;
 import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +58,14 @@ public abstract class GuiMachine extends GuiContainer
         drawCenteredString(fontRendererObj, getName(), guiLeft + xSize / 2, guiTop + 4, ColorHelper.DYE_WHITE);
         drawProgress();
         drawEnergy();
+
+    }
+
+    @Override
+    protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
         drawEnergyOverlay();
+
+        RenderHelper.enableGUIStandardItemLighting();
     }
 
     @Override
@@ -112,7 +124,7 @@ public abstract class GuiMachine extends GuiContainer
             int x = mouseX;
             int y = mouseY;
 
-            drawHoveringText(list, x + (width - xSize) / 2, y + (height - ySize) / 2, fontRendererObj);
+            drawHoveringText(list, x, y, fontRendererObj);
         }
     }
 

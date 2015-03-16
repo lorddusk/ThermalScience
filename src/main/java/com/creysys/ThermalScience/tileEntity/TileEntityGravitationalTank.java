@@ -19,7 +19,7 @@ public class TileEntityGravitationalTank extends TileEntity implements IFluidHan
     public boolean updateRenderer;
 
     public TileEntityGravitationalTank(){
-        capacity = 100000;
+        capacity = 10000000;
         updateRenderer = true;
     }
 
@@ -39,35 +39,72 @@ public class TileEntityGravitationalTank extends TileEntity implements IFluidHan
 
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
-        fluid = resource;
+        if(!canFill(from, resource.getFluid()))
+        {
+            return 0;
+        }
 
-        worldObj.markBlockForUpdate(xCoord,yCoord,zCoord);
-        return resource.amount;
+        int canFill = resource.amount;
+        if(fluid != null){
+            canFill = Math.min(resource.amount, capacity - fluid.amount);
+        }
+
+        if(doFill){
+            if(fluid == null){
+                fluid = resource.copy();
+            }
+            else
+            {
+                fluid.amount += canFill;
+            }
+
+            worldObj.markBlockForUpdate(xCoord,yCoord,zCoord);
+        }
+
+        return canFill;
     }
 
     @Override
     public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
-        return null;
+        if(!canDrain(from, resource.getFluid())){
+            return null;
+        }
+
+        return drain(from, resource.amount, doDrain);
     }
 
     @Override
     public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-        return null;
+        if(fluid == null){
+            return null;
+        }
+
+        int canDrain = Math.min(maxDrain, fluid.amount);
+
+        if(doDrain){
+            fluid.amount -= canDrain;
+
+            worldObj.markBlockForUpdate(xCoord,yCoord,zCoord);
+        }
+
+        FluidStack ret = fluid.copy();
+        ret.amount = canDrain;
+        return ret;
     }
 
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid) {
-        return true;
+        return this.fluid == null || this.fluid.getFluid() == fluid;
     }
 
     @Override
     public boolean canDrain(ForgeDirection from, Fluid fluid) {
-        return true;
+        return this.fluid != null && this.fluid.getFluid() == fluid;
     }
 
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-        return new FluidTankInfo[0];
+        return new FluidTankInfo[]{new FluidTankInfo(fluid, capacity)};
     }
 
     @Override

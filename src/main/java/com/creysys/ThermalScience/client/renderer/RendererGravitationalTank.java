@@ -5,16 +5,13 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import org.lwjgl.BufferUtils;
+import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Sphere;
 
-import java.nio.FloatBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.util.glu.GLU.*;
-import static org.lwjgl.util.glu.GLU.GLU_POINT;
 
 /**
  * Created by Creysys on 14 Mar 15.
@@ -32,29 +29,30 @@ public class RendererGravitationalTank extends TileEntitySpecialRenderer {
     @Override
     public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float f1) {
 
-        if(!(tileEntity instanceof TileEntityGravitationalTank)){
+        if (!(tileEntity instanceof TileEntityGravitationalTank)) {
             return;
         }
 
-        TileEntityGravitationalTank gravitationalTank = (TileEntityGravitationalTank)tileEntity;
+        TileEntityGravitationalTank gravitationalTank = (TileEntityGravitationalTank) tileEntity;
+        FluidStack fluid = gravitationalTank.fluid;
 
+        if (fluid != null) {
 
-        if(gravitationalTank.fluid != null){
+            float radius = (float)Math.pow(0.75f * fluid.amount / Math.PI, 1f/3f) * 0.025f;
+
             bindTexture(TextureMap.locationBlocksTexture);
-            IIcon icon = gravitationalTank.fluid.getFluid().getStillIcon();
-
-            float radius = (tileEntity.getWorldObj().getTotalWorldTime() / 100f) % 1;
+            IIcon icon = fluid.getFluid().getStillIcon();
 
             GL11.glPushMatrix();
 
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glTranslated(x + 0.5f, y + 0.5f, z + 0.5f);
+            GL11.glRotatef(90, 1, 0, 0);
+
             renderSphere(radius, icon.getMinU(), icon.getMinV(), icon.getMaxU(), icon.getMaxV());
 
             GL11.glPopMatrix();
         }
-
-
     }
 
     public void renderSphere(float radius, float minU, float minV, float maxU, float maxV) {
