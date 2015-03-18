@@ -3,12 +3,11 @@ package com.creysys.ThermalScience.block;
 import cofh.lib.util.helpers.StringHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
-import com.creysys.ThermalScience.util.IContentDropper;
 import com.creysys.ThermalScience.util.IWrenchable;
 import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.client.gui.IItemTooltipProvider;
-import com.creysys.ThermalScience.client.gui.ThermalScienceGuiID;
+import com.creysys.ThermalScience.ThermalScienceGuiID;
 import com.creysys.ThermalScience.item.ItemBlockMeta;
 import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
@@ -19,7 +18,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -30,7 +28,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

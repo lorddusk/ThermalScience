@@ -4,6 +4,7 @@ tile.blockCompressor.name=Compressor
 tile.blockCarbothermicFurnace.name=Carbothermic Furnace
 tile.blockCentrifuge.name=Centrifuge
 tile.blockWiremill.name=Wiremill
+tile.blockAssemblingMachine.name=Assembling Machine
 
 tile.blockWatermill.name=Watermill
 tile.blockEnergyRelay.name=Energy Relay
@@ -11,6 +12,10 @@ tile.blockEnergyRelay.name=Energy Relay
 tile.blockTeleporterWall.name=Teleporter Wall
 tile.blockTeleporterController.name=Teleporter Controller
 tile.blockTeleporterPowerTap.name=Teleporter Power Tap
+
+tile.blockGravitationalTank.name=Gravitational Tank
+
+
 
 item.itemPortableCompressor.name=Portable Compressor
 
@@ -49,6 +54,13 @@ item.materialInsulatedWireBronze.name=Insulated Bronze Wire
 item.materialInsulatedWireSignalum.name=Insulated Signalum Wire
 item.materialInsulatedWireLumium.name=Insulated Lumium Wire
 item.materialInsulatedWireEnderium.name=Insulated Enderium Wire
+
+item.materialTransistor.name=Transistor
+
+item.materialCircuitBasic.name=Basic Circuit
+item.materialCircuitHardened.name=Hardened Circuit
+item.materialCircuitReinforced.name=Reinforced Circuit
+item.materialCircuitResonant.name=Resonant Circuit
 
 item.dustNetherrack.name=Netherrack Dust
 item.dustDirtyNetherrack.name=Dirty Netherrack Dust

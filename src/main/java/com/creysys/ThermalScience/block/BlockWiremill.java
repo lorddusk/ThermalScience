@@ -1,7 +1,7 @@
 package com.creysys.ThermalScience.block;
 
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
-import com.creysys.ThermalScience.client.gui.ThermalScienceGuiID;
+import com.creysys.ThermalScience.ThermalScienceGuiID;
 import com.creysys.ThermalScience.tileEntity.TileEntityWiremill;
 import net.minecraft.client.renderer.texture.IIconRegister;
 
@@ -19,5 +19,10 @@ public class BlockWiremill extends BlockMachine {
 
         iconFrontOff = iconRegister.registerIcon(ThermalScienceTextures.wiremillOff.icon);
         iconFrontOn = iconRegister.registerIcon(ThermalScienceTextures.wiremillOn.icon);
+    }
+
+    @Override
+    public int getCraftingSpeed(int meta) {
+        return super.getCraftingSpeed(meta) / 2;
     }
 }

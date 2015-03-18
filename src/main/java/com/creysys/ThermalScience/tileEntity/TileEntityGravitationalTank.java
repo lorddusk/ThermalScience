@@ -16,11 +16,9 @@ public class TileEntityGravitationalTank extends TileEntity implements IFluidHan
 
     public FluidStack fluid;
     public int capacity;
-    public boolean updateRenderer;
 
     public TileEntityGravitationalTank(){
         capacity = 10000000;
-        updateRenderer = true;
     }
 
     public void writeCustomToNBT(NBTTagCompound compound){

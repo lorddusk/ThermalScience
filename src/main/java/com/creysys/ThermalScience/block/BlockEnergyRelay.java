@@ -7,7 +7,7 @@ import com.creysys.ThermalScience.util.IWrenchable;
 import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.client.gui.IItemTooltipProvider;
-import com.creysys.ThermalScience.client.gui.ThermalScienceGuiID;
+import com.creysys.ThermalScience.ThermalScienceGuiID;
 import com.creysys.ThermalScience.item.ItemBlockMeta;
 import com.creysys.ThermalScience.tileEntity.TileEntityEnergyRelay;
 import com.creysys.ThermalScience.tileEntity.TileEntityMachine;

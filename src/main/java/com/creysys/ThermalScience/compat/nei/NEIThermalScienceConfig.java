@@ -24,6 +24,7 @@ public class NEIThermalScienceConfig implements IConfigureNEI {
         handlers.add(new RecipeHandlerCompressor());
         handlers.add(new RecipeHandlerCarbothermicFurnace());
         handlers.add(new RecipeHandlerWiremill());
+        handlers.add(new RecipeHandlerAssemblingMachine());
 
 
         for(int i = 0; i < handlers.size(); i++) {

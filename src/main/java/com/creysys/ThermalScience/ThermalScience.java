@@ -5,7 +5,6 @@ import com.creysys.ThermalScience.block.teleporter.BlockTeleporterController;
 import com.creysys.ThermalScience.block.teleporter.BlockTeleporterPowerTap;
 import com.creysys.ThermalScience.block.teleporter.BlockTeleporterWall;
 import com.creysys.ThermalScience.compat.ThermalScienceCompat;
-import com.creysys.ThermalScience.client.gui.ThermalScienceGuiHandler;
 import com.creysys.ThermalScience.item.ItemDust;
 import com.creysys.ThermalScience.item.ItemMaterial;
 import com.creysys.ThermalScience.item.ItemPortableCompressor;
@@ -52,6 +51,7 @@ public class ThermalScience
     public static BlockMachine blockCarbothermicFurnace;
     public static BlockMachine blockCentrifuge;
     public static BlockMachine blockWiremill;
+    public static BlockMachine blockAssemblingMachine;
 
     public static Block blockWatermill;
     public static BlockEnergyRelay blockEnergyRelay;
@@ -85,6 +85,7 @@ public class ThermalScience
         blockCarbothermicFurnace = new BlockCarbothermicFurnace();
         blockCentrifuge = new BlockCentrifuge();
         blockWiremill = new BlockWiremill();
+        blockAssemblingMachine = new BlockAssemblingMachine();
 
         blockWatermill = new BlockWatermill();
         blockEnergyRelay = new BlockEnergyRelay();

@@ -45,4 +45,9 @@ public class TileEntityWiremill extends TileEntityMachine {
     public String getInventoryName() {
         return "wiremill";
     }
+
+    @Override
+    public int getCraftingSpeed() {
+        return super.getCraftingSpeed() / 2;
+    }
 }

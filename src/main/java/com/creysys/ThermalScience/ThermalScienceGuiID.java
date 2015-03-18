@@ -1,4 +1,4 @@
-package com.creysys.ThermalScience.client.gui;
+package com.creysys.ThermalScience;
 
 /**
  * Created by Creysys on 29.01.2015.
@@ -10,5 +10,6 @@ public enum ThermalScienceGuiID
     Centrifuge,
     Wiremill,
     EnergyRelay,
-    TeleporterController
+    TeleporterController,
+    AssemblingMachine
 }

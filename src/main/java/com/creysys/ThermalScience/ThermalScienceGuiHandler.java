@@ -1,4 +1,4 @@
-package com.creysys.ThermalScience.client.gui;
+package com.creysys.ThermalScience;
 
 import com.creysys.ThermalScience.client.gui.guiScreen.*;
 import com.creysys.ThermalScience.container.*;
@@ -55,6 +55,11 @@ public class ThermalScienceGuiHandler implements IGuiHandler {
                     return new ContainerTeleporterController(player.inventory, (TileEntityTeleporterController)tileEntity);
                 }
                 break;
+            case AssemblingMachine:
+                if(tileEntity instanceof TileEntityAssemblingMachine) {
+                    return new ContainerAssemblingMachine(player.inventory, (TileEntityAssemblingMachine)tileEntity);
+                }
+                break;
         }
 
         return null;
@@ -101,6 +106,11 @@ public class ThermalScienceGuiHandler implements IGuiHandler {
             case TeleporterController:
                 if(tileEntity instanceof TileEntityTeleporterController) {
                     return new GuiTeleporterController(player.inventory, (TileEntityTeleporterController)tileEntity);
+                }
+                break;
+            case AssemblingMachine:
+                if(tileEntity instanceof TileEntityAssemblingMachine) {
+                    return new GuiAssemblingMachine(player.inventory, (TileEntityAssemblingMachine)tileEntity);
                 }
                 break;
         }
