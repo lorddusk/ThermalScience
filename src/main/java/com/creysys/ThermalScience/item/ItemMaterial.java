@@ -52,8 +52,6 @@ public class ItemMaterial extends ItemThermalScience {
     public static ItemStack insulatedWireLumium;
     public static ItemStack insulatedWireEnderium;
 
-    public static ItemStack transistor;
-
     public static ItemStack circuitBasic;
     public static ItemStack circuitHardened;
     public static ItemStack circuitReinforced;
@@ -112,8 +110,6 @@ public class ItemMaterial extends ItemThermalScience {
         insulatedWireSignalum = registerMaterial("InsulatedWireSignalum");
         insulatedWireLumium = registerMaterial("InsulatedWireLumium");
         insulatedWireEnderium = registerMaterial("InsulatedWireEnderium");
-
-        transistor = registerMaterial("Transistor");
 
         circuitBasic = registerMaterial("CircuitBasic");
         circuitHardened = registerMaterial("CircuitHardened");

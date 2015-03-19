@@ -55,8 +55,6 @@ item.materialInsulatedWireSignalum.name=Insulated Signalum Wire
 item.materialInsulatedWireLumium.name=Insulated Lumium Wire
 item.materialInsulatedWireEnderium.name=Insulated Enderium Wire
 
-item.materialTransistor.name=Transistor
-
 item.materialCircuitBasic.name=Basic Circuit
 item.materialCircuitHardened.name=Hardened Circuit
 item.materialCircuitReinforced.name=Reinforced Circuit
