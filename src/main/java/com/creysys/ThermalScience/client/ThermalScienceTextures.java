@@ -1,7 +1,5 @@
 package com.creysys.ThermalScience.client;
 
-import net.minecraft.util.ResourceLocation;
-
 /**
  * Created by Creysys on 09 Mar 15.
  */
@@ -47,6 +45,7 @@ public class ThermalScienceTextures {
 
     //Guis
     public static final ThermalScienceResourceLocation guiEnergy = new ThermalScienceResourceLocation("textures/gui/elements/energy.png");
+    public static final ThermalScienceResourceLocation guiFluid = new ThermalScienceResourceLocation("textures/gui/elements/fluid.png");
 
     public static final ThermalScienceResourceLocation guiProgressArrowRight = new ThermalScienceResourceLocation("textures/gui/elements/arrow/right.png");
     public static final ThermalScienceResourceLocation guiProgressArrowUp = new ThermalScienceResourceLocation("textures/gui/elements/arrow/up.png");

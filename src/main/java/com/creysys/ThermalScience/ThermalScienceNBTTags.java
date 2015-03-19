@@ -31,4 +31,6 @@ public class ThermalScienceNBTTags {
     public static final String Controller = "controller";
     public static final String Door = "door";
     public static final String Fluid = "fluid";
+    public static final String Recipe = "recipe";
+    public static final String Amount = "amount";
 }

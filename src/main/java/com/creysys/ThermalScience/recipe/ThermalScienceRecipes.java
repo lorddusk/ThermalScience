@@ -3,6 +3,7 @@ package com.creysys.ThermalScience.recipe;
 import cofh.api.modhelpers.ThermalExpansionHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceConfig;
+import com.creysys.ThermalScience.recipe.recipe.RecipeAssemblingMachine;
 import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.item.ItemDust;
 import com.creysys.ThermalScience.item.ItemMaterial;
@@ -149,10 +150,10 @@ public class ThermalScienceRecipes {
         addRecipe(wiremillRecipes, new Object[]{"ingotEnderium"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireEnderium, 2)}, 100000);
 
         //Assembling Machine
-        addRecipe(assemblingMachineRecipes, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.insulatedWireCopper, 3), "ingotCopper"}, new Object[]{ItemMaterial.circuitBasic}, 8000);
-        addRecipe(assemblingMachineRecipes, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.insulatedWireInvar, 6), "ingotIron"}, new Object[]{ItemMaterial.circuitHardened}, 8000);
-        addRecipe(assemblingMachineRecipes, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.insulatedWireElectrum, 6), "ingotGold"}, new Object[]{ItemMaterial.circuitReinforced}, 20000);
-        addRecipe(assemblingMachineRecipes, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.insulatedWireEnderium, 6), Items.diamond}, new Object[]{ItemMaterial.circuitResonant}, 100000);
+        addAssemblingMachineRecipe(new Object[]{ThermalScienceUtil.setStack(ItemMaterial.insulatedWireCopper, 3), "ingotCopper"}, new Object[]{ItemMaterial.circuitBasic}, 8000, "redstone", 200);
+        addAssemblingMachineRecipe(new Object[]{ThermalScienceUtil.setStack(ItemMaterial.insulatedWireInvar, 6), "ingotIron"}, new Object[]{ItemMaterial.circuitHardened}, 8000, "redstone", 400);
+        addAssemblingMachineRecipe(new Object[]{ThermalScienceUtil.setStack(ItemMaterial.insulatedWireElectrum, 6), "ingotGold"}, new Object[]{ItemMaterial.circuitReinforced}, 20000, "redstone", 800);
+        addAssemblingMachineRecipe(new Object[]{ThermalScienceUtil.setStack(ItemMaterial.insulatedWireEnderium, 6), Items.diamond}, new Object[]{ItemMaterial.circuitResonant}, 100000, "redstone", 1000);
     }
 
     public static void postInitialize() {
@@ -189,6 +190,10 @@ public class ThermalScienceRecipes {
 
     public static void addCompressorRecipe(Object[] input, Object[] output, int energy, boolean portable) {
         addRecipe(compressorRecipes, new RecipeCompressor(input, output, energy, portable));
+    }
+
+    public static void addAssemblingMachineRecipe(Object[] input, Object[] output, int energy, String fluid, int fluidAmount) {
+        addRecipe(assemblingMachineRecipes, new RecipeAssemblingMachine(input, output, energy, fluid, fluidAmount));
     }
 
     public static void addCompressorOreRecipes() {

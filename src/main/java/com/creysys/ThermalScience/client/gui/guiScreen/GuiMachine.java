@@ -51,7 +51,7 @@ public abstract class GuiMachine extends GuiContainer
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
+    protected void drawGuiContainerBackgroundLayer(float f1, int i1, int i2) {
         ThermalScienceUtil.setTexture(guiTexture);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
@@ -62,18 +62,18 @@ public abstract class GuiMachine extends GuiContainer
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
+    protected void drawGuiContainerForegroundLayer(int i1, int i2) {
         drawEnergyOverlay();
 
         RenderHelper.enableGUIStandardItemLighting();
     }
 
     @Override
-    public void drawScreen(int mouseX, int mouseY, float p_73863_3_) {
+    public void drawScreen(int mouseX, int mouseY, float f1) {
         this.mouseX = mouseX - (width - xSize) / 2;
         this.mouseY = mouseY - (height - ySize) / 2;
 
-        super.drawScreen(mouseX, mouseY, p_73863_3_);
+        super.drawScreen(mouseX, mouseY, f1);
     }
 
     public void drawProgress(){
@@ -90,15 +90,15 @@ public abstract class GuiMachine extends GuiContainer
         }
     }
 
-    private void drawEnergy(){
-        drawEnergy(tileEntity.energyStored, tileEntity.getMaxEnergyStored(null),guiLeft, guiTop);
+    private void drawEnergy() {
+        drawEnergy(tileEntity.energyStored, tileEntity.getMaxEnergyStored(null), guiLeft, guiTop);
     }
 
-    public void drawEnergy(int energyStored, int maxEnergyStored,int xOffset, int yOffset){
+    public void drawEnergy(int energyStored, int maxEnergyStored,int xOffset, int yOffset) {
         ThermalScienceUtil.setTexture(ThermalScienceTextures.guiEnergy);
         ThermalScienceUtil.drawTexturedModalRect(xOffset + energyX, yOffset + energyY, 1, 0, energyWidth, energyHeight, 32, 64);
 
-        if(energyStored > 0) {
+        if (energyStored > 0) {
             int cut = energyHeight - 2 - (int) Math.floor(40f / (float) maxEnergyStored * (float) energyStored);
             ThermalScienceUtil.drawTexturedModalRect(xOffset + energyX + 1, yOffset + energyY + cut + 1, 18, cut + 1, energyWidth - 2, energyHeight - cut - 2, 32, 64);
         }

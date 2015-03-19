@@ -37,26 +37,23 @@ public class TileEntityGravitationalTank extends TileEntity implements IFluidHan
 
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
-        if(!canFill(from, resource.getFluid()))
-        {
+        if (!canFill(from, resource.getFluid())) {
             return 0;
         }
 
         int canFill = resource.amount;
-        if(fluid != null){
+        if (fluid != null) {
             canFill = Math.min(resource.amount, capacity - fluid.amount);
         }
 
-        if(doFill){
-            if(fluid == null){
+        if (doFill) {
+            if (fluid == null) {
                 fluid = resource.copy();
-            }
-            else
-            {
+            } else {
                 fluid.amount += canFill;
             }
 
-            worldObj.markBlockForUpdate(xCoord,yCoord,zCoord);
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
 
         return canFill;
@@ -64,7 +61,7 @@ public class TileEntityGravitationalTank extends TileEntity implements IFluidHan
 
     @Override
     public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
-        if(!canDrain(from, resource.getFluid())){
+        if (!canDrain(from, resource.getFluid())) {
             return null;
         }
 
@@ -73,16 +70,16 @@ public class TileEntityGravitationalTank extends TileEntity implements IFluidHan
 
     @Override
     public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-        if(fluid == null){
+        if (fluid == null) {
             return null;
         }
 
         int canDrain = Math.min(maxDrain, fluid.amount);
 
-        if(doDrain){
+        if (doDrain) {
             fluid.amount -= canDrain;
 
-            worldObj.markBlockForUpdate(xCoord,yCoord,zCoord);
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
 
         FluidStack ret = fluid.copy();

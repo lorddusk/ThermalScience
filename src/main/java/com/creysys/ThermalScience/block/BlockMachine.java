@@ -68,10 +68,12 @@ public class BlockMachine extends BlockContainer implements IItemTooltipProvider
     }
 
     @Override
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
+    public TileEntity createNewTileEntity(World world, int meta) {
         try {
             return (TileEntityMachine)tileEntityClass.newInstance();
         } catch (Exception ex) {
+            System.out.println("Could not create TE!");
+            ex.printStackTrace();
             return null;
         }
     }

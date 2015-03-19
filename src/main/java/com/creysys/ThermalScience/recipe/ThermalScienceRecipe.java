@@ -1,9 +1,12 @@
 package com.creysys.ThermalScience.recipe;
 
+import com.creysys.ThermalScience.ThermalScienceNBTTags;
+import com.creysys.ThermalScience.recipe.recipe.RecipeAssemblingMachine;
 import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import org.apache.commons.lang3.StringUtils;
 
 
@@ -11,6 +14,19 @@ import org.apache.commons.lang3.StringUtils;
  * Created by Creysys on 2/1/2015.
  */
 public class ThermalScienceRecipe {
+
+    public static ThermalScienceRecipe readFromNBT(String key, NBTTagCompound compound){
+        NBTTagCompound recipeCompound = compound.getCompoundTag(key);
+        String id = recipeCompound.getString(ThermalScienceNBTTags.Id);
+        if(id == "recipe") {
+            return new ThermalScienceRecipe(null, null, 0);
+        }
+        else if(id == "recipeAssemblingMachine") {
+            return new RecipeAssemblingMachine(null, null, 0, recipeCompound.getString(ThermalScienceNBTTags.Fluid), recipeCompound.getInteger(ThermalScienceNBTTags.Amount));
+        }
+
+        return null;
+    }
 
     public Object[] inputs;
     public Object[] outputs;
@@ -95,4 +111,17 @@ public class ThermalScienceRecipe {
 
         return true;
     }
+
+    public String getId(){
+        return "recipe";
+    }
+
+    public void writeToNBT(String key, NBTTagCompound compound){
+        NBTTagCompound recipeCompound = new NBTTagCompound();
+        recipeCompound.setString(ThermalScienceNBTTags.Id, getId());
+        writeCustomToNBT(recipeCompound);
+        compound.setTag(key, recipeCompound);
+    }
+
+    public void writeCustomToNBT(NBTTagCompound compound){}
 }

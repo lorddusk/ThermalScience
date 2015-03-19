@@ -31,10 +31,12 @@ public class RecipeHandlerMachine extends TemplateRecipeHandler {
         this.recipes = recipes;
     }
 
-    private class CachedRecipeMachine extends CachedRecipe {
+    public class CachedRecipeMachine extends CachedRecipe {
 
         private Slot[] inputSlots;
         private Slot[] outputSlots;
+
+        public ThermalScienceRecipe recipe;
 
         public List<ItemStack> inputs;
         public List<ItemStack> outputs;
@@ -43,6 +45,7 @@ public class RecipeHandlerMachine extends TemplateRecipeHandler {
         public boolean isValid;
 
         public CachedRecipeMachine(GuiMachine gui, ThermalScienceRecipe recipe) {
+            this.recipe = recipe;
 
             inputSlots = gui.getInputSlots();
             outputSlots = gui.getOutputSlots();

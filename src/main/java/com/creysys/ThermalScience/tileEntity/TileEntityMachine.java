@@ -41,6 +41,7 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
     public int craftingEnergyNeeded;
     public ItemStack[] craftingOutputs;
     public ItemStack[] craftingInputs;
+    public ThermalScienceRecipe craftingRecipe;
 
     public byte facing;
     public boolean active;
@@ -55,6 +56,7 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
         craftingEnergyNeeded = 0;
         craftingOutputs = null;
         craftingInputs = null;
+        craftingRecipe = null;
 
         facing = 2;
         active = false;
@@ -106,6 +108,9 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
         if(craftingInputs != null){
             ThermalScienceUtil.writeStacksToNBT(craftingInputs, compound, ThermalScienceNBTTags.CraftingInputs);
         }
+        if(craftingRecipe != null){
+            craftingRecipe.writeToNBT(ThermalScienceNBTTags.Recipe, compound);
+        }
 
         ThermalScienceUtil.writeStacksToNBT(slots, compound, ThermalScienceNBTTags.Slots);
     }
@@ -126,6 +131,9 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
         }
         if(compound.hasKey(ThermalScienceNBTTags.CraftingInputs)){
             craftingInputs = ThermalScienceUtil.readStacksFromNBT(getCraftingInputSize(),compound,ThermalScienceNBTTags.CraftingInputs);
+        }
+        if(compound.hasKey(ThermalScienceNBTTags.Recipe)) {
+            craftingRecipe = ThermalScienceRecipe.readFromNBT(ThermalScienceNBTTags.Recipe, compound);
         }
 
         slots = ThermalScienceUtil.readStacksFromNBT(getSizeInventory(), compound, ThermalScienceNBTTags.Slots);
@@ -154,10 +162,11 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
                 outputs[i] = ThermalScienceUtil.getStack(recipe.outputs[i]);
             }
 
-            if(energyStored >= recipe.energy && canCraft(outputs)){
+            if(energyStored >= recipe.energy && canCraft(recipe, outputs)){
                 craftingEnergyNeeded = recipe.energy;
                 craftingEnergy = 0;
                 craftingOutputs = outputs;
+                craftingRecipe = recipe;
 
                 for(int i = 0; i < recipe.inputs.length; i++){
                     ItemStack stack = ThermalScienceUtil.getStack(recipe.inputs[i]);
@@ -194,7 +203,7 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
             if(craftingEnergy >= craftingEnergyNeeded){
                 craftingEnergy = 0;
 
-                itemsCrafted(craftingOutputs);
+                itemsCrafted(craftingRecipe, craftingOutputs);
 
                 craftingOutputs = null;
                 craftingInputs = null;
@@ -210,7 +219,7 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
         }
     }
 
-    public void itemsCrafted(ItemStack[] stacks) {
+    public void itemsCrafted(ThermalScienceRecipe recipe, ItemStack[] stacks) {
         if (stacks != null && stacks.length > 0) {
             for (int i = 0; i < stacks.length; i++) {
                 for (int j = 0; j < getCraftingOutputSize(); j++) {
@@ -230,7 +239,7 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
 
-    public boolean canCraft(ItemStack[] stacks){
+    public boolean canCraft(ThermalScienceRecipe recipe, ItemStack[] stacks){
         if (stacks != null && stacks.length > 0) {
 
             ArrayList<Integer> occupiedSlots = new ArrayList<Integer>();

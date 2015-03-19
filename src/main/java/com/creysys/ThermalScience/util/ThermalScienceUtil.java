@@ -5,6 +5,7 @@ import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.network.packet.PacketEnergy;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipe;
 import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
+import com.sun.prism.Texture;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -12,6 +13,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -24,12 +26,14 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.oredict.OreDictionary;
 import org.lwjgl.opengl.GL11;
 
+import javax.xml.soap.Text;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -288,11 +292,36 @@ public class ThermalScienceUtil {
         world.setBlockToAir(x, y, z);
     }
 
-    public static void drawTexturedModalRect(int x, int y, int u, int v, int width, int height){
+    public static void drawTexturedModalRectWithIcon(IIcon icon, int x, int y) {
+        drawTexturedModalRectWithIcon(icon, x, y , icon.getIconWidth(), icon.getIconHeight(), false);
+    }
+
+    public static void drawTexturedModalRectWithIcon(IIcon icon, int x, int y, int width, int height, boolean crop) {
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        float minU = icon.getMinU();
+        float minV = icon.getMinV();
+        float maxU = icon.getMaxU();
+        float maxV = icon.getMaxV();
+
+        if(crop){
+            maxU = minU + (maxU - minU) / (float)icon.getIconWidth() * (float)width;
+            maxV = minV + (maxV - minV) / (float)icon.getIconHeight() * (float)height;
+        }
+
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
+        tessellator.addVertexWithUV(x, y + height, 0, minU, maxV);
+        tessellator.addVertexWithUV(x + width, y + height, 0, maxU, maxV);
+        tessellator.addVertexWithUV(x + width, y, 0, maxU, minV);
+        tessellator.addVertexWithUV(x, y, 0, minU, minV);
+        tessellator.draw();
+    }
+
+    public static void drawTexturedModalRect(int x, int y, float u, float v, int width, int height){
         drawTexturedModalRect(x, y, u, v, width, height, 256, 256);
     }
 
-    public static void drawTexturedModalRect(int x, int y, int u, int v, int width, int height, int textureWidth, int textureHeight) {
+    public static void drawTexturedModalRect(int x, int y, float u, float v, int width, int height, int textureWidth, int textureHeight) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         float f = 1F / (float) textureWidth;
         float f1 = 1F / (float) textureHeight;
