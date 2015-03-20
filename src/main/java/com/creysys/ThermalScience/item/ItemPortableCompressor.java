@@ -4,11 +4,13 @@ import cofh.api.energy.ItemEnergyContainer;
 import cofh.lib.util.helpers.StringHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
+import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
 import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipes;
 import com.creysys.ThermalScience.recipe.recipe.RecipeCompressor;
 import cpw.mods.fml.common.registry.GameRegistry;
+import dan200.computercraft.ComputerCraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -30,6 +32,10 @@ import java.util.Map;
  */
 public class ItemPortableCompressor extends ItemEnergyContainer
 {
+    public static final int[] mapCapacities = new int[]{4000000, 20000000};
+    public static final int[] mapBandwidths = new int[]{8000, 32000};
+
+
     public static Hashtable<ItemStack, ItemStack> entries;
 
     public static void registerRecipes(){
@@ -56,7 +62,7 @@ public class ItemPortableCompressor extends ItemEnergyContainer
     public IIcon iconOff;
 
     public ItemPortableCompressor() {
-        super(2000000, 2000, 2000);
+        super(0, 0, 0);
 
         setUnlocalizedName("itemPortableCompressor");
         setCreativeTab(ThermalScience.creativeTab);
@@ -65,6 +71,26 @@ public class ItemPortableCompressor extends ItemEnergyContainer
 
         setMaxStackSize(1);
         setMaxDamage(16);
+    }
+
+    public int getTier(ItemStack stack){
+        int tier = 0;
+
+        if(stack.hasTagCompound() && stack.getTagCompound().hasKey(ThermalScienceNBTTags.Tier)){
+            tier = stack.getTagCompound().getInteger(ThermalScienceNBTTags.Tier);
+        }
+
+        return tier;
+    }
+
+    public int getCapacity(ItemStack stack){
+        capacity = mapCapacities[getTier(stack)];
+        return capacity;
+    }
+
+    public int getBandwith(ItemStack stack){
+        maxReceive = mapBandwidths[getTier(stack)];
+        return maxReceive;
     }
 
     @Override
@@ -91,13 +117,15 @@ public class ItemPortableCompressor extends ItemEnergyContainer
             compound.setInteger(ThermalScienceNBTTags.EnergyStored, 0);
         }
 
+        info.add("Tier: " + TileEntityMachine.mapTiers[getTier(stack) + 2]);
+
         if (active) {
             info.add(StringHelper.GREEN + "Active");
         } else {
             info.add(StringHelper.RED + "Inactive");
         }
 
-        info.add(energyStored + " / " + capacity + " RF");
+        info.add(energyStored + " / " + getCapacity(stack) + " RF");
     }
 
     @Override
@@ -174,8 +202,8 @@ public class ItemPortableCompressor extends ItemEnergyContainer
                         }
 
                         stack.getTagCompound().setInteger(ThermalScienceNBTTags.EnergyStored, energyStored);
-
                         updateDamage(stack);
+
                         player.inventoryContainer.detectAndSendChanges();
 
 
@@ -230,16 +258,6 @@ public class ItemPortableCompressor extends ItemEnergyContainer
         return 1;
     }
 
-    public void updateDamage(ItemStack stack) {
-        int energyStored = 0;
-
-        if(stack.hasTagCompound() && stack.getTagCompound().hasKey(ThermalScienceNBTTags.EnergyStored)){
-            energyStored = stack.getTagCompound().getInteger(ThermalScienceNBTTags.EnergyStored);
-        }
-
-        stack.setItemDamage(getMaxDamage() - (int)Math.floor(((float)getMaxDamage() - 1) / (float)capacity * (float)energyStored));
-    }
-
     @Override
     public int receiveEnergy(ItemStack stack, int max, boolean simulate) {
         int energyStored = 0;
@@ -256,13 +274,12 @@ public class ItemPortableCompressor extends ItemEnergyContainer
             energyStored = compound.getInteger(ThermalScienceNBTTags.EnergyStored);
         }
 
-        int canReceive = Math.min(Math.min(max, maxReceive), capacity - energyStored);
+        int canReceive = Math.min(Math.min(max, getBandwith(stack)), getCapacity(stack) - energyStored);
 
         energyStored += canReceive;
 
         compound.setInteger(ThermalScienceNBTTags.EnergyStored, energyStored);
         stack.setTagCompound(compound);
-
         updateDamage(stack);
 
         return canReceive;
@@ -325,12 +342,40 @@ public class ItemPortableCompressor extends ItemEnergyContainer
 
     @Override
     public void getSubItems(Item item, CreativeTabs tab, List list) {
-        list.add(new ItemStack(this, 1, getMaxDamage()));
-
-        ItemStack stack = new ItemStack(this, 1, 1);
-        NBTTagCompound compound = new NBTTagCompound();
-        compound.setInteger(ThermalScienceNBTTags.EnergyStored, capacity);
-        stack.setTagCompound(compound);
+        ItemStack stack = new ItemStack(this);
+        updateDamage(stack);
         list.add(stack);
+
+        stack = new ItemStack(this);
+        NBTTagCompound compound = new NBTTagCompound();
+        stack.setTagCompound(compound);
+        compound.setInteger(ThermalScienceNBTTags.EnergyStored, getCapacity(stack));
+        updateDamage(stack);
+        list.add(stack);
+
+        stack = new ItemStack(this);
+        compound = new NBTTagCompound();
+        stack.setTagCompound(compound);
+        compound.setInteger(ThermalScienceNBTTags.Tier, 1);
+        updateDamage(stack);
+        list.add(stack);
+
+        stack = new ItemStack(this);
+        compound = new NBTTagCompound();
+        stack.setTagCompound(compound);
+        compound.setInteger(ThermalScienceNBTTags.Tier, 1);
+        compound.setInteger(ThermalScienceNBTTags.EnergyStored, getCapacity(stack));
+        updateDamage(stack);
+        list.add(stack);
+    }
+
+    public void updateDamage(ItemStack stack) {
+        int energyStored = 0;
+
+        if(stack.hasTagCompound() && stack.getTagCompound().hasKey(ThermalScienceNBTTags.EnergyStored)){
+            energyStored = stack.getTagCompound().getInteger(ThermalScienceNBTTags.EnergyStored);
+        }
+
+        stack.setItemDamage(getMaxDamage() - (int)Math.floor(((float)getMaxDamage() - 1) / (float)getCapacity(stack) * (float)energyStored));
     }
 }

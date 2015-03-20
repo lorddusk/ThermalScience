@@ -36,29 +36,36 @@ public class RendererGravitationalTank extends TileEntitySpecialRenderer {
         TileEntityGravitationalTank gravitationalTank = (TileEntityGravitationalTank) tileEntity;
         FluidStack fluid = gravitationalTank.fluid;
 
+
+        float radius = 0.3f;
+
+        GL11.glPushMatrix();
+
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glTranslated(x + 0.5f, y + 0.5f, z + 0.5f);
+        GL11.glRotatef(90, 1, 0, 0);
+
         if (fluid != null) {
+            radius = (float) Math.pow(0.75f * fluid.amount / Math.PI, 1f / 3f) * 0.025f + 0.3f;
+        }
 
-            float radius = (float)Math.pow(0.75f * fluid.amount / Math.PI, 1f/3f) * 0.025f;
-
+        if (radius <= 0.3f) {
+            GL11.glColor3f(0.5f, 0.5f, 0.5f);
+            renderSphere(radius, 0, 0, 0, 0, false);
+        } else {
             bindTexture(TextureMap.locationBlocksTexture);
             IIcon icon = fluid.getFluid().getStillIcon();
 
-            GL11.glPushMatrix();
-
-            GL11.glDisable(GL11.GL_LIGHTING);
-            GL11.glTranslated(x + 0.5f, y + 0.5f, z + 0.5f);
-            GL11.glRotatef(90, 1, 0, 0);
-
-            renderSphere(radius, icon.getMinU(), icon.getMinV(), icon.getMaxU(), icon.getMaxV());
-
-            GL11.glPopMatrix();
+            renderSphere(radius, icon.getMinU(), icon.getMinV(), icon.getMaxU(), icon.getMaxV(), true);
         }
+
+        GL11.glPopMatrix();
     }
 
-    public void renderSphere(float radius, float minU, float minV, float maxU, float maxV) {
-        int slices = 10;
-        int stacks = 10;
-        float textureQuality = 4;
+    public void renderSphere(float radius, float minU, float minV, float maxU, float maxV, boolean texture) {
+        int slices = 16;
+        int stacks = 16;
+        float textureQuality = 7;
 
 
         float rho, drho, theta, dtheta;
@@ -73,7 +80,11 @@ public class RendererGravitationalTank extends TileEntitySpecialRenderer {
 
         glBegin(GL_TRIANGLE_FAN);
         glNormal3f(0.0f, 0.0f, 1.0f);
-        glTexCoord2f(minU, maxV);
+
+        if(texture) {
+            glTexCoord2f(minU, maxV);
+        }
+
         glVertex3f(0.0f, 0.0f, nsign * radius);
         for (j = 0; j <= slices; j++) {
             theta = (j == slices) ? 0.0f : j * dtheta;
@@ -83,7 +94,11 @@ public class RendererGravitationalTank extends TileEntitySpecialRenderer {
             if (normals) {
                 glNormal3f(x * nsign, y * nsign, z * nsign);
             }
-            glTexCoord2f(minU + (maxU - minU) * j / (slices + 1), minV + (maxV - minV) * j / (slices + 1));
+
+            if(texture) {
+                glTexCoord2f(minU + (maxU - minU) * j / (slices + 1), minV + (maxV - minV) * j / (slices + 1));
+            }
+
             glVertex3f(x * radius, y * radius, z * radius);
         }
         glEnd();
@@ -106,8 +121,9 @@ public class RendererGravitationalTank extends TileEntitySpecialRenderer {
                     glNormal3f(x * nsign, y * nsign, z * nsign);
                 }
 
-
-                glTexCoord2f(minU + ((maxU - minU) * ((s * textureQuality) % 1)), minV + ((maxV - minV) * ((t * textureQuality) % 1)));
+                if(texture) {
+                    glTexCoord2f(minU + ((maxU - minU) * ((s * textureQuality) % 1)), minV + ((maxV - minV) * ((t * textureQuality) % 1)));
+                }
 
 
 
@@ -119,8 +135,9 @@ public class RendererGravitationalTank extends TileEntitySpecialRenderer {
                     glNormal3f(x * nsign, y * nsign, z * nsign);
                 }
 
-
-                glTexCoord2f(minU + ((maxU - minU) * ((s * textureQuality) % 1)), minV + ((maxV - minV) * (((t - dt) * textureQuality) % 1)));
+                if(texture) {
+                    glTexCoord2f(minU + ((maxU - minU) * ((s * textureQuality) % 1)), minV + ((maxV - minV) * (((t - dt) * textureQuality) % 1)));
+                }
 
 
 
@@ -143,7 +160,11 @@ public class RendererGravitationalTank extends TileEntitySpecialRenderer {
             if (normals)
                 glNormal3f(x * nsign, y * nsign, z * nsign);
             s -= ds;
-            glTexCoord2f(minU + (maxU - minU) * (slices - j) / (slices + 1), minV + (maxV - minV) * (slices - j) / (slices + 1));
+
+            if(texture) {
+                glTexCoord2f(minU + (maxU - minU) * (slices - j) / (slices + 1), minV + (maxV - minV) * (slices - j) / (slices + 1));
+            }
+
             glVertex3f(x * radius, y * radius, z * radius);
         }
         glEnd();

@@ -3,6 +3,7 @@ package com.creysys.ThermalScience.recipe;
 import cofh.api.modhelpers.ThermalExpansionHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceConfig;
+import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.recipe.recipe.RecipeAssemblingMachine;
 import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.item.ItemDust;
@@ -17,6 +18,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -234,7 +236,7 @@ public class ThermalScienceRecipes {
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockCentrifuge, "IMI", "CFC", "IMI", 'I', "ingotInvar", 'M', ItemMaterial.motor, 'C', ItemMaterial.circuitBasic, 'F', teMachineFrame));
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockAssemblingMachine, "MDM", "CFC", "WCW", 'M', ItemMaterial.motor, 'C', ItemMaterial.circuitBasic, 'F', teMachineFrame, 'D', Items.diamond, 'W', ItemMaterial.insulatedWireTin));
 
-            GameRegistry.addRecipe(new ItemStack(ThermalScience.blockEnergyRelay), "IHI", "TWR","ICI", 'C', new ItemStack(teMaterial, 1, 3), 'T', new ItemStack(teMaterial, 1, 2), 'R', new ItemStack(teMaterial, 1, 1), 'W', ItemMaterial.insulatedWireSilver, 'I', Items.iron_ingot, 'H', ItemMaterial.circuitBasic);
+            GameRegistry.addRecipe(new ItemStack(ThermalScience.blockEnergyRelay), "IHI", "TWR", "ICI", 'C', new ItemStack(teMaterial, 1, 3), 'T', new ItemStack(teMaterial, 1, 2), 'R', new ItemStack(teMaterial, 1, 1), 'W', ItemMaterial.insulatedWireSilver, 'I', Items.iron_ingot, 'H', ItemMaterial.circuitBasic);
 
             addUpgradableMachineRecipes(ThermalScience.blockCompressor, tfMaterial);
             addUpgradableMachineRecipes(ThermalScience.blockWiremill, tfMaterial);
@@ -244,16 +246,27 @@ public class ThermalScienceRecipes {
             addUpgradableMachineRecipes(ThermalScience.blockAssemblingMachine, tfMaterial);
 
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockTeleporterController, "ICI", "EFE", "ICI", 'I', "ingotInvar", 'C', new ItemStack(teCapacitor, 1, 5), 'E', "ingotEnderium", 'F', new ItemStack(teMachineFrame, 1, 3), 'C', ItemMaterial.circuitResonant));
-            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockTeleporterPowerTap, "I_I", "ECE", "ICI", 'I', "ingotInvar", 'E', "ingotEnderium", 'C', new ItemStack(teMaterial, 1, 1), 'C', ItemMaterial.circuitResonant));
+            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockTeleporterPowerTap, "IEI", "WWC", "IEI", 'I', "ingotInvar", 'E', "ingotEnderium", 'C', new ItemStack(teMaterial, 1, 1), 'W', ItemMaterial.insulatedWireEnderium));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ThermalScience.blockTeleporterWall, 4), "IEI", "EIE", "IEI", 'I', "ingotInvar", 'E', "ingotEnderium"));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ThermalScience.itemTeleporterDestinationCard, 2), "W_W", "EPE", "_C_", 'W', ItemMaterial.wireCopper, 'E', "ingotEnderium", 'P', Items.paper, 'C', ItemMaterial.circuitResonant));
 
             //Items
-            GameRegistry.addShapelessRecipe(new ItemStack(ThermalScience.itemPortableCompressor), new ItemStack(ThermalScience.blockCompressor), new ItemStack(GameRegistry.findItem("ThermalExpansion", "capacitor"), 1, 4));
+            //Portable Compressor
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setInteger(ThermalScienceNBTTags.Tier, 0);
+            ItemStack rein = new ItemStack(ThermalScience.itemPortableCompressor);
+            rein.setTagCompound(compound);
+
+            compound = new NBTTagCompound();
+            compound.setInteger(ThermalScienceNBTTags.Tier, 1);
+            ItemStack reso = new ItemStack(ThermalScience.itemPortableCompressor);
+            reso.setTagCompound(compound);
+
+            GameRegistry.addShapedRecipe(rein, "HCR", "WMW", "___", 'M', new ItemStack(ThermalScience.blockCompressor, 1, 2), 'C', new ItemStack(GameRegistry.findItem("ThermalExpansion", "capacitor"), 1, 4), 'H', ItemMaterial.circuitHardened, 'R', ItemMaterial.circuitReinforced, 'W', ItemMaterial.insulatedWireElectrum);
+            GameRegistry.addShapedRecipe(reso, "RCS", "WMW", "___", 'M', rein, 'C', new ItemStack(GameRegistry.findItem("ThermalExpansion", "capacitor"), 1, 5), 'R', ItemMaterial.circuitReinforced, 'S', ItemMaterial.circuitResonant, 'W', ItemMaterial.insulatedWireSignalum);
 
 
-
-            if(ThermalScienceConfig.recipeOverrideMachines){
+            if (ThermalScienceConfig.recipeOverrideMachines) {
                 //Redstone Furnace
                 ItemStack stack = new ItemStack(teMachine, 1, 0);
                 ThermalScienceUtil.removeCraftingRecipeFor(stack);

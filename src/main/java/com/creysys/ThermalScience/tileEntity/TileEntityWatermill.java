@@ -92,7 +92,10 @@ public class TileEntityWatermill extends TileEntity implements IEnergyProvider, 
     }
 
     public void checkWater(){
-        active = worldObj.getBlock(xCoord + 1, yCoord, zCoord) == Blocks.water && worldObj.getBlock(xCoord - 1, yCoord, zCoord) == Blocks.water && worldObj.getBlock(xCoord, yCoord, zCoord + 1) == Blocks.water && worldObj.getBlock(xCoord, yCoord, zCoord - 1) == Blocks.water;
+        active = worldObj.getBlock(xCoord + 1, yCoord, zCoord) == Blocks.water &&
+                worldObj.getBlock(xCoord - 1, yCoord, zCoord) == Blocks.water &&
+                worldObj.getBlock(xCoord, yCoord, zCoord + 1) == Blocks.water &&
+                worldObj.getBlock(xCoord, yCoord, zCoord - 1) == Blocks.water;
     }
 
     @Override
