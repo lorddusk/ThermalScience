@@ -11,5 +11,6 @@ public enum ThermalScienceGuiID
     Wiremill,
     EnergyRelay,
     TeleporterController,
-    AssemblingMachine
+    AssemblingMachine,
+    Magnetizer
 }

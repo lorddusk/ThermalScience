@@ -52,6 +52,7 @@ public class ThermalScience
     public static BlockMachine blockCentrifuge;
     public static BlockMachine blockWiremill;
     public static BlockMachine blockAssemblingMachine;
+    public static BlockMachine blockMagnetizer;
 
     public static Block blockWatermill;
     public static BlockEnergyRelay blockEnergyRelay;
@@ -86,6 +87,7 @@ public class ThermalScience
         blockCentrifuge = new BlockCentrifuge();
         blockWiremill = new BlockWiremill();
         blockAssemblingMachine = new BlockAssemblingMachine();
+        blockMagnetizer = new BlockMagnetizer();
 
         blockWatermill = new BlockWatermill();
         blockEnergyRelay = new BlockEnergyRelay();

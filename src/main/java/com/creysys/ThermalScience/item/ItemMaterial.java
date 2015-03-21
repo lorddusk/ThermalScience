@@ -57,6 +57,10 @@ public class ItemMaterial extends ItemThermalScience {
     public static ItemStack circuitReinforced;
     public static ItemStack circuitResonant;
 
+    public static ItemStack magnet;
+    public static ItemStack inductionCoil;
+
+    public static ItemStack ingotMagneticIron;
 
 
     public List<String> materials;
@@ -115,6 +119,11 @@ public class ItemMaterial extends ItemThermalScience {
         circuitHardened = registerMaterial("CircuitHardened");
         circuitReinforced = registerMaterial("CircuitReinforced");
         circuitResonant = registerMaterial("CircuitResonant");
+
+        magnet = registerMaterial("Magnet");
+        inductionCoil = registerMaterial("InductionCoil");
+
+        ingotMagneticIron = registerMaterial("IngotMagneticIron");
     }
 
     public ItemStack registerMaterial(String name){

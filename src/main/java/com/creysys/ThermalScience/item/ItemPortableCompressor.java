@@ -34,6 +34,7 @@ public class ItemPortableCompressor extends ItemEnergyContainer
 {
     public static final int[] mapCapacities = new int[]{4000000, 20000000};
     public static final int[] mapBandwidths = new int[]{8000, 32000};
+    public static final int[] mapSpeeds = new int[]{5, 2};
 
 
     public static Hashtable<ItemStack, ItemStack> entries;
@@ -157,7 +158,7 @@ public class ItemPortableCompressor extends ItemEnergyContainer
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int p_77663_4_, boolean p_77663_5_) {
-        if(entity instanceof EntityPlayer && !world.isRemote && world.getTotalWorldTime() % 5 == 0) {
+        if(entity instanceof EntityPlayer && !world.isRemote && world.getTotalWorldTime() % mapSpeeds[getTier(stack)] == 0) {
 
             int energyStored = 0;
 

@@ -60,6 +60,11 @@ public class ThermalScienceGuiHandler implements IGuiHandler {
                     return new ContainerAssemblingMachine(player.inventory, (TileEntityAssemblingMachine)tileEntity);
                 }
                 break;
+            case Magnetizer:
+                if(tileEntity instanceof TileEntityMagnetizer) {
+                    return new ContainerMagnetizer(player.inventory, (TileEntityMagnetizer)tileEntity);
+                }
+                break;
         }
 
         return null;
@@ -111,6 +116,11 @@ public class ThermalScienceGuiHandler implements IGuiHandler {
             case AssemblingMachine:
                 if(tileEntity instanceof TileEntityAssemblingMachine) {
                     return new GuiAssemblingMachine(player.inventory, (TileEntityAssemblingMachine)tileEntity);
+                }
+                break;
+            case Magnetizer:
+                if(tileEntity instanceof TileEntityMagnetizer) {
+                    return new GuiMagnetizer(player.inventory, (TileEntityMagnetizer)tileEntity);
                 }
                 break;
         }

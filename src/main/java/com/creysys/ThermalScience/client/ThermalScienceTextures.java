@@ -33,6 +33,9 @@ public class ThermalScienceTextures {
     public static final ThermalScienceResourceLocation assemblingMachineOff = new ThermalScienceResourceLocation("textures/blocks/assemblingMachine/off.png");
     public static final ThermalScienceResourceLocation assemblingMachineOn = new ThermalScienceResourceLocation("textures/blocks/assemblingMachine/on.png");
 
+    public static final ThermalScienceResourceLocation magnetizerOff = new ThermalScienceResourceLocation("textures/blocks/magnetizer/off.png");
+    public static final ThermalScienceResourceLocation magnetizerOn = new ThermalScienceResourceLocation("textures/blocks/magnetizer/on.png");
+
 
     public static final ThermalScienceResourceLocation watermill = new ThermalScienceResourceLocation("textures/blocks/watermill.png");
 
@@ -57,6 +60,7 @@ public class ThermalScienceTextures {
     public static final ThermalScienceResourceLocation guiCarbothermicFurnace = new ThermalScienceResourceLocation("textures/gui/carbothermicFurnace.png");
     public static final ThermalScienceResourceLocation guiCompressor = new ThermalScienceResourceLocation("textures/gui/compressor.png");
     public static final ThermalScienceResourceLocation guiAssemblingMachine = new ThermalScienceResourceLocation("textures/gui/assemblingMachine.png");
+    public static final ThermalScienceResourceLocation guiMagnetizer = new ThermalScienceResourceLocation("textures/gui/magnetizer.png");
 
     public static final ThermalScienceResourceLocation guiEnergyRelay = new ThermalScienceResourceLocation("textures/gui/energyRelay.png");
 }

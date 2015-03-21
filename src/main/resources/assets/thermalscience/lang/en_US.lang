@@ -5,6 +5,7 @@ tile.blockCarbothermicFurnace.name=Carbothermic Furnace
 tile.blockCentrifuge.name=Centrifuge
 tile.blockWiremill.name=Wiremill
 tile.blockAssemblingMachine.name=Assembling Machine
+tile.blockMagnetizer.name=Magnetizer
 
 tile.blockWatermill.name=Watermill
 tile.blockEnergyRelay.name=Energy Relay
@@ -59,6 +60,11 @@ item.materialCircuitBasic.name=Basic Circuit
 item.materialCircuitHardened.name=Hardened Circuit
 item.materialCircuitReinforced.name=Reinforced Circuit
 item.materialCircuitResonant.name=Resonant Circuit
+
+item.materialMagnet.name=Magnet
+item.materialInductionCoil.name=Induction Coil
+
+item.materialIngotMagneticIron.name=Magnetic Iron Ingot
 
 item.dustNetherrack.name=Netherrack Dust
 item.dustDirtyNetherrack.name=Dirty Netherrack Dust
