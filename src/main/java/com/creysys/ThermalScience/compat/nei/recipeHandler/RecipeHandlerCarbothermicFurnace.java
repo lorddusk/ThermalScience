@@ -8,6 +8,6 @@ import com.creysys.ThermalScience.recipe.ThermalScienceRecipes;
  */
 public class RecipeHandlerCarbothermicFurnace extends RecipeHandlerMachine {
     public RecipeHandlerCarbothermicFurnace() {
-        super(new GuiCarbothermicFurnace(null,null), ThermalScienceRecipes.carbothermicFurnaceRecipes);
+        super(new GuiCarbothermicFurnace(null,null), ThermalScienceRecipes.recipesCarbothermicFurnace);
     }
 }

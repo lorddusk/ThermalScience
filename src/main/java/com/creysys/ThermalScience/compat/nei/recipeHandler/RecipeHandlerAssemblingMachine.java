@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class RecipeHandlerAssemblingMachine extends RecipeHandlerMachine {
     public RecipeHandlerAssemblingMachine() {
-        super(new GuiAssemblingMachine(null, null), ThermalScienceRecipes.assemblingMachineRecipes);
+        super(new GuiAssemblingMachine(null, null), ThermalScienceRecipes.recipesAssemblingMachine);
     }
 
     @Override

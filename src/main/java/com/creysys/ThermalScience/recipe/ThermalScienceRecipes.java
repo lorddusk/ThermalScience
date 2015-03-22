@@ -23,6 +23,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -30,20 +31,20 @@ import java.util.ArrayList;
  */
 public class ThermalScienceRecipes {
 
-    public static ArrayList<ThermalScienceRecipe> carbothermicFurnaceRecipes;
-    public static ArrayList<ThermalScienceRecipe> centrifugeRecipes;
-    public static ArrayList<ThermalScienceRecipe> compressorRecipes;
-    public static ArrayList<ThermalScienceRecipe> wiremillRecipes;
-    public static ArrayList<ThermalScienceRecipe> assemblingMachineRecipes;
-    public static ArrayList<ThermalScienceRecipe> magnetizerRecipes;
+    public static ArrayList<ThermalScienceRecipe> recipesCarbothermicFurnace;
+    public static ArrayList<ThermalScienceRecipe> recipesCentrifuge;
+    public static ArrayList<ThermalScienceRecipe> recipesCompressor;
+    public static ArrayList<ThermalScienceRecipe> recipesWiremill;
+    public static ArrayList<ThermalScienceRecipe> recipesAssemblingMachine;
+    public static ArrayList<ThermalScienceRecipe> recipesMagnetizer;
 
     public static void preInitialize(){
-        carbothermicFurnaceRecipes = new ArrayList<ThermalScienceRecipe>();
-        centrifugeRecipes = new ArrayList<ThermalScienceRecipe>();
-        compressorRecipes = new ArrayList<ThermalScienceRecipe>();
-        wiremillRecipes = new ArrayList<ThermalScienceRecipe>();
-        assemblingMachineRecipes = new ArrayList<ThermalScienceRecipe>();
-        magnetizerRecipes = new ArrayList<ThermalScienceRecipe>();
+        recipesCarbothermicFurnace = new ArrayList<ThermalScienceRecipe>();
+        recipesCentrifuge = new ArrayList<ThermalScienceRecipe>();
+        recipesCompressor = new ArrayList<ThermalScienceRecipe>();
+        recipesWiremill = new ArrayList<ThermalScienceRecipe>();
+        recipesAssemblingMachine = new ArrayList<ThermalScienceRecipe>();
+        recipesMagnetizer = new ArrayList<ThermalScienceRecipe>();
 
         if (Loader.isModLoaded("ThermalExpansion")) {
 
@@ -96,35 +97,35 @@ public class ThermalScienceRecipes {
 
         //Carbothermic Furnace
         //Ore Processing
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreIron", Items.coal}, new Object[]{"ingotIron,2"}, 7000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreGold", Items.coal}, new Object[]{"ingotGold,2"}, 7000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreAdamantium", Items.coal}, new Object[]{"ingotAdamantium,2"}, 7000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreAluminium", Items.coal}, new Object[]{"ingotAluminium,2"}, 7000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreCopper", Items.coal}, new Object[]{"ingotCopper,2"}, 7000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreLead", Items.coal}, new Object[]{"ingotLead,2"}, 7000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreSilver", Items.coal}, new Object[]{"ingotSilver,2"}, 7000);
-        addRecipe(carbothermicFurnaceRecipes, new Object[]{"oreTin", Items.coal}, new Object[]{"ingotTin,2"}, 7000);
+        addRecipe(recipesCarbothermicFurnace, new Object[]{"oreIron", Items.coal}, new Object[]{"ingotIron,2"}, 7000);
+        addRecipe(recipesCarbothermicFurnace, new Object[]{"oreGold", Items.coal}, new Object[]{"ingotGold,2"}, 7000);
+        addRecipe(recipesCarbothermicFurnace, new Object[]{"oreAdamantium", Items.coal}, new Object[]{"ingotAdamantium,2"}, 7000);
+        addRecipe(recipesCarbothermicFurnace, new Object[]{"oreAluminium", Items.coal}, new Object[]{"ingotAluminium,2"}, 7000);
+        addRecipe(recipesCarbothermicFurnace, new Object[]{"oreCopper", Items.coal}, new Object[]{"ingotCopper,2"}, 7000);
+        addRecipe(recipesCarbothermicFurnace, new Object[]{"oreLead", Items.coal}, new Object[]{"ingotLead,2"}, 7000);
+        addRecipe(recipesCarbothermicFurnace, new Object[]{"oreSilver", Items.coal}, new Object[]{"ingotSilver,2"}, 7000);
+        addRecipe(recipesCarbothermicFurnace, new Object[]{"oreTin", Items.coal}, new Object[]{"ingotTin,2"}, 7000);
 
 
         //Centrifuge
-        addRecipe(centrifugeRecipes, new Object[]{Items.magma_cream}, new Object[]{Items.blaze_powder, Items.slime_ball}, 30000);
-        addRecipe(centrifugeRecipes, new Object[]{Items.ender_eye}, new Object[]{Items.ender_pearl, Items.blaze_powder}, 30000);
-        addRecipe(centrifugeRecipes, new Object[]{Items.blaze_powder}, new Object[]{new ItemStack(Items.redstone, 2), Items.glowstone_dust}, 30000);
-        addRecipe(centrifugeRecipes, new Object[]{new ItemStack(Blocks.soul_sand, 4)}, new Object[]{new ItemStack(Blocks.sand, 2), "dustSaltpeter"}, 30000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustDirtyNetherrack,2"}, new Object[]{"dustNetherrack,2", "dustSulfur"}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustNetherrack,16"}, new Object[]{Items.redstone, "dustSulfur,4", "dustCoal", "nuggetGold"}, 80000);
-        addRecipe(centrifugeRecipes, new Object[]{new ItemStack(Items.gunpowder, 2)}, new Object[]{"dustCoal", "dustSaltpeter,2", "dustSulfur"}, 10000);
-        addRecipe(centrifugeRecipes, new Object[]{new ItemStack(Items.glowstone_dust, 16)}, new Object[]{new ItemStack(Items.redstone, 8), "dustGold,8"}, 240000);
+        addRecipe(recipesCentrifuge, new Object[]{Items.magma_cream}, new Object[]{Items.blaze_powder, Items.slime_ball}, 30000);
+        addRecipe(recipesCentrifuge, new Object[]{Items.ender_eye}, new Object[]{Items.ender_pearl, Items.blaze_powder}, 30000);
+        addRecipe(recipesCentrifuge, new Object[]{Items.blaze_powder}, new Object[]{new ItemStack(Items.redstone, 2), Items.glowstone_dust}, 30000);
+        addRecipe(recipesCentrifuge, new Object[]{new ItemStack(Blocks.soul_sand, 4)}, new Object[]{new ItemStack(Blocks.sand, 2), "dustSaltpeter"}, 30000);
+        addRecipe(recipesCentrifuge, new Object[]{"dustDirtyNetherrack,2"}, new Object[]{"dustNetherrack,2", "dustSulfur"}, 10000);
+        addRecipe(recipesCentrifuge, new Object[]{"dustNetherrack,16"}, new Object[]{Items.redstone, "dustSulfur,4", "dustCoal", "nuggetGold"}, 80000);
+        addRecipe(recipesCentrifuge, new Object[]{new ItemStack(Items.gunpowder, 2)}, new Object[]{"dustCoal", "dustSaltpeter,2", "dustSulfur"}, 10000);
+        addRecipe(recipesCentrifuge, new Object[]{new ItemStack(Items.glowstone_dust, 16)}, new Object[]{new ItemStack(Items.redstone, 8), "dustGold,8"}, 240000);
 
 
         //Alloy Seperating
-        addRecipe(centrifugeRecipes, new Object[]{"dustBrass,4"}, new Object[]{"dustCopper,3", "dustZinc"}, 18000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustBronze,4"}, new Object[]{"dustCopper,3", "dustTin"}, 18000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustElectrum,2"}, new Object[]{"dustSilver", "dustGold"}, 18000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustAluminiumBrass,4"}, new Object[]{"dustAluminium,3", "dustCopper"}, 18000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustAlumite,6"}, new Object[]{"dustObsidian,2", "dustIron,4", "dustAluminium,10"}, 18000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustManyullyn"}, new Object[]{"dustCobalt", "dustArdite"}, 18000);
-        addRecipe(centrifugeRecipes, new Object[]{"dustInvar,3"}, new Object[]{"dustIron,2", "dustNickel"}, 18000);
+        addRecipe(recipesCentrifuge, new Object[]{"dustBrass,4"}, new Object[]{"dustCopper,3", "dustZinc"}, 18000);
+        addRecipe(recipesCentrifuge, new Object[]{"dustBronze,4"}, new Object[]{"dustCopper,3", "dustTin"}, 18000);
+        addRecipe(recipesCentrifuge, new Object[]{"dustElectrum,2"}, new Object[]{"dustSilver", "dustGold"}, 18000);
+        addRecipe(recipesCentrifuge, new Object[]{"dustAluminiumBrass,4"}, new Object[]{"dustAluminium,3", "dustCopper"}, 18000);
+        addRecipe(recipesCentrifuge, new Object[]{"dustAlumite,6"}, new Object[]{"dustObsidian,2", "dustIron,4", "dustAluminium,10"}, 18000);
+        addRecipe(recipesCentrifuge, new Object[]{"dustManyullyn"}, new Object[]{"dustCobalt", "dustArdite"}, 18000);
+        addRecipe(recipesCentrifuge, new Object[]{"dustInvar,3"}, new Object[]{"dustIron,2", "dustNickel"}, 18000);
 
         //Compressor
         addCompressorRecipe(new Object[]{new ItemStack(Items.blaze_powder, 5)}, new Object[]{Items.blaze_rod}, 3200, false);
@@ -139,21 +140,21 @@ public class ThermalScienceRecipes {
         addCompressorRecipe(new Object[]{new ItemStack(Items.wheat, 9)}, new Object[]{Blocks.hay_block}, 1000, true);
 
         //Wiremill
-        addRecipe(wiremillRecipes, new Object[]{"ingotCopper"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireCopper, 2)}, 8000);
-        addRecipe(wiremillRecipes, new Object[]{"ingotTin"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireTin, 2)}, 4000);
-        addRecipe(wiremillRecipes, new Object[]{"ingotIron"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireIron, 2)}, 1000);
-        addRecipe(wiremillRecipes, new Object[]{"ingotGold"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireGold, 2)}, 50000);
-        addRecipe(wiremillRecipes, new Object[]{"ingotSilver"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireSilver, 2)}, 40000);
-        addRecipe(wiremillRecipes, new Object[]{"ingotLead"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireLead, 2)}, 8000);
-        addRecipe(wiremillRecipes, new Object[]{"ingotNickel"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireNickel, 2)}, 8000);
-        addRecipe(wiremillRecipes, new Object[]{"ingotPlatinum"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wirePlatinum, 2)}, 60000);
-        addRecipe(wiremillRecipes, new Object[]{"ingotMithril"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireMithril, 2)}, 50000);
-        addRecipe(wiremillRecipes, new Object[]{"ingotElectrum"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireElectrum, 2)}, 20000);
-        addRecipe(wiremillRecipes, new Object[]{"ingotInvar"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireInvar, 2)}, 8000);
-        addRecipe(wiremillRecipes, new Object[]{"ingotBronze"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireBronze, 2)}, 20000);
-        addRecipe(wiremillRecipes, new Object[]{"ingotSignalum"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireSignalum, 2)}, 8000);
-        addRecipe(wiremillRecipes, new Object[]{"ingotLumium"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireLumium, 2)}, 8000);
-        addRecipe(wiremillRecipes, new Object[]{"ingotEnderium"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireEnderium, 2)}, 100000);
+        addRecipe(recipesWiremill, new Object[]{"ingotCopper"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireCopper, 2)}, 8000);
+        addRecipe(recipesWiremill, new Object[]{"ingotTin"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireTin, 2)}, 4000);
+        addRecipe(recipesWiremill, new Object[]{"ingotIron"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireIron, 2)}, 1000);
+        addRecipe(recipesWiremill, new Object[]{"ingotGold"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireGold, 2)}, 50000);
+        addRecipe(recipesWiremill, new Object[]{"ingotSilver"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireSilver, 2)}, 40000);
+        addRecipe(recipesWiremill, new Object[]{"ingotLead"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireLead, 2)}, 8000);
+        addRecipe(recipesWiremill, new Object[]{"ingotNickel"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireNickel, 2)}, 8000);
+        addRecipe(recipesWiremill, new Object[]{"ingotPlatinum"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wirePlatinum, 2)}, 60000);
+        addRecipe(recipesWiremill, new Object[]{"ingotMithril"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireMithril, 2)}, 50000);
+        addRecipe(recipesWiremill, new Object[]{"ingotElectrum"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireElectrum, 2)}, 20000);
+        addRecipe(recipesWiremill, new Object[]{"ingotInvar"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireInvar, 2)}, 8000);
+        addRecipe(recipesWiremill, new Object[]{"ingotBronze"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireBronze, 2)}, 20000);
+        addRecipe(recipesWiremill, new Object[]{"ingotSignalum"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireSignalum, 2)}, 8000);
+        addRecipe(recipesWiremill, new Object[]{"ingotLumium"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireLumium, 2)}, 8000);
+        addRecipe(recipesWiremill, new Object[]{"ingotEnderium"}, new Object[]{ThermalScienceUtil.setStack(ItemMaterial.wireEnderium, 2)}, 100000);
 
         //Assembling Machine
         addAssemblingMachineRecipe(new Object[]{ThermalScienceUtil.setStack(ItemMaterial.insulatedWireCopper, 3), "ingotCopper"}, new Object[]{ItemMaterial.circuitBasic}, 8000, "redstone", 200);
@@ -162,7 +163,7 @@ public class ThermalScienceRecipes {
         addAssemblingMachineRecipe(new Object[]{ThermalScienceUtil.setStack(ItemMaterial.insulatedWireEnderium, 6), Items.diamond}, new Object[]{ItemMaterial.circuitResonant}, 100000, "redstone", 1000);
 
         //Magnetizer
-        addRecipe(magnetizerRecipes, new Object[]{"ingotIron"}, new Object[]{ItemMaterial.ingotMagneticIron}, 8000);
+        addRecipe(recipesMagnetizer, new Object[]{"ingotIron"}, new Object[]{ItemMaterial.ingotMagneticIron}, 8000);
     }
 
     public static void postInitialize() {
@@ -176,6 +177,9 @@ public class ThermalScienceRecipes {
             ThermalScienceUtil.removeCraftingRecipeFor(new ItemStack(Items.gunpowder));
         }
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder,2), "dustCoal", "dustSaltpeter","dustSulfur","dustSaltpeter"));
+
+
+        ThermalScienceRecipeLoader.load(new File(ThermalScience.configDir, "recipes.txt"));
     }
 
     public static void addRecipe(ArrayList<ThermalScienceRecipe> recipes, ThermalScienceRecipe recipe) {
@@ -198,11 +202,11 @@ public class ThermalScienceRecipes {
 
 
     public static void addCompressorRecipe(Object[] input, Object[] output, int energy, boolean portable) {
-        addRecipe(compressorRecipes, new RecipeCompressor(input, output, energy, portable));
+        addRecipe(recipesCompressor, new RecipeCompressor(input, output, energy, portable));
     }
 
     public static void addAssemblingMachineRecipe(Object[] input, Object[] output, int energy, String fluid, int fluidAmount) {
-        addRecipe(assemblingMachineRecipes, new RecipeAssemblingMachine(input, output, energy, fluid, fluidAmount));
+        addRecipe(recipesAssemblingMachine, new RecipeAssemblingMachine(input, output, energy, fluid, fluidAmount));
     }
 
     public static void addCompressorOreRecipes() {
@@ -331,7 +335,7 @@ public class ThermalScienceRecipes {
             Item eioMaterial = GameRegistry.findItem("EnderIO", "itemMaterial");
 
             if (eioMaterial != null) {
-                addRecipe(carbothermicFurnaceRecipes, new Object[]{Items.coal, Blocks.sand}, new Object[]{eioMaterial}, 16000);
+                addRecipe(recipesCarbothermicFurnace, new Object[]{Items.coal, Blocks.sand}, new Object[]{eioMaterial}, 16000);
             }
         }
     }

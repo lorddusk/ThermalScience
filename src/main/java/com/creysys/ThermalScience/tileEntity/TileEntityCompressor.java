@@ -34,7 +34,7 @@ public class TileEntityCompressor extends TileEntityMachine {
 
     @Override
     public List<ThermalScienceRecipe> getRecipes() {
-        return ThermalScienceRecipes.compressorRecipes;
+        return ThermalScienceRecipes.recipesCompressor;
     }
 
     @Override

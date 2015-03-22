@@ -12,6 +12,6 @@ import java.util.List;
  */
 public class RecipeHandlerMagnetizer extends RecipeHandlerMachine {
     public RecipeHandlerMagnetizer() {
-        super(new GuiMagnetizer(null, null), ThermalScienceRecipes.magnetizerRecipes);
+        super(new GuiMagnetizer(null, null), ThermalScienceRecipes.recipesMagnetizer);
     }
 }

@@ -8,6 +8,6 @@ import com.creysys.ThermalScience.recipe.ThermalScienceRecipes;
  */
 public class RecipeHandlerCentrifuge extends RecipeHandlerMachine{
     public RecipeHandlerCentrifuge() {
-        super(new GuiCentrifuge(null,null), ThermalScienceRecipes.centrifugeRecipes);
+        super(new GuiCentrifuge(null,null), ThermalScienceRecipes.recipesCentrifuge);
     }
 }

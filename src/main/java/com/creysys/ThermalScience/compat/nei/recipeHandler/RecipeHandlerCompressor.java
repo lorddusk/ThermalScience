@@ -8,6 +8,6 @@ import com.creysys.ThermalScience.recipe.ThermalScienceRecipes;
  */
 public class RecipeHandlerCompressor extends RecipeHandlerMachine {
     public RecipeHandlerCompressor() {
-        super(new GuiCompressor(null,null), ThermalScienceRecipes.compressorRecipes);
+        super(new GuiCompressor(null,null), ThermalScienceRecipes.recipesCompressor);
     }
 }

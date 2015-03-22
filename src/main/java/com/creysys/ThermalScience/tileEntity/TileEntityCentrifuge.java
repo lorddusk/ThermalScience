@@ -13,7 +13,7 @@ public class TileEntityCentrifuge extends TileEntityMachine{
 
     @Override
     public List<ThermalScienceRecipe> getRecipes() {
-        return ThermalScienceRecipes.centrifugeRecipes;
+        return ThermalScienceRecipes.recipesCentrifuge;
     }
 
     @Override

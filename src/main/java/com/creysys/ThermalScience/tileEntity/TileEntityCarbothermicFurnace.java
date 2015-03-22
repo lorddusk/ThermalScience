@@ -23,7 +23,7 @@ public class TileEntityCarbothermicFurnace extends TileEntityMachine {
 
     @Override
     public List<ThermalScienceRecipe> getRecipes() {
-        return ThermalScienceRecipes.carbothermicFurnaceRecipes;
+        return ThermalScienceRecipes.recipesCarbothermicFurnace;
     }
 
     @Override

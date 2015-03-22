@@ -41,9 +41,9 @@ public class ItemPortableCompressor extends ItemEnergyContainer
 
     public static void registerRecipes(){
         entries = new Hashtable<ItemStack, ItemStack>();
-        for(int i = 0; i < ThermalScienceRecipes.compressorRecipes.size(); i++){
-            if(ThermalScienceRecipes.compressorRecipes.get(i) instanceof RecipeCompressor){
-                RecipeCompressor recipe = (RecipeCompressor)ThermalScienceRecipes.compressorRecipes.get(i);
+        for(int i = 0; i < ThermalScienceRecipes.recipesCompressor.size(); i++){
+            if(ThermalScienceRecipes.recipesCompressor.get(i) instanceof RecipeCompressor){
+                RecipeCompressor recipe = (RecipeCompressor)ThermalScienceRecipes.recipesCompressor.get(i);
                 if(recipe.portable) {
 
                     ItemStack input = ThermalScienceUtil.getStack(recipe.inputs[0]);

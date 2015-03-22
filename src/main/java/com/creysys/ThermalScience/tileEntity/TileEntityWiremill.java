@@ -13,7 +13,7 @@ public class TileEntityWiremill extends TileEntityMachine {
 
     @Override
     public List<ThermalScienceRecipe> getRecipes() {
-        return ThermalScienceRecipes.wiremillRecipes;
+        return ThermalScienceRecipes.recipesWiremill;
     }
 
     @Override

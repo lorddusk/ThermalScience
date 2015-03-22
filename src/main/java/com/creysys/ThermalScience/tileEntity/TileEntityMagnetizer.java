@@ -11,7 +11,7 @@ import java.util.List;
 public class TileEntityMagnetizer extends TileEntityMachine {
     @Override
     public List<ThermalScienceRecipe> getRecipes() {
-        return ThermalScienceRecipes.magnetizerRecipes;
+        return ThermalScienceRecipes.recipesMagnetizer;
     }
 
     @Override

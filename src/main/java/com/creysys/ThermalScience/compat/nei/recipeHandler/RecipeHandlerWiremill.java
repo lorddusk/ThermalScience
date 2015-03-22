@@ -9,6 +9,6 @@ import com.creysys.ThermalScience.recipe.ThermalScienceRecipes;
 public class RecipeHandlerWiremill extends RecipeHandlerMachine
 {
     public RecipeHandlerWiremill() {
-        super(new GuiWiremill(null,null), ThermalScienceRecipes.wiremillRecipes);
+        super(new GuiWiremill(null,null), ThermalScienceRecipes.recipesWiremill);
     }
 }

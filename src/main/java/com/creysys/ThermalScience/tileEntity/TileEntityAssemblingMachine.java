@@ -51,7 +51,7 @@ public class TileEntityAssemblingMachine extends TileEntityMachine implements IF
 
     @Override
     public List<ThermalScienceRecipe> getRecipes() {
-        return ThermalScienceRecipes.assemblingMachineRecipes;
+        return ThermalScienceRecipes.recipesAssemblingMachine;
     }
 
     @Override

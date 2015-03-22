@@ -26,6 +26,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.item.Item;
 
+import java.io.File;
 import java.util.Iterator;
 
 @Mod(modid = ThermalScience.MODID, version = ThermalScience.VERSION, name = ThermalScience.MODNAME, dependencies = "required-after:CoFHCore;required-after:ThermalExpansion")
@@ -36,10 +37,12 @@ public class ThermalScience
     public static final String VERSION = "1.7.10";
     public static final String MODNAME = "Thermal Science";
 
-    @Mod.Instance(ThermalScience.MODID)
+    public static File configDir;
+
+    @Mod.Instance(MODID)
     public static ThermalScience instance;
 
-    @SidedProxy(modId = ThermalScience.MODID, clientSide = "com.creysys.ThermalScience.proxy.ClientProxy", serverSide = "com.creysys.ThermalScience.proxy.ServerProxy")
+    @SidedProxy(modId = MODID, clientSide = "com.creysys.ThermalScience.proxy.ClientProxy", serverSide = "com.creysys.ThermalScience.proxy.ServerProxy")
     public static ServerProxy proxy;
 
     public static ThermalSciencePacketHandler packetHandler;
@@ -75,7 +78,8 @@ public class ThermalScience
 
     @EventHandler
     public void preInitialize(FMLPreInitializationEvent event){
-        ThermalScienceConfig.load(event.getSuggestedConfigurationFile());
+        configDir = new File(event.getModConfigurationDirectory(), MODID);
+        ThermalScienceConfig.load(new File(configDir, "main.cfg"));
 
         creativeTab = new ThermalScienceCreativeTab();
 
