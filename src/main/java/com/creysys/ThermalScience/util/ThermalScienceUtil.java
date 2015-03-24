@@ -25,7 +25,9 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.oredict.OreDictionary;
 import org.lwjgl.opengl.GL11;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -484,5 +486,25 @@ public class ThermalScienceUtil {
                 }
             }
         }
+    }
+
+    public static <T> ArrayList<T> toList(T[] t){
+        ArrayList<T> list = new ArrayList<>(t.length);
+
+        for(int i = 0; i < t.length; i++){
+            list.add(t[i]);
+        }
+
+        return list;
+    }
+
+    public static <T> T[] toArray(Class<T> clazz, List<T> list){
+        T[] t = (T[])Array.newInstance(clazz, list.size());
+
+        for(int i = 0; i < t.length; i++){
+            t[i] = list.get(i);
+        }
+
+        return t;
     }
 }

@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  */
 public class ThermalScienceRecipeLoader {
 
-    public static ArrayList<ThermalScienceRecipe> currentMachine = null;
+    public static ArrayList<ThermalScienceRecipe> currentMachine = ThermalScienceRecipes.recipesAssemblingMachine;
     public static int currentEnergy = 0;
     public static int currentFluidAmount = 0;
     public static String currentFluid = "water";
@@ -34,6 +34,10 @@ public class ThermalScienceRecipeLoader {
             List<String> lines = Files.readAllLines(file.toPath(), Charset.defaultCharset());
 
             for (int i = 0; i < lines.size(); i++) {
+                if(lines.get(i).startsWith("//")){
+                    continue;
+                }
+
                 if (!doLine(lines.get(i))) {
                     System.out.println("Failed to do line: " + (i + 1));
                 }

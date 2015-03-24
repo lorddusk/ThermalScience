@@ -1,6 +1,8 @@
 package com.creysys.ThermalScience.block;
 
+import cofh.api.modhelpers.ThermalExpansionHelper;
 import cofh.lib.util.helpers.StringHelper;
+import cofh.thermalexpansion.util.crafting.PulverizerManager;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.util.IWrenchable;
@@ -19,6 +21,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,6 +30,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
 
@@ -47,8 +51,8 @@ public class BlockMachine extends BlockContainer implements IItemTooltipProvider
     public BlockMachine(String name, Class<? extends TileEntityMachine> tileEntityClass, ThermalScienceGuiID guiID) {
         super(Material.iron);
 
-        setHardness(1F);
-        setResistance(1F);
+        setHardness(12F);
+        setResistance(16F);
         setHarvestLevel("pickaxe", 1);
 
         this.tileEntityClass = tileEntityClass;
@@ -96,6 +100,7 @@ public class BlockMachine extends BlockContainer implements IItemTooltipProvider
                 facing = 4;
                 break;
         }
+
 
         tileEntity.facing = facing;
 

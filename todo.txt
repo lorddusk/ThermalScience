@@ -1,6 +1,7 @@
-Machine rebalance
+greg more recipes
+
+
 compressed stone
-machine circuits
 redstone alloy
 OpenComputers support
 

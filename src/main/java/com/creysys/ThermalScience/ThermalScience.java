@@ -1,5 +1,6 @@
 package com.creysys.ThermalScience;
 
+import cofh.thermalexpansion.util.crafting.PulverizerManager;
 import com.creysys.ThermalScience.block.*;
 import com.creysys.ThermalScience.block.teleporter.BlockTeleporterController;
 import com.creysys.ThermalScience.block.teleporter.BlockTeleporterPowerTap;
@@ -17,6 +18,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -24,12 +26,14 @@ import cpw.mods.fml.common.registry.GameData;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 import java.io.File;
 import java.util.Iterator;
 
-@Mod(modid = ThermalScience.MODID, version = ThermalScience.VERSION, name = ThermalScience.MODNAME, dependencies = "required-after:CoFHCore;required-after:ThermalExpansion")
+@Mod(modid = ThermalScience.MODID, version = ThermalScience.VERSION, name = ThermalScience.MODNAME, dependencies = "required-after:CoFHCore;required-after:ThermalExpansion;required-after:EnderIO")
 public class ThermalScience
 {
     public static final String MODID = "ThermalScience";
@@ -139,5 +143,10 @@ public class ThermalScience
                 EntityEnderman.setCarriable(block, false);
             }
         }
+    }
+
+    @EventHandler
+    public void loaded(FMLLoadCompleteEvent event){
+        ThermalScienceRecipes.removeRecipes();
     }
 }
