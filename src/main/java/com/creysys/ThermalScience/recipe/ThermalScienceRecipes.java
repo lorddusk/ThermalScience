@@ -1,7 +1,9 @@
 package com.creysys.ThermalScience.recipe;
 
 import cofh.api.modhelpers.ThermalExpansionHelper;
+import cofh.thermalexpansion.plugins.nei.handlers.NEIRecipeWrapper;
 import cofh.thermalexpansion.util.crafting.PulverizerManager;
+import cofh.thermalexpansion.util.crafting.RecipeMachine;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceConfig;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
@@ -24,6 +26,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -45,6 +49,12 @@ public class ThermalScienceRecipes {
     public static ArrayList<ThermalScienceRecipe> recipesAssemblingMachine;
     public static ArrayList<ThermalScienceRecipe> recipesMagnetizer;
 
+    public static Item teMachine;
+    public static Item teMachineFrame;
+    public static Item teCapacitor;
+    public static Item teMaterial;
+    public static Item tfMaterial;
+
     public static void preInitialize(){
         recipesCarbothermicFurnace = new ArrayList();
         recipesCentrifuge = new ArrayList();
@@ -52,17 +62,6 @@ public class ThermalScienceRecipes {
         recipesWiremill = new ArrayList();
         recipesAssemblingMachine = new ArrayList();
         recipesMagnetizer = new ArrayList();
-
-        if (Loader.isModLoaded("EnderIO")) {
-            ThermalScienceUtil.addEnderIORecipe("sagmill", "Netherrack", "<itemStack modID=\"minecraft\" itemName=\"netherrack\" />", "<itemStack oreDictionary=\"dustDirtyNetherrack\" />", 2400);
-
-            //Remove old silicon recipe
-            //Doesnt work yet disable in config too
-            if(ThermalScienceConfig.recipeOverrideSilicon) {
-                ThermalScienceUtil.removeEnderIORecipe("sagmill", "EnderIO", "Silicon");
-                ThermalScienceUtil.removeEnderIORecipe("sagmill", "EnderIO", "SiliconRedSand");
-            }
-        }
     }
 
     public static void initialize() {
@@ -173,9 +172,6 @@ public class ThermalScienceRecipes {
         addModRecipes();
 
         //Tweaks
-        if(ThermalScienceConfig.recipesOverrideGunpowder) {
-            ThermalScienceUtil.removeCraftingRecipeFor(new ItemStack(Items.gunpowder));
-        }
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder,2), "dustCoal", "dustSaltpeter","dustSulfur","dustSaltpeter"));
 
 
@@ -231,12 +227,11 @@ public class ThermalScienceRecipes {
         //Thermal Expansion
         if (Loader.isModLoaded("ThermalExpansion")) {
 
-            Item teMachineFrame = GameRegistry.findItem("ThermalExpansion", "Frame");
-            Item teMachine = GameRegistry.findItem("ThermalExpansion", "Machine");
-            Item teMaterial = GameRegistry.findItem("ThermalExpansion", "material");
-            Item teCapacitor = GameRegistry.findItem("ThermalExpansion", "capacitor");
-
-            Item tfMaterial = GameRegistry.findItem("ThermalFoundation", "material");
+            teMachineFrame = GameRegistry.findItem("ThermalExpansion", "Frame");
+            teMachine = GameRegistry.findItem("ThermalExpansion", "Machine");
+            teMaterial = GameRegistry.findItem("ThermalExpansion", "material");
+            teCapacitor = GameRegistry.findItem("ThermalExpansion", "capacitor");
+            tfMaterial = GameRegistry.findItem("ThermalFoundation", "material");
 
             //Machines
             GameRegistry.addRecipe(new ItemStack(ThermalScience.blockWatermill), "MGM", "GCG", "MGM", 'G', new ItemStack(tfMaterial, 1, 128), 'M', ItemMaterial.motor, 'C', ItemMaterial.circuitBasic);
@@ -278,28 +273,6 @@ public class ThermalScienceRecipes {
 
             GameRegistry.addShapedRecipe(rein, "HCR", "WMW", "___", 'M', new ItemStack(ThermalScience.blockCompressor, 1, 2), 'C', new ItemStack(GameRegistry.findItem("ThermalExpansion", "capacitor"), 1, 4), 'H', ItemMaterial.circuitHardened, 'R', ItemMaterial.circuitReinforced, 'W', ItemMaterial.insulatedWireElectrum);
             GameRegistry.addShapedRecipe(reso, "RCS", "WMW", "___", 'M', rein, 'C', new ItemStack(GameRegistry.findItem("ThermalExpansion", "capacitor"), 1, 5), 'R', ItemMaterial.circuitReinforced, 'S', ItemMaterial.circuitResonant, 'W', ItemMaterial.insulatedWireSignalum);
-
-
-            if (ThermalScienceConfig.recipeOverrideMachines) {
-
-                //Cannot remove te machine recipes :(
-                //User must remove them in config
-
-
-                //Redstone Furnace
-                ItemStack stack = new ItemStack(teMachine, 1, 0);
-                ThermalScienceUtil.removeCraftingRecipeFor(stack);
-                GameRegistry.addShapedRecipe(stack, "_C_", "FMF", "ORO", 'C', ItemMaterial.circuitHardened, 'M', new ItemStack(teMachineFrame, 1, 0), 'F', Blocks.furnace, 'O', ItemMaterial.inductionCoil, 'R', new ItemStack(teMaterial, 1, 1));
-
-                //Pulverizer
-                stack = new ItemStack(teMachine, 1, 1);
-                ThermalScienceUtil.removeCraftingRecipeFor(stack);
-                GameRegistry.addShapedRecipe(stack, "WCW", "cMc", "FGF", 'W', ItemMaterial.insulatedWireElectrum, 'C', ItemMaterial.circuitReinforced, 'c', new ItemStack(ThermalScience.blockCompressor, 1, 2), 'M', ItemMaterial.motor, 'F', Items.flint, 'G', new ItemStack(tfMaterial, 1, 128));
-            }
-
-
-            ThermalExpansionHelper.removePulverizerRecipe(new ItemStack(Blocks.netherrack));
-            ThermalExpansionHelper.addPulverizerRecipe(2400, new ItemStack(Blocks.netherrack), ItemDust.getDust("DirtyNetherrack"));
         }
 
         //ProjectRed
@@ -349,8 +322,6 @@ public class ThermalScienceRecipes {
         if (Loader.isModLoaded("EnderIO")) {
             Item eioMaterial = GameRegistry.findItem("EnderIO", "itemMaterial");
 
-
-
             if (eioMaterial != null) {
                 addRecipe(recipesCarbothermicFurnace, new Object[]{Items.coal, Blocks.sand}, new Object[]{eioMaterial}, 16000);
             }
@@ -359,14 +330,46 @@ public class ThermalScienceRecipes {
 
     public static void removeRecipes() {
         if (Loader.isModLoaded("ThermalExpansion")) {
+
+            PulverizerManager.removeRecipe(new ItemStack(Blocks.netherrack));
+            PulverizerManager.addRecipe(2400, new ItemStack(Blocks.netherrack), ItemDust.getDust("DirtyNetherrack"));
+
             if (ThermalScienceConfig.recipeOverrideSilicon) {
                 PulverizerManager.removeRecipe(new ItemStack(Blocks.sand));
+            }
+
+            if (ThermalScienceConfig.recipeOverrideMachines) {
+                //Remove all machine crafting
+                List list = CraftingManager.getInstance().getRecipeList();
+                List remove = new ArrayList<>();
+
+                for(int i = 0; i < list.size(); i++) {
+                    if (list.get(i) instanceof NEIRecipeWrapper) {
+                        NEIRecipeWrapper recipe = (NEIRecipeWrapper)list.get(i);
+                        if(recipe.getRecipeType() == NEIRecipeWrapper.RecipeType.MACHINE){
+                            remove.add(recipe);
+                        }
+                    }
+                }
+
+                list.removeAll(remove);
+
+
+                //Redstone Furnace
+                GameRegistry.addShapedRecipe(new ItemStack(teMachine, 1, 0), "_C_", "FMF", "ORO", 'C', ItemMaterial.circuitHardened, 'M', new ItemStack(teMachineFrame, 1, 0), 'F', Blocks.furnace, 'O', ItemMaterial.inductionCoil, 'R', new ItemStack(teMaterial, 1, 1));
+
+                //Pulverizer
+                GameRegistry.addShapedRecipe(new ItemStack(teMachine, 1, 1), "WCW", "cMc", "FGF", 'W', ItemMaterial.insulatedWireElectrum, 'C', ItemMaterial.circuitReinforced, 'c', new ItemStack(ThermalScience.blockCompressor, 1, 2), 'M', ItemMaterial.motor, 'F', Items.flint, 'G', new ItemStack(tfMaterial, 1, 128));
+            }
+
+            if(ThermalScienceConfig.recipesOverrideGunpowder) {
+                ThermalScienceUtil.removeCraftingRecipeFor(new ItemStack(Items.gunpowder));
             }
         }
 
         if (Loader.isModLoaded("EnderIO")) {
             if (ThermalScienceConfig.recipeOverrideSilicon) {
-                //Remove silicon from every ender io recipe
+                //Remove silicon from every ender io sag mill recipe
                 CrusherRecipeManager recipeManager = CrusherRecipeManager.getInstance();
                 List<Recipe> recipes = recipeManager.getRecipes();
                 List<Recipe> removeRecipes = new ArrayList<>();

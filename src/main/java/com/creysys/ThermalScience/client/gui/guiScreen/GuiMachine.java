@@ -108,7 +108,7 @@ public abstract class GuiMachine extends GuiContainer
         drawEnergyOverlay(mouseX, mouseY, tileEntity.energyStored, tileEntity.getMaxEnergyStored(null));
     }
 
-    private void drawEnergyOverlay(int mouseX, int mouseY, int energyStored, int maxEnergyStored){
+    public void drawEnergyOverlay(int mouseX, int mouseY, int energyStored, int maxEnergyStored){
         if(mouseX > energyX && mouseX < energyX + energyWidth &&
                 mouseY > energyY && mouseY < energyY + energyHeight) {
 

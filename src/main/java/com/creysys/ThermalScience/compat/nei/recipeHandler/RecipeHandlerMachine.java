@@ -2,6 +2,7 @@ package com.creysys.ThermalScience.compat.nei.recipeHandler;
 
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
+import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import cofh.lib.util.helpers.ColorHelper;
 import com.creysys.ThermalScience.util.ThermalScienceUtil;
@@ -160,7 +161,6 @@ public class RecipeHandlerMachine extends TemplateRecipeHandler {
 
         GuiDraw.drawString(recipe.energy + " RF", gui.energyX + xOffset - xCrop + gui.energyWidth + 10, gui.energyY + yOffset - yCrop + gui.energyHeight - 10, ColorHelper.DYE_WHITE);
     }
-
 
     @Override
     public void loadTransferRects() {
