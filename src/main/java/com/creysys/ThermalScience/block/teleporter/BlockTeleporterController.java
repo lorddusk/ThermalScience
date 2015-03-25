@@ -6,6 +6,7 @@ import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.client.gui.IItemTooltipProvider;
 import com.creysys.ThermalScience.ThermalScienceGuiID;
 import com.creysys.ThermalScience.tileEntity.teleporter.TileEntityTeleporterController;
+import com.creysys.ThermalScience.util.DXYZ;
 import com.creysys.ThermalScience.util.IWrenchable;
 import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
@@ -25,6 +26,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Creysys on 06 Mar 15.
@@ -106,6 +108,9 @@ public class BlockTeleporterController extends BlockContainer implements IWrench
         if(stack.hasTagCompound() && stack.getTagCompound().hasKey(ThermalScienceNBTTags.Id)){
             tileEntity.controllerId = stack.getTagCompound().getInteger(ThermalScienceNBTTags.Id);
         }
+        else if(!world.isRemote){
+            tileEntity.controllerId = TileEntityTeleporterController.addController(new DXYZ(world.provider.dimensionId, x, y, z));
+        }
     }
 
 
@@ -157,6 +162,15 @@ public class BlockTeleporterController extends BlockContainer implements IWrench
     public void addTooltip(List<String> list, ItemStack stack) {
         if(stack.hasTagCompound() && stack.getTagCompound().hasKey(ThermalScienceNBTTags.Id)) {
             list.add("Controller Id: " + stack.getTagCompound().getInteger(ThermalScienceNBTTags.Id));
+        }
+    }
+
+    @Override
+    public void updateTick(World world, int x, int y, int z, Random random) {
+        TileEntityTeleporterController controller = (TileEntityTeleporterController)world.getTileEntity(x,y,z);
+
+        if(controller != null){
+            controller.checkMultiblock();
         }
     }
 }

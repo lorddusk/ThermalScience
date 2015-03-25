@@ -6,6 +6,8 @@ import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.container.ContainerTeleporterController;
 import com.creysys.ThermalScience.tileEntity.teleporter.TileEntityTeleporterController;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.InventoryPlayer;
 
 import java.util.ArrayList;
@@ -69,6 +71,8 @@ public class GuiTeleporterController extends GuiContainer {
 
     private void drawEnergyOverlay(){
         drawEnergyOverlay(mouseX, mouseY, tileEntity.energyStored, tileEntity.maxEnergyStored);
+
+        RenderHelper.enableGUIStandardItemLighting();
     }
 
     private void drawEnergyOverlay(int mouseX, int mouseY, int energyStored, int maxEnergyStored){

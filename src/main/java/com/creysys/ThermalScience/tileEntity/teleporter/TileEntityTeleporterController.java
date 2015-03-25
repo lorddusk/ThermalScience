@@ -30,14 +30,23 @@ import java.util.List;
  * Created by Creysys on 06 Mar 15.
  */
 
-//TODO: set yaw
-
 public class TileEntityTeleporterController extends TileEntity implements IInventory, ISyncEnergy, IWailaBodyProvider, IContentDropper {
 
     public static int addController(DXYZ pos){
-        ThermalScienceWorldData.instance.mapControllerPositions.add(pos);
+
+        List<DXYZ> list = ThermalScienceWorldData.instance.mapControllerPositions;
+
+        for(int i = 0; i < list.size(); i++){
+            DXYZ temp = list.get(i);
+            if(pos.d == temp.d && pos.x == temp.x && pos.y == temp.y && pos.z == temp.z){
+                return i;
+            }
+        }
+
+
+        list.add(pos);
         ThermalScienceWorldData.instance.markDirty();
-        return ThermalScienceWorldData.instance.mapControllerPositions.size() - 1;
+        return list.size() - 1;
     }
 
     public static void setControllerPosition(int id, DXYZ pos){
@@ -101,8 +110,6 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
         }
 
         if (worldObj.getTotalWorldTime() % 40 == 0) {
-            checkMultiblock();
-
             if (active && (slot == null || !slot.hasTagCompound())) {
                 statusText = "Insert destination card";
                 statusTextColor = ColorHelper.DYE_YELLOW;
@@ -112,7 +119,7 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
 
-        if (active && worldObj.getTotalWorldTime() %  20 == 0) {
+        if (active) {
             if (slot == null || !slot.hasTagCompound()) {
                 return;
             }

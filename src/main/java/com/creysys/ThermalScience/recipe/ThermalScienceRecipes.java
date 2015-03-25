@@ -7,6 +7,7 @@ import cofh.thermalexpansion.util.crafting.RecipeMachine;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceConfig;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
+import com.creysys.ThermalScience.compat.nei.recipeHandler.RecipeHandlerWorld;
 import com.creysys.ThermalScience.recipe.recipe.RecipeAssemblingMachine;
 import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.item.ItemDust;
@@ -164,6 +165,11 @@ public class ThermalScienceRecipes {
 
         //Magnetizer
         addRecipe(recipesMagnetizer, new Object[]{"ingotIron"}, new Object[]{ItemMaterial.ingotMagneticIron}, 8000);
+
+
+
+        //Misc
+        RecipeHandlerWorld.addWorldCraftingRecipe(ItemMaterial.ingotMagneticIron, "Rub a piece of iron on wool\nto magnetize it.");
     }
 
     public static void postInitialize() {

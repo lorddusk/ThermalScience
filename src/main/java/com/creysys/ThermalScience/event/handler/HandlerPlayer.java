@@ -20,24 +20,19 @@ import net.minecraftforge.oredict.OreDictionary;
  * Created by Creysys on 10 Mar 15.
  */
 public class HandlerPlayer {
-
     @SubscribeEvent
-    public void onPlayerInteract(PlayerInteractEvent event){
-
-        if(event.world.isRemote){
-            return;
-        }
-
-        if(event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK &&
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK &&
                 event.entityPlayer.getCurrentEquippedItem() != null &&
                 event.entityPlayer.getCurrentEquippedItem().getItem() == Items.iron_ingot &&
-                event.world.getBlock(event.x,event.y,event.z) == Blocks.wool){
+                event.world.getBlock(event.x, event.y, event.z) == Blocks.wool) {
             event.setCanceled(false);
+            event.entityPlayer.swingItem();
 
-            if(event.world.getTotalWorldTime() % 40 == 0){
-                if(event.entityPlayer.inventory.addItemStackToInventory(ItemMaterial.ingotMagneticIron.copy())){
+            if (!event.world.isRemote && event.world.getTotalWorldTime() % 80 == 0) {
+                if (event.entityPlayer.inventory.addItemStackToInventory(ItemMaterial.ingotMagneticIron.copy())) {
                     event.entityPlayer.getCurrentEquippedItem().stackSize--;
-                    if(event.entityPlayer.getCurrentEquippedItem().stackSize<=0){
+                    if (event.entityPlayer.getCurrentEquippedItem().stackSize <= 0) {
                         event.entityPlayer.inventory.setInventorySlotContents(event.entityPlayer.inventory.currentItem, null);
                     }
 
@@ -46,7 +41,6 @@ public class HandlerPlayer {
             }
         }
     }
-
 
     @SubscribeEvent
     public void onAddTooltip(ItemTooltipEvent event) {

@@ -153,7 +153,10 @@ public class RecipeHandlerMachine extends TemplateRecipeHandler {
     public void drawForeground(int recipeID) {
         CachedRecipeMachine recipe = (CachedRecipeMachine) arecipes.get(recipeID);
 
-        gui.drawProgress((cycleticks * 3) % 101, xOffset - xCrop, yOffset - yCrop);
+        gui.drawProgress(cycleticks * 2, xOffset - xCrop, yOffset - yCrop);
+        if(cycleticks > 50){
+            cycleticks = 0;
+        }
 
         //10mil is max for energy use
         int energyInterpolated = (int)(16f / 7f * Math.log10(recipe.energy + 1));
