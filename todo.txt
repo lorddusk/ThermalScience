@@ -1,5 +1,6 @@
 greg more recipes
 
+machine upgrade kit
 
 compressed stone
 redstone alloy

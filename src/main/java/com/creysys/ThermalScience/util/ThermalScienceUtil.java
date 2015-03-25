@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -23,11 +24,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 import org.lwjgl.opengl.GL11;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -371,6 +375,84 @@ public class ThermalScienceUtil {
 
                 if(areStacksEqual(recipe.getRecipeOutput(), stack)){
                     remove.add(recipe);
+                }
+            }
+        }
+
+        list.removeAll(remove);
+    }
+
+    public static void removeShapedOreRecipeFor(ItemStack stack, String ingredient){
+        List list = CraftingManager.getInstance().getRecipeList();
+        List remove = new ArrayList<IRecipe>();
+
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i) instanceof ShapedOreRecipe){
+                ShapedOreRecipe recipe = (ShapedOreRecipe)list.get(i);
+
+                if(areStacksEqual(recipe.getRecipeOutput(), stack)) {
+                    Object[] objs = recipe.getInput();
+                    boolean found = false;
+                    for (int j = 0; j < objs.length; j++) {
+                        if (objs[j] instanceof ArrayList) {
+                            ItemStack temp = ((ArrayList<ItemStack>) objs[j]).get(0);
+                            int[] ids = OreDictionary.getOreIDs(temp);
+
+                            for (int k = 0; k < ids.length; k++) {
+                                if(OreDictionary.getOreName(ids[k]).equals(ingredient)){
+                                    found = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (found) {
+                            break;
+                        }
+                    }
+
+                    if (found) {
+                        remove.add(recipe);
+                    }
+                }
+            }
+        }
+
+        list.removeAll(remove);
+    }
+
+    public static void removeShapelessOreRecipeFor(ItemStack stack, String ingredient){
+        List list = CraftingManager.getInstance().getRecipeList();
+        List remove = new ArrayList<IRecipe>();
+
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i) instanceof ShapelessOreRecipe){
+                ShapelessOreRecipe recipe = (ShapelessOreRecipe)list.get(i);
+
+                if(areStacksEqual(recipe.getRecipeOutput(), stack)) {
+                    Object[] objs = ThermalScienceUtil.toArray(Object.class, recipe.getInput());
+                    boolean found = false;
+                    for (int j = 0; j < objs.length; j++) {
+                        if (objs[j] instanceof ArrayList) {
+                            ItemStack temp = ((ArrayList<ItemStack>) objs[j]).get(0);
+                            int[] ids = OreDictionary.getOreIDs(temp);
+
+                            for (int k = 0; k < ids.length; k++) {
+                                if(OreDictionary.getOreName(ids[k]).equals(ingredient)){
+                                    found = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (found) {
+                            break;
+                        }
+                    }
+
+                    if (found) {
+                        remove.add(recipe);
+                    }
                 }
             }
         }

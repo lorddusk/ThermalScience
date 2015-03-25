@@ -65,6 +65,10 @@ item.materialMagnet.name=Magnet
 item.materialInductionCoil.name=Induction Coil
 
 item.materialIngotMagneticIron.name=Magnetic Iron Ingot
+item.materialIngotMagneticTin.name=Magnetic Tin Ingot
+item.materialIngotMagneticCopper.name=Magnetic Copper Ingot
+item.materialIngotMagneticInvar.name=Magnetic Invar Ingot
+item.materialIngotMagneticEnderium.name=Magnetic Enderium Ingot
 
 item.dustNetherrack.name=Netherrack Dust
 item.dustDirtyNetherrack.name=Dirty Netherrack Dust

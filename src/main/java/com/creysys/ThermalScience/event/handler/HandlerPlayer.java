@@ -5,6 +5,7 @@ import com.creysys.ThermalScience.client.gui.IItemTooltipProvider;
 import com.creysys.ThermalScience.item.ItemMaterial;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -47,6 +48,13 @@ public class HandlerPlayer {
         ItemStack stack = event.itemStack;
         if(stack == null){
             return;
+        }
+
+        if(ThermalScienceConfig.showItemNames){
+            GameRegistry.UniqueIdentifier identifier = GameRegistry.findUniqueIdentifierFor(stack.getItem());
+            if(identifier != null) {
+                event.toolTip.add(identifier.toString());
+            }
         }
 
         if(ThermalScienceConfig.showOreDictNames) {

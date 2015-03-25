@@ -2,12 +2,16 @@ package com.creysys.ThermalScience.recipe;
 
 import com.creysys.ThermalScience.recipe.recipe.RecipeAssemblingMachine;
 import com.creysys.ThermalScience.recipe.recipe.RecipeCompressor;
+import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -24,9 +28,16 @@ public class ThermalScienceRecipeLoader {
     public static String currentFluid = "water";
     public static boolean currentPortable = false;
 
+    public static final String[] defaultText = new String[]{"//machine: carbothermicFurnace","//energy: 1000","//recipe: (<minecraft,sand,2>, <minecraft,coal,2>)->(<EnderIO,itemMaterial,2,4>)","","//machine: compressor","//energy: 100000","//recipe: (\"dustCoal,64\", \"wtf,13\")->(<minecraft,diamond>)","//recipe: (\"ingotIron,4\")->(\"ingotSilver,1\")","","//machine: assemblingMachine","//energy: 50000","//fluid: cryotheum","//fluidAmount: 420","//recipe: (\"ingotIron,10\", \"ingotGold,10\")->(<minecraft,diamond>)","","//machine: compressor","//portable: true","//recipe: (...)(...)","//portable: false","//recipe: (...)(...)"};
+
     public static void load(File file) {
 
         if (!file.exists()) {
+            try {
+                Files.write(file.toPath(), ThermalScienceUtil.toList(defaultText), Charset.defaultCharset(), StandardOpenOption.CREATE_NEW);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return;
         }
 
@@ -34,7 +45,7 @@ public class ThermalScienceRecipeLoader {
             List<String> lines = Files.readAllLines(file.toPath(), Charset.defaultCharset());
 
             for (int i = 0; i < lines.size(); i++) {
-                if(lines.get(i).startsWith("//")){
+                if (lines.get(i).trim().length() == 0 ||lines.get(i).startsWith("//")) {
                     continue;
                 }
 

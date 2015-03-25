@@ -61,6 +61,10 @@ public class ItemMaterial extends ItemThermalScience {
     public static ItemStack inductionCoil;
 
     public static ItemStack ingotMagneticIron;
+    public static ItemStack ingotMagneticTin;
+    public static ItemStack ingotMagneticCopper;
+    public static ItemStack ingotMagneticInvar;
+    public static ItemStack ingotMagneticEnderium;
 
 
     public List<String> materials;
@@ -124,6 +128,10 @@ public class ItemMaterial extends ItemThermalScience {
         inductionCoil = registerMaterial("InductionCoil");
 
         ingotMagneticIron = registerMaterial("IngotMagneticIron");
+        ingotMagneticTin = registerMaterial("IngotMagneticTin");
+        ingotMagneticCopper = registerMaterial("IngotMagneticCopper");
+        ingotMagneticInvar = registerMaterial("IngotMagneticInvar");
+        ingotMagneticEnderium = registerMaterial("IngotMagneticEnderium");
     }
 
     public ItemStack registerMaterial(String name){
