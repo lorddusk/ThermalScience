@@ -1,9 +1,6 @@
 greg more recipes
 
-machine upgrade kit
-
 compressed stone
-redstone alloy
 OpenComputers support
 
 UU replica
@@ -13,4 +10,4 @@ gravitational tank
 
 
 Void world provider?
-Time space manipulator
+Time space manipulator<

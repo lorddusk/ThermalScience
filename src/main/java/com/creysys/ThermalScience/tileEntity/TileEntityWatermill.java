@@ -2,6 +2,9 @@ package com.creysys.ThermalScience.tileEntity;
 
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyProvider;
+import cofh.api.energy.IEnergyReceiver;
+import cofh.api.energy.IEnergyStorage;
+import cofh.lib.util.helpers.EnergyHelper;
 import com.creysys.ThermalScience.compat.waila.IWailaBodyProvider;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -74,8 +77,8 @@ public class TileEntityWatermill extends TileEntity implements IEnergyProvider, 
     public boolean tryExtractEnergy(ForgeDirection dir){
         TileEntity tileEntity = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ);
 
-        if(tileEntity instanceof IEnergyHandler){
-            IEnergyHandler energyHandler = (IEnergyHandler)tileEntity;
+        if(tileEntity instanceof IEnergyReceiver){
+            IEnergyReceiver energyHandler = (IEnergyReceiver)tileEntity;
 
             if(!energyHandler.canConnectEnergy(dir.getOpposite())){
                 return false;

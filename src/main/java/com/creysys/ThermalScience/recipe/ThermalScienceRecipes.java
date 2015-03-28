@@ -527,7 +527,7 @@ public class ThermalScienceRecipes {
                     if (oresContain(ores, stack)) {
                         newOutputs = new ArrayList<RecipeOutput>();
                         for (int k = 0; k < outputs.length; k++) {
-                            if (!oresContain(ores, stack)) {
+                            if (!oresContain(ores, outputs[k].getOutput())) {
                                 newOutputs.add(outputs[k]);
                             }
                         }
@@ -553,8 +553,9 @@ public class ThermalScienceRecipes {
 
     public static boolean oresContain(List<String> ores, ItemStack stack){
         for(int i = 0; i< ores.size(); i++){
-            if(ThermalScienceUtil.areOresIdentical(stack, ores.get(i)));
-            return true;
+            if(ThermalScienceUtil.areOresIdentical(stack, ores.get(i))) {
+                return true;
+            }
         }
         return false;
     }
