@@ -1,10 +1,9 @@
 package com.creysys.ThermalScience.recipe;
 
-import cofh.api.modhelpers.ThermalExpansionHelper;
-import cofh.thermaldynamics.ThermalDynamics;
 import cofh.thermalexpansion.plugins.nei.handlers.NEIRecipeWrapper;
 import cofh.thermalexpansion.util.crafting.PulverizerManager;
-import cofh.thermalexpansion.util.crafting.RecipeMachine;
+import cofh.thermalexpansion.util.crafting.SmelterManager;
+import cofh.thermalfoundation.item.TFItems;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceConfig;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
@@ -18,18 +17,15 @@ import com.creysys.ThermalScience.recipe.recipe.RecipeCompressor;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
-import crazypants.enderio.EnderIO;
 import crazypants.enderio.machine.crusher.CrusherRecipeManager;
 import crazypants.enderio.machine.recipe.Recipe;
 import crazypants.enderio.machine.recipe.RecipeOutput;
-import crazypants.enderio.material.Material;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -52,12 +48,15 @@ public class ThermalScienceRecipes {
     public static ArrayList<ThermalScienceRecipe> recipesMagnetizer;
 
     public static Item teMachine;
-    public static Item teMachineFrame;
+    public static Item teFrame;
     public static Item teCapacitor;
     public static Item teMaterial;
+    public static Item teCell;
+    public static Item teTesseract;
+    public static Item teDynamo;
     public static Item tfMaterial;
 
-    public static void preInitialize(){
+    public static void preInitialize() {
         recipesCarbothermicFurnace = new ArrayList();
         recipesCentrifuge = new ArrayList();
         recipesCompressor = new ArrayList();
@@ -98,6 +97,7 @@ public class ThermalScienceRecipes {
         GameRegistry.addRecipe(new ShapedOreRecipe(Items.glowstone_dust, "RGR", "GRG", "RGR", 'G', "dustGold", 'R', Items.redstone));
 
         //Carbothermic Furnace
+        addRecipe(recipesCarbothermicFurnace, new Object[]{Items.coal, Blocks.sand}, new Object[]{"itemSilicon"}, 16000);
         //Ore Processing
         addRecipe(recipesCarbothermicFurnace, new Object[]{"oreIron", Items.coal}, new Object[]{"ingotIron,2"}, 7000);
         addRecipe(recipesCarbothermicFurnace, new Object[]{"oreGold", Items.coal}, new Object[]{"ingotGold,2"}, 7000);
@@ -118,6 +118,8 @@ public class ThermalScienceRecipes {
         addRecipe(recipesCentrifuge, new Object[]{"dustNetherrack,16"}, new Object[]{Items.redstone, "dustSulfur,4", "dustCoal", "nuggetGold"}, 80000);
         addRecipe(recipesCentrifuge, new Object[]{new ItemStack(Items.gunpowder, 2)}, new Object[]{"dustCoal", "dustSaltpeter,2", "dustSulfur"}, 10000);
         addRecipe(recipesCentrifuge, new Object[]{new ItemStack(Items.glowstone_dust, 16)}, new Object[]{new ItemStack(Items.redstone, 8), "dustGold,8"}, 240000);
+        addRecipe(recipesCentrifuge, new Object[]{new ItemStack(Items.golden_apple, 1, 0)}, new Object[]{new ItemStack(Items.gold_ingot, 8)}, 80000);
+        addRecipe(recipesCentrifuge, new Object[]{new ItemStack(Items.golden_apple, 1, 1)}, new Object[]{new ItemStack(Items.gold_ingot, 64)}, 300000);
 
 
         //Alloy Seperating
@@ -130,8 +132,10 @@ public class ThermalScienceRecipes {
         addRecipe(recipesCentrifuge, new Object[]{"dustInvar,3"}, new Object[]{"dustIron,2", "dustNickel"}, 18000);
 
         //Compressor
-        addCompressorRecipe(new Object[]{new ItemStack(Items.blaze_powder, 5)}, new Object[]{Items.blaze_rod}, 3200, false);
+        addCompressorRecipe(new Object[]{new ItemStack(Items.blaze_powder, 5)}, new Object[]{Items.blaze_rod}, 10000, false);
         addCompressorRecipe(new Object[]{"dustCoal,64"}, new Object[]{Items.diamond}, 100000, false);
+        addCompressorRecipe(new Object[]{new ItemStack(Blocks.netherrack, 2)}, new Object[]{Blocks.nether_brick}, 10000, false);
+        addCompressorRecipe(new Object[]{new ItemStack(Blocks.sand, 2)}, new Object[]{Blocks.sandstone}, 10000, false);
 
         //Portable recipes
         addCompressorRecipe(new Object[]{new ItemStack(Items.coal, 9)}, new Object[]{Blocks.coal_block}, 1000, true);
@@ -172,7 +176,6 @@ public class ThermalScienceRecipes {
         addRecipe(recipesMagnetizer, new Object[]{"ingotEnderium"}, new Object[]{ItemMaterial.ingotMagneticEnderium}, 60000);
 
 
-
         //Misc
         RecipeHandlerWorld.addWorldCraftingRecipe(ItemMaterial.ingotMagneticIron, "Rub a piece of iron on wool\nto magnetize it.");
     }
@@ -181,10 +184,6 @@ public class ThermalScienceRecipes {
         //Add these recipes after all items have been registered
         addCompressorOreRecipes();
         addModRecipes();
-
-        //Tweaks
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder,2), "dustCoal", "dustSaltpeter","dustSulfur","dustSaltpeter"));
-
 
         ThermalScienceRecipeLoader.load(new File(ThermalScience.configDir, "recipes.txt"));
         ItemPortableCompressor.registerRecipes();
@@ -234,26 +233,29 @@ public class ThermalScienceRecipes {
         }
     }
 
-    public static void addModRecipes(){
+    public static void addModRecipes() {
         //Thermal Expansion
         if (Loader.isModLoaded("ThermalExpansion")) {
 
-            teMachineFrame = GameRegistry.findItem("ThermalExpansion", "Frame");
+            teFrame = GameRegistry.findItem("ThermalExpansion", "Frame");
             teMachine = GameRegistry.findItem("ThermalExpansion", "Machine");
             teMaterial = GameRegistry.findItem("ThermalExpansion", "material");
             teCapacitor = GameRegistry.findItem("ThermalExpansion", "capacitor");
+            teCell = GameRegistry.findItem("ThermalExpansion", "Cell");
+            teTesseract = GameRegistry.findItem("ThermalExpansion", "Tesseract");
+            teDynamo = GameRegistry.findItem("ThermalExpansion", "Dynamo");
             tfMaterial = GameRegistry.findItem("ThermalFoundation", "material");
 
             //Machines
-            GameRegistry.addRecipe(new ItemStack(ThermalScience.blockWatermill), "MGM", "GCG", "MGM", 'G', new ItemStack(tfMaterial, 1, 128), 'M', ItemMaterial.motor, 'C', ItemMaterial.circuitBasic);
+            GameRegistry.addRecipe(new ItemStack(ThermalScience.blockWatermill), "MGM", "GCG", "MGM", 'G', new ItemStack(tfMaterial, 1, 128), 'M', ItemMaterial.motor, 'C', new ItemStack(teFrame, 1, 0));
 
 
-            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockCompressor, "CPM", "TFI", "CPM", 'M', ItemMaterial.motor, 'P', Blocks.piston, 'I', Blocks.iron_bars, 'F', teMachineFrame, 'C', ItemMaterial.circuitHardened, 'T', ItemMaterial.insulatedWireTin));
-            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockWiremill, "CWI", "PFT", "MWI", 'M', ItemMaterial.motor, 'P', Blocks.piston, 'T', ItemMaterial.tube, 'I', Items.iron_ingot, 'F', teMachineFrame, 'C', ItemMaterial.circuitBasic, 'W', ItemMaterial.insulatedWireCopper));
+            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockCompressor, "CPM", "TFI", "CPM", 'M', ItemMaterial.motor, 'P', Blocks.piston, 'I', Blocks.iron_bars, 'F', teFrame, 'C', ItemMaterial.circuitHardened, 'T', ItemMaterial.insulatedWireTin));
+            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockWiremill, "CWI", "PFT", "MWI", 'M', ItemMaterial.motor, 'P', Blocks.piston, 'T', ItemMaterial.tube, 'I', Items.iron_ingot, 'F', teFrame, 'C', ItemMaterial.circuitBasic, 'W', ItemMaterial.insulatedWireCopper));
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockCarbothermicFurnace, "_C_", "ISI", "_I_", 'I', "ingotInvar", 'S', new ItemStack(teMachine, 1, 3), 'C', ItemMaterial.circuitHardened));
-            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockCentrifuge, "IMI", "CFC", "IMI", 'I', ItemMaterial.insulatedWireElectrum, 'M', ItemMaterial.motor, 'C', ItemMaterial.circuitHardened, 'F', teMachineFrame));
-            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockAssemblingMachine, "MDM", "CFC", "WCW", 'M', ItemMaterial.motor, 'C', ItemMaterial.circuitBasic, 'F', teMachineFrame, 'D', Items.diamond, 'W', ItemMaterial.insulatedWireTin));
-            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockMagnetizer, "WCW", "TFT", "WCW", 'W', ItemMaterial.insulatedWireSilver, 'C', ItemMaterial.circuitHardened, 'F', teMachineFrame, 'T', ItemMaterial.tube));
+            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockCentrifuge, "IMI", "CFC", "IMI", 'I', ItemMaterial.insulatedWireElectrum, 'M', ItemMaterial.motor, 'C', ItemMaterial.circuitHardened, 'F', teFrame));
+            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockAssemblingMachine, "MDM", "CFC", "WCW", 'M', ItemMaterial.motor, 'C', ItemMaterial.circuitBasic, 'F', teFrame, 'D', Items.diamond, 'W', ItemMaterial.insulatedWireTin));
+            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockMagnetizer, "WCW", "TFT", "WCW", 'W', ItemMaterial.insulatedWireSilver, 'C', ItemMaterial.circuitHardened, 'F', teFrame, 'T', ItemMaterial.tube));
 
             GameRegistry.addRecipe(new ItemStack(ThermalScience.blockEnergyRelay), "IHI", "TWR", "ICI", 'C', new ItemStack(teMaterial, 1, 3), 'T', new ItemStack(teMaterial, 1, 2), 'R', new ItemStack(teMaterial, 1, 1), 'W', ItemMaterial.insulatedWireSilver, 'I', Items.iron_ingot, 'H', ItemMaterial.circuitBasic);
 
@@ -265,7 +267,7 @@ public class ThermalScienceRecipes {
             addUpgradableMachineRecipes(ThermalScience.blockAssemblingMachine, tfMaterial);
             addUpgradableMachineRecipes(ThermalScience.blockMagnetizer, tfMaterial);
 
-            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockTeleporterController, "ICI", "EFE", "ICI", 'I', "ingotInvar", 'C', new ItemStack(teCapacitor, 1, 5), 'E', "ingotEnderium", 'F', new ItemStack(teMachineFrame, 1, 3), 'C', ItemMaterial.circuitResonant));
+            GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockTeleporterController, "ICI", "EFE", "ICI", 'I', "ingotInvar", 'C', new ItemStack(teCapacitor, 1, 5), 'E', "ingotEnderium", 'F', new ItemStack(teFrame, 1, 3), 'C', ItemMaterial.circuitResonant));
             GameRegistry.addRecipe(new ShapedOreRecipe(ThermalScience.blockTeleporterPowerTap, "IEI", "WWC", "IEI", 'I', "ingotInvar", 'E', "ingotEnderium", 'C', new ItemStack(teMaterial, 1, 1), 'W', ItemMaterial.insulatedWireEnderium));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ThermalScience.blockTeleporterWall, 4), "IEI", "EIE", "IEI", 'I', "ingotInvar", 'E', "ingotEnderium"));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ThermalScience.itemTeleporterDestinationCard, 2), "W_W", "EPE", "_C_", 'W', ItemMaterial.wireCopper, 'E', "ingotEnderium", 'P', Items.paper, 'C', ItemMaterial.circuitResonant));
@@ -284,10 +286,14 @@ public class ThermalScienceRecipes {
 
             GameRegistry.addShapedRecipe(rein, "HCR", "WMW", "___", 'M', new ItemStack(ThermalScience.blockCompressor, 1, 2), 'C', new ItemStack(GameRegistry.findItem("ThermalExpansion", "capacitor"), 1, 4), 'H', ItemMaterial.circuitHardened, 'R', ItemMaterial.circuitReinforced, 'W', ItemMaterial.insulatedWireElectrum);
             GameRegistry.addShapedRecipe(reso, "RCS", "WMW", "___", 'M', rein, 'C', new ItemStack(GameRegistry.findItem("ThermalExpansion", "capacitor"), 1, 5), 'R', ItemMaterial.circuitReinforced, 'S', ItemMaterial.circuitResonant, 'W', ItemMaterial.insulatedWireSignalum);
+
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ThermalScience.itemMachineUpgradeKit, 1, 0), "IGI", "C_C", "I_I", 'I', "ingotInvar", 'G', new ItemStack(tfMaterial, 1, 135), 'C', ItemMaterial.circuitHardened));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ThermalScience.itemMachineUpgradeKit, 1, 1), "IGI", "C_C", "IDI", 'I', "blockGlassHardened", 'G', new ItemStack(tfMaterial, 1, 138), 'D', Items.diamond, 'C', ItemMaterial.circuitReinforced));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ThermalScience.itemMachineUpgradeKit, 1, 2), "IGI", "C_C", "IDI", 'I', "ingotSilver", 'G', new ItemStack(tfMaterial, 1, 140), 'D', Items.diamond, 'C', ItemMaterial.circuitResonant));
         }
 
         //ProjectRed
-        if(Loader.isModLoaded("ProjRed|Core") && Loader.isModLoaded("ProjRed|Exploration")) {
+        if (Loader.isModLoaded("ProjRed|Core") && Loader.isModLoaded("ProjRed|Exploration")) {
             Item projRedGem = GameRegistry.findItem("ProjRed|Core", "projectred.core.part");
             Item projRedBlock = GameRegistry.findItem("ProjRed|Exploration", "projectred.exploration.stone");
 
@@ -297,7 +303,7 @@ public class ThermalScienceRecipes {
         }
 
         //AE2
-        if(Loader.isModLoaded("appliedenergistics2")){
+        if (Loader.isModLoaded("appliedenergistics2")) {
             Item ae2Material = GameRegistry.findItem("appliedenergistics2", "item.ItemMultiMaterial");
 
             addCompressorRecipe(new Object[]{new ItemStack(ae2Material, 4, 0)}, new Object[]{new ItemStack(GameRegistry.findItem("appliedenergistics2", "tile.BlockQuartz"))}, 1000, true);
@@ -329,14 +335,6 @@ public class ThermalScienceRecipes {
                 addCompressorRecipe(new Object[]{input}, new Object[]{new ItemStack(item, 1, i)}, 420, true);
             }
         }
-
-        if (Loader.isModLoaded("EnderIO")) {
-            Item eioMaterial = GameRegistry.findItem("EnderIO", "itemMaterial");
-
-            if (eioMaterial != null) {
-                addRecipe(recipesCarbothermicFurnace, new Object[]{Items.coal, Blocks.sand}, new Object[]{eioMaterial}, 16000);
-            }
-        }
     }
 
     public static void removeRecipes() {
@@ -348,16 +346,41 @@ public class ThermalScienceRecipes {
             if (ThermalScienceConfig.recipeOverrideSilicon) {
                 PulverizerManager.removeRecipe(new ItemStack(Blocks.sand));
             }
+            if(ThermalScienceConfig.recipeOverrideNiter){
+                PulverizerManager.removeRecipe(new ItemStack(Blocks.sandstone));
+                PulverizerManager.addRecipe(3200, new ItemStack(Blocks.sand), new ItemStack(Blocks.sand, 2));
+            }
+            if(ThermalScienceConfig.recipeOverrideSulfur){
+                SmelterManager.removeRecipe(new ItemStack(Blocks.netherrack, 4), new ItemStack(Blocks.soul_sand));
+                SmelterManager.addRecipe(4000, new ItemStack(Blocks.netherrack, 4), new ItemStack(Blocks.soul_sand), new ItemStack(Blocks.nether_brick, 2));
+
+                PulverizerManager.removeRecipe(new ItemStack(Items.coal));
+                PulverizerManager.addRecipe(2400, new ItemStack(Items.coal, 1), TFItems.dustCoal);
+
+                PulverizerManager.removeRecipe(new ItemStack(Blocks.quartz_ore));
+                PulverizerManager.addRecipe(2400, new ItemStack(Blocks.quartz_ore), new ItemStack(Items.quartz, 2));
+
+                PulverizerManager.removeRecipe(new ItemStack(Items.blaze_rod));
+                PulverizerManager.addTERecipe(1600, new ItemStack(Items.blaze_rod), new ItemStack(Items.blaze_powder, 4));
+            }
 
             if (ThermalScienceConfig.recipeOverrideMachines) {
                 //Remove all machine crafting
+                ArrayList<Integer> excluded = new ArrayList<>();
+                excluded.add(7);
+                excluded.add(8);
+                excluded.add(9);
+                excluded.add(10);
+                excluded.add(11);
+
+
                 List list = CraftingManager.getInstance().getRecipeList();
                 List remove = new ArrayList<>();
 
-                for(int i = 0; i < list.size(); i++) {
+                for (int i = 0; i < list.size(); i++) {
                     if (list.get(i) instanceof NEIRecipeWrapper) {
-                        NEIRecipeWrapper recipe = (NEIRecipeWrapper)list.get(i);
-                        if(recipe.getRecipeType() == NEIRecipeWrapper.RecipeType.MACHINE){
+                        NEIRecipeWrapper recipe = (NEIRecipeWrapper) list.get(i);
+                        if (recipe.getRecipeType() == NEIRecipeWrapper.RecipeType.MACHINE && !excluded.contains(recipe.getRecipeOutput().getItemDamage())) {
                             remove.add(recipe);
                         }
                     }
@@ -367,22 +390,76 @@ public class ThermalScienceRecipes {
 
 
                 //Redstone Furnace
-                GameRegistry.addShapedRecipe(new ItemStack(teMachine, 1, 0), "_C_", "FMF", "ORO", 'C', ItemMaterial.circuitHardened, 'M', new ItemStack(teMachineFrame, 1, 0), 'F', Blocks.furnace, 'O', ItemMaterial.inductionCoil, 'R', new ItemStack(teMaterial, 1, 1));
+                GameRegistry.addShapedRecipe(new ItemStack(teMachine, 1, 0), "cCc", "FMF", "ORO", 'C', ItemMaterial.circuitBasic, 'M', teFrame, 'F', Blocks.furnace, 'O', ItemMaterial.inductionCoil, 'R', new ItemStack(teMaterial, 1, 1), 'c', ItemMaterial.insulatedWireCopper);
                 //Pulverizer
-                GameRegistry.addShapedRecipe(new ItemStack(teMachine, 1, 1), "WCW", "cMc", "FGF", 'W', ItemMaterial.insulatedWireElectrum, 'C', ItemMaterial.circuitReinforced, 'c', new ItemStack(ThermalScience.blockCompressor, 1, 2), 'M', ItemMaterial.motor, 'F', Items.flint, 'G', new ItemStack(tfMaterial, 1, 128));
+                GameRegistry.addShapedRecipe(new ItemStack(teMachine, 1, 1), "WCW", "cMc", "FGF", 'W', ItemMaterial.insulatedWireElectrum, 'C', ItemMaterial.circuitReinforced, 'c', new ItemStack(ThermalScience.blockCompressor), 'M', ItemMaterial.motor, 'F', Items.flint, 'G', new ItemStack(tfMaterial, 1, 128));
+                //Sawmill
+                GameRegistry.addShapedRecipe(new ItemStack(teMachine, 1, 2), "GAG", "MFM", "CcC", 'G', new ItemStack(tfMaterial, 1, 136), 'A', Items.iron_axe, 'M', ItemMaterial.motor, 'F', teFrame, 'C', ItemMaterial.circuitHardened, 'c', ItemMaterial.insulatedWireInvar);
+                //Induction Smelter
+                GameRegistry.addShapedRecipe(new ItemStack(teMachine, 1, 3), "cCc", "FMF", "iRi", 'C', ItemMaterial.circuitBasic, 'M', teFrame, 'F', teMachine, 'i', ItemMaterial.insulatedWireIron, 'R', new ItemStack(teMaterial, 1, 1), 'c', ItemMaterial.insulatedWireCopper);
+                //Magma Crucible
+                GameRegistry.addShapedRecipe(new ItemStack(teMachine, 1, 4), "B_B", "IFI", "WCW", 'B', Items.bucket, 'I', ItemMaterial.inductionCoil, 'F', teFrame, 'W', ItemMaterial.insulatedWireInvar, 'C', ItemMaterial.circuitReinforced);
+                //Fluid Transposer
+                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(teMachine, 1, 5), "MGB", "CF_", "WIg", 'M', ItemMaterial.motor, 'G', new ItemStack(tfMaterial, 1, 12), 'B', Items.bucket, 'C', ItemMaterial.circuitReinforced, 'F', teFrame, 'W', ItemMaterial.insulatedWireGold, 'I', ItemMaterial.ingotMagneticInvar, 'g', "blockGlass"));
+                //Glacial Precipitator
+                GameRegistry.addShapedRecipe(new ItemStack(teMachine, 1, 6), "WWC", "cFB", "WWI", 'W', ItemMaterial.insulatedWireCopper, 'C', new ItemStack(ThermalScience.blockCompressor, 1, 0), 'c', ItemMaterial.circuitBasic, 'F', teFrame, 'B', Items.bucket, 'I', ItemMaterial.ingotMagneticIron);
             }
 
-            if(ThermalScienceConfig.recipesOverrideGunpowder) {
-                ThermalScienceUtil.removeCraftingRecipeFor(new ItemStack(Items.gunpowder));
+            if(ThermalScienceConfig.recipeOverrideEnergyCells){
+                //Energy Cells
+                for (int i = 0; i < 5; i++) {
+                    ThermalScienceUtil.removeCraftingRecipeFor(new ItemStack(teCell, 1, i), true);
+                }
+
+                //Leadstone Energy Cell
+                GameRegistry.addShapedRecipe(new ItemStack(teCell, 1, 1), "WTW", "CEC", "WRW", 'W', ItemMaterial.insulatedWireCopper, 'T', new ItemStack(teMaterial, 1, 2), 'C', ItemMaterial.circuitBasic, 'E', new ItemStack(teFrame, 1, 4), 'R', new ItemStack(teMaterial, 1, 1));
+                //Hardened Energy Cell
+                GameRegistry.addShapedRecipe(new ItemStack(teCell, 1, 2), "WTW", "CEC", "WRW", 'W', ItemMaterial.insulatedWireInvar, 'T', new ItemStack(teMaterial, 1, 2), 'C', ItemMaterial.circuitHardened, 'E', new ItemStack(teFrame, 1, 5), 'R', new ItemStack(teMaterial, 1, 1));
+                //Redstone Energy Cell
+                GameRegistry.addShapedRecipe(new ItemStack(teCell, 1, 3), "WTW", "CEC", "WRW", 'W', ItemMaterial.insulatedWireElectrum, 'T', new ItemStack(teMaterial, 1, 2), 'C', ItemMaterial.circuitReinforced, 'E', new ItemStack(teFrame, 1, 7), 'R', new ItemStack(teMaterial, 1, 1));
+                //Resonant Energy Cell
+                GameRegistry.addShapedRecipe(new ItemStack(teCell, 1, 4), "WTW", "CEC", "WRW", 'W', ItemMaterial.insulatedWireEnderium, 'T', new ItemStack(teMaterial, 1, 2), 'C', ItemMaterial.circuitResonant, 'E', new ItemStack(teFrame, 1, 9), 'R', new ItemStack(teMaterial, 1, 1));
+            }
+
+            if(ThermalScienceConfig.recipeOverrideTesseract) {
+                //Tesseract
+                ThermalScienceUtil.removeCraftingRecipeFor(new ItemStack(teTesseract), true);
+                GameRegistry.addShapedRecipe(new ItemStack(teTesseract), "WCT", "MFM", "RCW", 'W', ItemMaterial.insulatedWireEnderium, 'C', ItemMaterial.circuitResonant, 'T', new ItemStack(teMaterial, 1, 2), 'M', ItemMaterial.ingotMagneticEnderium, 'F', new ItemStack(teFrame, 1, 11), 'R', new ItemStack(teMaterial, 1, 1));
+            }
+
+            if (ThermalScienceConfig.recipeOverrideGunpowder) {
+                ThermalScienceUtil.removeShapelessOreRecipeFor(new ItemStack(Items.gunpowder), "dustCharcoal");
+            }
+
+            if(ThermalScienceConfig.recipeOverrideServo){
+                ThermalScienceUtil.removeCraftingRecipeFor(new ItemStack(teMaterial), true);
+                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(teMaterial), "_I_", "GCG", "_I_", 'I', "ingotIron", 'G', "blockGlass", 'C', ItemMaterial.circuitHardened));
+            }
+
+            if(ThermalScienceConfig.recipeOverrideDynamos){
+                for(int i = 0; i < 5; i++){
+                    ThermalScienceUtil.removeCraftingRecipeFor(new ItemStack(teDynamo, 1, i), true);
+                }
+
+                //Steam Dynamo
+                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(teDynamo, 1, 0), "_T_", "GIG", "MCM", 'T', new ItemStack(teMaterial, 1, 2), 'G', new ItemStack(tfMaterial, 1, 128), 'I', "ingotCopper", 'M', ItemMaterial.motor, 'C', ItemMaterial.circuitBasic));
+                //Magmatic Dynamo
+                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(teDynamo, 1, 1), "_T_", "GIG", "MCM", 'T', new ItemStack(teMaterial, 1, 2), 'G', new ItemStack(tfMaterial, 1, 136), 'I', "ingotInvar", 'M', ItemMaterial.motor, 'C', ItemMaterial.circuitReinforced));
+                //Compression Dynamo
+                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(teDynamo, 1, 2), "_T_", "GIG", "MCM", 'T', new ItemStack(teMaterial, 1, 2), 'G', new ItemStack(tfMaterial, 1, 129), 'I', "ingotTin", 'M', ItemMaterial.motor, 'C', ItemMaterial.circuitHardened));
+                //Steam Dynamo
+                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(teDynamo, 1, 3), "_T_", "GIG", "MCM", 'T', new ItemStack(teMaterial, 1, 2), 'G', new ItemStack(tfMaterial, 1, 137), 'I', "ingotBronze", 'M', ItemMaterial.motor, 'C', ItemMaterial.circuitHardened));
+                //Steam Dynamo
+                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(teDynamo, 1, 4), "_T_", "GIG", "MCM", 'T', new ItemStack(teMaterial, 1, 2), 'G', new ItemStack(tfMaterial, 1, 135), 'I', "ingotElectrum", 'M', ItemMaterial.motor, 'C', ItemMaterial.circuitReinforced));
             }
         }
 
         if (Loader.isModLoaded("ThermalDynamics")) {
-            Item dynamics0 = GameRegistry.findItem("ThermalDynamics","ThermalDynamics_0");
-            Item dynamics16 = GameRegistry.findItem("ThermalDynamics","ThermalDynamics_16");
-            Item dynamics32 = GameRegistry.findItem("ThermalDynamics","ThermalDynamics_32");
+            Item dynamics0 = GameRegistry.findItem("ThermalDynamics", "ThermalDynamics_0");
+            Item dynamics16 = GameRegistry.findItem("ThermalDynamics", "ThermalDynamics_16");
+            Item dynamics32 = GameRegistry.findItem("ThermalDynamics", "ThermalDynamics_32");
 
-            if(ThermalScienceConfig.recipeOverrideDynamics) {
+            if (ThermalScienceConfig.recipeOverrideDynamics) {
                 //Fluxduct
                 ThermalScienceUtil.removeCraftingRecipeFor(new ItemStack(dynamics0, 1, 0));
                 ThermalScienceUtil.removeCraftingRecipeFor(new ItemStack(dynamics0, 1, 1));
@@ -423,43 +500,62 @@ public class ThermalScienceRecipes {
         }
 
         if (Loader.isModLoaded("EnderIO")) {
+
+            ArrayList<String> ores = new ArrayList<>();
             if (ThermalScienceConfig.recipeOverrideSilicon) {
-                //Remove silicon from every ender io sag mill recipe
-                CrusherRecipeManager recipeManager = CrusherRecipeManager.getInstance();
-                List<Recipe> recipes = recipeManager.getRecipes();
-                List<Recipe> removeRecipes = new ArrayList<>();
-                List<Recipe> addRecipes = new ArrayList<>();
+                ores.add("itemSilicon");
+            }
+            if(ThermalScienceConfig.recipeOverrideNiter){
+                ores.add("dustSaltpeter");
+            }
+            if(ThermalScienceConfig.recipeOverrideSulfur){
+                ores.add("dustSulfur");
+            }
 
-                for(int i = 0; i < recipes.size(); i++){
-                    RecipeOutput[] outputs = recipes.get(i).getOutputs();
-                    List<RecipeOutput> newOutputs = null;
+            //Remove silicon from every ender io sag mill recipe
+            CrusherRecipeManager recipeManager = CrusherRecipeManager.getInstance();
+            List<Recipe> recipes = recipeManager.getRecipes();
+            List<Recipe> removeRecipes = new ArrayList<>();
+            List<Recipe> addRecipes = new ArrayList<>();
 
-                    for(int j = 0; j < outputs.length; j++){
-                        ItemStack stack = outputs[j].getOutput();
-                        if(ThermalScienceUtil.areStacksEqual(stack, new ItemStack(EnderIO.itemMaterial, 1, 0))){
-                            newOutputs = new ArrayList<>();
-                            for(int k = 0; k < outputs.length; k++){
-                                if(!ThermalScienceUtil.areStacksEqual(outputs[k].getOutput(), new ItemStack(EnderIO.itemMaterial, 1, 0))){
-                                    newOutputs.add(outputs[k]);
-                                }
+            for (int i = 0; i < recipes.size(); i++) {
+                RecipeOutput[] outputs = recipes.get(i).getOutputs();
+                List<RecipeOutput> newOutputs = null;
+
+                for (int j = 0; j < outputs.length; j++) {
+                    ItemStack stack = outputs[j].getOutput();
+                    if (oresContain(ores, stack)) {
+                        newOutputs = new ArrayList<>();
+                        for (int k = 0; k < outputs.length; k++) {
+                            if (!oresContain(ores, stack)) {
+                                newOutputs.add(outputs[k]);
                             }
-
-                            break;
                         }
-                    }
 
-                    if(newOutputs != null) {
-                        removeRecipes.add(recipes.get(i));
-
-                        if (newOutputs.size() > 0) {
-                            addRecipes.add(new Recipe(recipes.get(i).getInputs(), ThermalScienceUtil.toArray(RecipeOutput.class, newOutputs), recipes.get(i).getEnergyRequired(), recipes.get(i).getBonusType()));
-                        }
+                        break;
                     }
                 }
 
-                recipes.removeAll(removeRecipes);
-                recipes.addAll(addRecipes);
+                if (newOutputs != null) {
+                    removeRecipes.add(recipes.get(i));
+
+                    if (newOutputs.size() > 0) {
+                        addRecipes.add(new Recipe(recipes.get(i).getInputs(), ThermalScienceUtil.toArray(RecipeOutput.class, newOutputs), recipes.get(i).getEnergyRequired(), recipes.get(i).getBonusType()));
+                    }
+                }
             }
+
+            recipes.removeAll(removeRecipes);
+            recipes.addAll(addRecipes);
         }
+
+    }
+
+    public static boolean oresContain(List<String> ores, ItemStack stack){
+        for(int i = 0; i< ores.size(); i++){
+            if(ThermalScienceUtil.areOresIdentical(stack, ores.get(i)));
+            return true;
+        }
+        return false;
     }
 }

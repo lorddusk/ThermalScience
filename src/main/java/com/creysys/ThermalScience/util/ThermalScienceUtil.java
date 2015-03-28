@@ -128,8 +128,12 @@ public class ThermalScienceUtil {
         return -1;
     }
 
-    public static boolean areStacksEqual(ItemStack stack1, ItemStack stack2) {
-        return stack1 != null && stack2 != null && stack1.getItem() == stack2.getItem() && stack1.getItemDamage() == stack2.getItemDamage() && !stack1.hasTagCompound() && !stack2.hasTagCompound();
+    public static boolean areStacksEqual(ItemStack stack1, ItemStack stack2){
+        return areStacksEqual(stack1, stack2, false);
+    }
+
+    public static boolean areStacksEqual(ItemStack stack1, ItemStack stack2, boolean ignoreNBT) {
+        return stack1 != null && stack2 != null && stack1.getItem() == stack2.getItem() && stack1.getItemDamage() == stack2.getItemDamage() && (ignoreNBT || (!stack1.hasTagCompound() && !stack2.hasTagCompound()));
     }
 
     public static ItemStack getStack(Object output) {
@@ -218,6 +222,23 @@ public class ThermalScienceUtil {
         return true;
     }
 
+    public static boolean areOresIdentical(ItemStack stack1, String ore){
+        int[] ores1 = OreDictionary.getOreIDs(stack1);
+        int ore2 = OreDictionary.getOreID(ore);
+
+        if(ores1.length == 0){
+            return false;
+        }
+
+        for(int i = 0; i < ores1.length; i++){
+            if(ores1[i] == ore2){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public static List<ThermalScienceRecipe> getRecipesFor(List<ThermalScienceRecipe> recipes,Object obj) {
         List<ThermalScienceRecipe> ret = new ArrayList<ThermalScienceRecipe>();
 
@@ -289,7 +310,7 @@ public class ThermalScienceUtil {
     }
 
     public static void drawTexturedModalRectWithIcon(IIcon icon, int x, int y) {
-        drawTexturedModalRectWithIcon(icon, x, y , icon.getIconWidth(), icon.getIconHeight(), false);
+        drawTexturedModalRectWithIcon(icon, x, y, icon.getIconWidth(), icon.getIconHeight(), false);
     }
 
     public static void drawTexturedModalRectWithIcon(IIcon icon, int x, int y, int width, int height, boolean crop) {
@@ -366,6 +387,10 @@ public class ThermalScienceUtil {
     }
 
     public static void removeCraftingRecipeFor(ItemStack stack){
+        removeCraftingRecipeFor(stack, false);
+    }
+
+    public static void removeCraftingRecipeFor(ItemStack stack, boolean ignoreNBT){
         List list = CraftingManager.getInstance().getRecipeList();
         List remove = new ArrayList<IRecipe>();
 
@@ -373,7 +398,7 @@ public class ThermalScienceUtil {
             if(list.get(i) instanceof IRecipe){
                 IRecipe recipe = (IRecipe)list.get(i);
 
-                if(areStacksEqual(recipe.getRecipeOutput(), stack)){
+                if(areStacksEqual(recipe.getRecipeOutput(), stack, ignoreNBT)){
                     remove.add(recipe);
                 }
             }
@@ -384,7 +409,7 @@ public class ThermalScienceUtil {
 
     public static void removeShapedOreRecipeFor(ItemStack stack, String ingredient){
         List list = CraftingManager.getInstance().getRecipeList();
-        List remove = new ArrayList<IRecipe>();
+        List remove = new ArrayList<>();
 
         for(int i = 0; i < list.size(); i++){
             if(list.get(i) instanceof ShapedOreRecipe){

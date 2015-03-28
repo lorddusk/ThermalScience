@@ -6,10 +6,7 @@ import com.creysys.ThermalScience.block.teleporter.BlockTeleporterController;
 import com.creysys.ThermalScience.block.teleporter.BlockTeleporterPowerTap;
 import com.creysys.ThermalScience.block.teleporter.BlockTeleporterWall;
 import com.creysys.ThermalScience.compat.ThermalScienceCompat;
-import com.creysys.ThermalScience.item.ItemDust;
-import com.creysys.ThermalScience.item.ItemMaterial;
-import com.creysys.ThermalScience.item.ItemPortableCompressor;
-import com.creysys.ThermalScience.item.ItemTeleporterDestinationCard;
+import com.creysys.ThermalScience.item.*;
 import com.creysys.ThermalScience.network.ThermalSciencePacketHandler;
 import com.creysys.ThermalScience.proxy.ServerProxy;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipes;
@@ -77,6 +74,7 @@ public class ThermalScience
     public static ItemDust itemDust;
 
     public static Item itemPortableCompressor;
+    public static Item itemMachineUpgradeKit;
 
     public static Item itemTeleporterDestinationCard;
 
@@ -109,6 +107,7 @@ public class ThermalScience
 
 
         itemPortableCompressor = new ItemPortableCompressor();
+        itemMachineUpgradeKit = new ItemMachineUpgradeKit();
 
         itemTeleporterDestinationCard = new ItemTeleporterDestinationCard();
 

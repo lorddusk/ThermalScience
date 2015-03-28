@@ -19,6 +19,9 @@ tile.blockGravitationalTank.name=Gravitational Tank
 
 
 item.itemPortableCompressor.name=Portable Compressor
+item.itemMachineUpgradeKitHardened.name=Hardened Machine Upgrade Kit
+item.itemMachineUpgradeKitReinforced.name=Reinforced Machine Upgrade Kit
+item.itemMachineUpgradeKitResonant.name=Resonant Machine Upgrade Kit
 
 item.materialTube.name=Tube
 item.materialCoil.name=Coil

@@ -13,9 +13,15 @@ public class ThermalScienceConfig
     public static boolean crashOnInvalidRecipe;
 
     public static boolean recipeOverrideSilicon;
-    public static boolean recipesOverrideGunpowder;
+    public static boolean recipeOverrideGunpowder;
+    public static boolean recipeOverrideNiter;
+    public static boolean recipeOverrideSulfur;
     public static boolean recipeOverrideMachines;
     public static boolean recipeOverrideDynamics;
+    public static boolean recipeOverrideEnergyCells;
+    public static boolean recipeOverrideTesseract;
+    public static boolean recipeOverrideServo;
+    public static boolean recipeOverrideDynamos;
 
     public static boolean showOreDictNames;
     public static boolean showItemNames;
@@ -32,9 +38,15 @@ public class ThermalScienceConfig
 
         config.addCustomCategoryComment("recipe overrides", "These settings will fully replace the way some items are made.");
         recipeOverrideSilicon = config.getBoolean("silicon", "recipe overrides", true, "Make silicon in carb furnace");
-        recipesOverrideGunpowder = config.getBoolean("gunpowder", "recipe overrides", true, "Remove charcoal gunpowder recipe");
+        recipeOverrideNiter = config.getBoolean("niter", "recipe overrides", true, "Get niter (saltpeter) from centrifuge");
+        recipeOverrideSulfur = config.getBoolean("sulfur", "recipe overrides", true, "Get sulfur from centrifuge");
+        recipeOverrideGunpowder = config.getBoolean("gunpowder", "recipe overrides", true, "Remove charcoal gunpowder recipe");
         recipeOverrideMachines = config.getBoolean("machines", "recipe overrides", true, "Greg all machine recipes");
         recipeOverrideDynamics = config.getBoolean("dynamics", "recipe overrides", true, "Greg thermal dynamics recipes");
+        recipeOverrideEnergyCells = config.getBoolean("energyCells", "recipe overrides", true, "Greg all energy cells");
+        recipeOverrideTesseract = config.getBoolean("tesseract", "recipe overrides", true, "Greg tesseracts");
+        recipeOverrideServo = config.getBoolean("servo", "recipe overrides", true, "(Greg) servo recipe");
+        recipeOverrideDynamos = config.getBoolean("dynamos", "recipe overrides", true, "Greg dynamo recipe");
 
         config.save();
     }

@@ -24,6 +24,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
 
 import java.util.List;
 import java.util.Random;
@@ -64,7 +65,7 @@ public class BlockTeleporterController extends BlockContainer implements IWrench
 
         if (player.isSneaking() && player.getHeldItem() != null && ThermalScienceUtil.isItemWrench(player.getHeldItem().getItem())) {
             ThermalScienceUtil.wrenchBlock(world, player, x, y, z, this);
-        } else if (world.getTileEntity(x, y, z) instanceof TileEntityTeleporterController) {
+        } else if (world.getTileEntity(x, y, z) instanceof TileEntityTeleporterController && !(player instanceof FakePlayer)) {
             FMLNetworkHandler.openGui(player, ThermalScience.instance, ThermalScienceGuiID.TeleporterController.ordinal(), world, x, y, z);
         }
 

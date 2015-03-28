@@ -42,8 +42,6 @@ public class HandlerBlock {
                 continue;
             }
 
-            //TODO: X POS ISNT RIGHT AFTER WORLD RELOAD
-
             TileEntityTeleporterController controller = (TileEntityTeleporterController) world.getTileEntity(pos.x, pos.y, pos.z);
             if (controller == null) {
                 continue;

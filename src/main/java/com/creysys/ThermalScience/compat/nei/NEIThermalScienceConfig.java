@@ -1,5 +1,6 @@
 package com.creysys.ThermalScience.compat.nei;
 
+import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
 import codechicken.nei.recipe.TemplateRecipeHandler;
@@ -21,12 +22,12 @@ public class NEIThermalScienceConfig implements IConfigureNEI {
     public void loadConfig() {
         handlers = new ArrayList<>();
 
-        handlers.add(new RecipeHandlerCentrifuge());
-        handlers.add(new RecipeHandlerCompressor());
-        handlers.add(new RecipeHandlerCarbothermicFurnace());
-        handlers.add(new RecipeHandlerWiremill());
-        handlers.add(new RecipeHandlerAssemblingMachine());
-        handlers.add(new RecipeHandlerMagnetizer());
+        handlers.add(new RecipeHandlerCentrifuge().newInstance());
+        handlers.add(new RecipeHandlerCompressor().newInstance());
+        handlers.add(new RecipeHandlerCarbothermicFurnace().newInstance());
+        handlers.add(new RecipeHandlerWiremill().newInstance().newInstance());
+        handlers.add(new RecipeHandlerAssemblingMachine().newInstance());
+        handlers.add(new RecipeHandlerMagnetizer().newInstance());
         handlers.add(new RecipeHandlerWorld());
 
 

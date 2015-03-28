@@ -2,35 +2,37 @@ package com.creysys.ThermalScience.compat.nei.recipeHandler;
 
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
+import codechicken.nei.api.API;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import cofh.lib.util.helpers.ColorHelper;
+import cofh.thermalexpansion.ThermalExpansion;
+import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.gui.guiScreen.GuiMachine;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipe;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Creysys on 08 Feb 15.
  */
+
 public class RecipeHandlerMachine extends TemplateRecipeHandler {
 
     public GuiMachine gui;
     public List<ThermalScienceRecipe> recipes;
+    public String name;
 
     public int xOffset = -5;
     public int yOffset = 8;
     public int xCrop = 0;
     public int yCrop = 11;
-
-    public RecipeHandlerMachine(GuiMachine gui, List<ThermalScienceRecipe> recipes){
-        this.gui = gui;
-        this.recipes = recipes;
-    }
 
     public class CachedRecipeMachine extends CachedRecipe {
 
@@ -52,7 +54,7 @@ public class RecipeHandlerMachine extends TemplateRecipeHandler {
             outputSlots = gui.getOutputSlots();
             isValid = true;
 
-            outputs = new ArrayList<ItemStack>();
+            outputs = new ArrayList<>();
             for (int j = 0; j < recipe.outputs.length; j++) {
                 ItemStack stack = ThermalScienceUtil.getStack(recipe.outputs[j]);
                 if(stack != null) {
@@ -78,6 +80,7 @@ public class RecipeHandlerMachine extends TemplateRecipeHandler {
 
             energy = recipe.energy;
         }
+
 
         @Override
         public PositionedStack getResult() {
@@ -107,14 +110,56 @@ public class RecipeHandlerMachine extends TemplateRecipeHandler {
         }
     }
 
+
+    @Override
+    public void loadTransferRects() {
+        super.loadTransferRects();
+
+        API.setGuiOffset(getGuiClass(), getOffsetX(), getOffsetY());
+        this.transferRects.add(new TemplateRecipeHandler.RecipeTransferRect(getRecipesRect(), getOverlayIdentifier()));
+    }
+
+    public Rectangle getRecipesRect(){
+        return new Rectangle(75, 20, 30, 20);
+    }
+
+    public int getOffsetX(){
+        return 0;
+    }
+
+    public int getOffsetY(){
+        return 0;
+    }
+
     @Override
     public String getGuiTexture() {
         return null;
     }
 
     @Override
+    public Class<? extends GuiContainer> getGuiClass() {
+        return gui.getClass();
+    }
+
+    @Override
     public String getRecipeName() {
         return gui.getName();
+    }
+
+    @Override
+    public void loadCraftingRecipes(String outputId, Object... results) {
+        if(outputId.equals(getOverlayIdentifier())) {
+            arecipes.clear();
+            for (int i = 0; i < recipes.size(); i++) {
+                CachedRecipeMachine recipe = new CachedRecipeMachine(gui, recipes.get(i));
+                if (recipe.isValid) {
+                    arecipes.add(recipe);
+                }
+            }
+        }
+        else {
+            super.loadCraftingRecipes(outputId, results);
+        }
     }
 
     @Override
@@ -166,8 +211,8 @@ public class RecipeHandlerMachine extends TemplateRecipeHandler {
     }
 
     @Override
-    public void loadTransferRects() {
-        super.loadTransferRects();
+    public String getOverlayIdentifier() {
+        return ThermalScience.MODID + "." + name;
     }
 
     @Override

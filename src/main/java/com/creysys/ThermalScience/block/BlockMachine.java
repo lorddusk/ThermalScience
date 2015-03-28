@@ -1,6 +1,7 @@
 package com.creysys.ThermalScience.block;
 
 import cofh.api.modhelpers.ThermalExpansionHelper;
+import cofh.core.entity.CoFHFakePlayer;
 import cofh.lib.util.helpers.StringHelper;
 import cofh.thermalexpansion.util.crafting.PulverizerManager;
 import com.creysys.ThermalScience.ThermalScience;
@@ -30,6 +31,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
@@ -122,7 +124,7 @@ public class BlockMachine extends BlockContainer implements IItemTooltipProvider
             if (heldItemStack != null && ThermalScienceUtil.isItemWrench(heldItemStack.getItem())) {
                 ThermalScienceUtil.wrenchBlock(world, player, x, y, z, this);
             }
-        } else {
+        } else if(!(player instanceof FakePlayer)){
             FMLNetworkHandler.openGui(player, ThermalScience.instance, guiID.ordinal(), world, x, y, z);
         }
 

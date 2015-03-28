@@ -26,6 +26,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
 
 import java.util.List;
 
@@ -123,7 +124,7 @@ public class BlockEnergyRelay extends BlockContainer implements IItemTooltipProv
                 }
             }
             else {
-                if (!world.isRemote) {
+                if (!world.isRemote && !(player instanceof FakePlayer)) {
                     FMLNetworkHandler.openGui(player, ThermalScience.instance, ThermalScienceGuiID.EnergyRelay.ordinal(), world, x, y, z);
                 }
             }
@@ -138,7 +139,7 @@ public class BlockEnergyRelay extends BlockContainer implements IItemTooltipProv
                 }
             }
         } else {
-            if (!world.isRemote) {
+            if (!world.isRemote &&  !(player instanceof FakePlayer)) {
                 FMLNetworkHandler.openGui(player, ThermalScience.instance, ThermalScienceGuiID.EnergyRelay.ordinal(), world, x, y, z);
             }
         }
