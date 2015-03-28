@@ -409,7 +409,7 @@ public class ThermalScienceUtil {
 
     public static void removeShapedOreRecipeFor(ItemStack stack, String ingredient){
         List list = CraftingManager.getInstance().getRecipeList();
-        List remove = new ArrayList<>();
+        List remove = new ArrayList<ShapedOreRecipe>();
 
         for(int i = 0; i < list.size(); i++){
             if(list.get(i) instanceof ShapedOreRecipe){
@@ -596,7 +596,7 @@ public class ThermalScienceUtil {
     }
 
     public static <T> ArrayList<T> toList(T[] t){
-        ArrayList<T> list = new ArrayList<>(t.length);
+        ArrayList<T> list = new ArrayList<T>(t.length);
 
         for(int i = 0; i < t.length; i++){
             list.add(t[i]);

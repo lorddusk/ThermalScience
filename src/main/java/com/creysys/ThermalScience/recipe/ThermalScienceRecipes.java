@@ -366,7 +366,7 @@ public class ThermalScienceRecipes {
 
             if (ThermalScienceConfig.recipeOverrideMachines) {
                 //Remove all machine crafting
-                ArrayList<Integer> excluded = new ArrayList<>();
+                ArrayList<Integer> excluded = new ArrayList<Integer>();
                 excluded.add(7);
                 excluded.add(8);
                 excluded.add(9);
@@ -375,7 +375,7 @@ public class ThermalScienceRecipes {
 
 
                 List list = CraftingManager.getInstance().getRecipeList();
-                List remove = new ArrayList<>();
+                List remove = new ArrayList();
 
                 for (int i = 0; i < list.size(); i++) {
                     if (list.get(i) instanceof NEIRecipeWrapper) {
@@ -501,7 +501,7 @@ public class ThermalScienceRecipes {
 
         if (Loader.isModLoaded("EnderIO")) {
 
-            ArrayList<String> ores = new ArrayList<>();
+            ArrayList<String> ores = new ArrayList<String>();
             if (ThermalScienceConfig.recipeOverrideSilicon) {
                 ores.add("itemSilicon");
             }
@@ -515,8 +515,8 @@ public class ThermalScienceRecipes {
             //Remove silicon from every ender io sag mill recipe
             CrusherRecipeManager recipeManager = CrusherRecipeManager.getInstance();
             List<Recipe> recipes = recipeManager.getRecipes();
-            List<Recipe> removeRecipes = new ArrayList<>();
-            List<Recipe> addRecipes = new ArrayList<>();
+            List<Recipe> removeRecipes = new ArrayList<Recipe>();
+            List<Recipe> addRecipes = new ArrayList<Recipe>();
 
             for (int i = 0; i < recipes.size(); i++) {
                 RecipeOutput[] outputs = recipes.get(i).getOutputs();
@@ -525,7 +525,7 @@ public class ThermalScienceRecipes {
                 for (int j = 0; j < outputs.length; j++) {
                     ItemStack stack = outputs[j].getOutput();
                     if (oresContain(ores, stack)) {
-                        newOutputs = new ArrayList<>();
+                        newOutputs = new ArrayList<RecipeOutput>();
                         for (int k = 0; k < outputs.length; k++) {
                             if (!oresContain(ores, stack)) {
                                 newOutputs.add(outputs[k]);

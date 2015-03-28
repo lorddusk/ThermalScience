@@ -54,7 +54,7 @@ public class RecipeHandlerMachine extends TemplateRecipeHandler {
             outputSlots = gui.getOutputSlots();
             isValid = true;
 
-            outputs = new ArrayList<>();
+            outputs = new ArrayList<ItemStack>();
             for (int j = 0; j < recipe.outputs.length; j++) {
                 ItemStack stack = ThermalScienceUtil.getStack(recipe.outputs[j]);
                 if(stack != null) {

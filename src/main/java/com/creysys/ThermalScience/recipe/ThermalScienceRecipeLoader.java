@@ -69,70 +69,56 @@ public class ThermalScienceRecipeLoader {
         String key = splits[0];
         String value = splits[1];
 
-        switch (key) {
-            case "machine":
-                switch (value) {
-                    case "assemblingMachine":
-                        currentMachine = ThermalScienceRecipes.recipesAssemblingMachine;
-                        break;
-                    case "carbothermicFurnace":
-                        currentMachine = ThermalScienceRecipes.recipesCarbothermicFurnace;
-                        break;
-                    case "centrifuge":
-                        currentMachine = ThermalScienceRecipes.recipesCentrifuge;
-                        break;
-                    case "compressor":
-                        currentMachine = ThermalScienceRecipes.recipesCompressor;
-                        break;
-                    case "magnetizer":
-                        currentMachine = ThermalScienceRecipes.recipesMagnetizer;
-                        break;
-                    case "wiremill":
-                        currentMachine = ThermalScienceRecipes.recipesWiremill;
-                        break;
-                    default:
-                        System.out.println("Unknown machine!");
-                        return false;
-                }
-                break;
-            case "energy":
-                try {
-                    currentEnergy = Integer.parseInt(value);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    return false;
-                }
-                break;
-            case "fluidAmount":
-                try {
-                    currentFluidAmount = Integer.parseInt(value);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    return false;
-                }
-                break;
-            case "recipe":
-                ThermalScienceRecipe recipe = parseRecipe(value);
-                if (recipe == null) {
-                    System.out.println("Failed to parse recipe!");
-                    return false;
-                }
+        if (key.equals("machine")) {
+            if (value.equals("assemblingMachine")) {
+                currentMachine = ThermalScienceRecipes.recipesAssemblingMachine;
+            } else if (value.equals("carbothermicFurnace")) {
+                currentMachine = ThermalScienceRecipes.recipesCarbothermicFurnace;
+            } else if (value.equals("centrifuge")) {
+                currentMachine = ThermalScienceRecipes.recipesCentrifuge;
+            } else if (value.equals("compressor")) {
+                currentMachine = ThermalScienceRecipes.recipesCompressor;
+            } else if (value.equals("magnetizer")) {
+                currentMachine = ThermalScienceRecipes.recipesMagnetizer;
+            } else if (value.equals("wiremill")) {
+                currentMachine = ThermalScienceRecipes.recipesWiremill;
+            } else {
+                System.out.println("Unknown machine!");
+                return false;
+            }
+        } else if (key.equals("energy")) {
+            try {
+                currentEnergy = Integer.parseInt(value);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                return false;
+            }
+        } else if (key.equals("fluidAmount")) {
+            try {
+                currentFluidAmount = Integer.parseInt(value);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                return false;
+            }
+        } else if (key.equals("recipe")) {
+            ThermalScienceRecipe recipe = parseRecipe(value);
+            if (recipe == null) {
+                System.out.println("Failed to parse recipe!");
+                return false;
+            }
 
-                currentMachine.add(recipe);
-            case "fluid":
-                currentFluid = value;
-                break;
-            case "portable":
-                try {
-                    currentPortable = Boolean.parseBoolean(value);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    return false;
-                }
-                break;
-            default:
-                System.out.println("Unknown key!");
-                break;
+            currentMachine.add(recipe);
+        } else if (key.equals("fluid")) {
+            currentFluid = value;
+        } else if (key.equals("portable")) {
+            try {
+                currentPortable = Boolean.parseBoolean(value);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                return false;
+            }
+        } else {
+            System.out.println("Unknown key!");
         }
 
         return true;

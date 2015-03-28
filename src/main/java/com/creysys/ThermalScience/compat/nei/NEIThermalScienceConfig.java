@@ -20,7 +20,7 @@ public class NEIThermalScienceConfig implements IConfigureNEI {
 
     @Override
     public void loadConfig() {
-        handlers = new ArrayList<>();
+        handlers = new ArrayList<TemplateRecipeHandler>();
 
         handlers.add(new RecipeHandlerCentrifuge().newInstance());
         handlers.add(new RecipeHandlerCompressor().newInstance());

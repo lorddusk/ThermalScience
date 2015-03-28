@@ -33,12 +33,12 @@ public class ThermalScienceWorldData extends WorldSavedData {
     public ThermalScienceWorldData(String mapName) {
         super(mapName);
 
-        mapControllerPositions = new ArrayList<>();
+        mapControllerPositions = new ArrayList<DXYZ>();
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
-        mapControllerPositions = new ArrayList<>();
+        mapControllerPositions = new ArrayList<DXYZ>();
         if(compound.hasKey(ThermalScienceNBTTags.Controller)){
             NBTTagCompound posCompound = compound.getCompoundTag(ThermalScienceNBTTags.Controller);
             int length = posCompound.getInteger(ThermalScienceNBTTags.Count);
