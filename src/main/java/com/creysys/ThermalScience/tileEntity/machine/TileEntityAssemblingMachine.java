@@ -1,4 +1,4 @@
-package com.creysys.ThermalScience.tileEntity;
+package com.creysys.ThermalScience.tileEntity.machine;
 
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipe;

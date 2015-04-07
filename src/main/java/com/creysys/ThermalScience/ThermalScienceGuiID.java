@@ -12,5 +12,6 @@ public enum ThermalScienceGuiID
     EnergyRelay,
     TeleporterController,
     AssemblingMachine,
-    Magnetizer
+    Magnetizer,
+    Extractor
 }

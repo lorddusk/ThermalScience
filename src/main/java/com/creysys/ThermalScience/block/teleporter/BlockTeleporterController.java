@@ -165,13 +165,4 @@ public class BlockTeleporterController extends BlockContainer implements IWrench
             list.add("Controller Id: " + stack.getTagCompound().getInteger(ThermalScienceNBTTags.Id));
         }
     }
-
-    @Override
-    public void updateTick(World world, int x, int y, int z, Random random) {
-        TileEntityTeleporterController controller = (TileEntityTeleporterController)world.getTileEntity(x,y,z);
-
-        if(controller != null){
-            controller.checkMultiblock();
-        }
-    }
 }

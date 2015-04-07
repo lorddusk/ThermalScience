@@ -46,6 +46,7 @@ public class ThermalScienceRecipes {
     public static ArrayList<ThermalScienceRecipe> recipesWiremill;
     public static ArrayList<ThermalScienceRecipe> recipesAssemblingMachine;
     public static ArrayList<ThermalScienceRecipe> recipesMagnetizer;
+    public static ArrayList<ThermalScienceRecipe> recipesExtractor;
 
     public static Item teMachine;
     public static Item teFrame;
@@ -63,6 +64,7 @@ public class ThermalScienceRecipes {
         recipesWiremill = new ArrayList();
         recipesAssemblingMachine = new ArrayList();
         recipesMagnetizer = new ArrayList();
+        recipesExtractor = new ArrayList();
     }
 
     public static void initialize() {
@@ -92,6 +94,10 @@ public class ThermalScienceRecipes {
         GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.inductionCoil, "CIC", 'C', ItemMaterial.coil, 'I', "ingotIron"));
 
         GameRegistry.addRecipe(new ShapedOreRecipe(ItemMaterial.circuitBasic, "WWW", "RCR", "WWW", 'W', ItemMaterial.insulatedWireCopper, 'R', Items.redstone, 'C', "ingotCopper"));
+
+        GameRegistry.addShapedRecipe(ItemMaterial.fluidTransmitter, "_E_", "_T_", "_B_", 'E', ItemMaterial.ingotMagneticEnderium, 'T', Blocks.redstone_torch, 'B', Items.bucket);
+        GameRegistry.addShapedRecipe(ItemMaterial.fluidReceiver, "_B_", "_T_", "_E_", 'E', ItemMaterial.ingotMagneticEnderium, 'T', Blocks.redstone_torch, 'B', Items.bucket);
+        GameRegistry.addShapedRecipe(new ItemStack(ThermalScience.blockGravitationalTank), "CWT", "WDW", "RWC", 'C', ItemMaterial.circuitResonant, 'W', ItemMaterial.insulatedWireEnderium, 'T', ItemMaterial.fluidTransmitter, 'R', ItemMaterial.fluidReceiver, 'D', ItemMaterial.denseMatterBall);
 
         //Tweaks
         GameRegistry.addRecipe(new ShapedOreRecipe(Items.glowstone_dust, "RGR", "GRG", "RGR", 'G', "dustGold", 'R', Items.redstone));
@@ -175,9 +181,8 @@ public class ThermalScienceRecipes {
         addRecipe(recipesMagnetizer, new Object[]{"ingotInvar"}, new Object[]{ItemMaterial.ingotMagneticInvar}, 30000);
         addRecipe(recipesMagnetizer, new Object[]{"ingotEnderium"}, new Object[]{ItemMaterial.ingotMagneticEnderium}, 60000);
 
-
-        //Misc
-        RecipeHandlerWorld.addWorldCraftingRecipe(ItemMaterial.ingotMagneticIron, "Rub a piece of iron on wool\nto magnetize it.");
+        //Extractor
+        addRecipe(recipesExtractor, new Object[]{"woodRubber"}, new Object[]{"itemRawRubber,3"}, 15000);
     }
 
     public static void postInitialize() {
@@ -334,6 +339,11 @@ public class ThermalScienceRecipes {
 
                 addCompressorRecipe(new Object[]{input}, new Object[]{new ItemStack(item, 1, i)}, 420, true);
             }
+
+            GameRegistry.addShapedRecipe(ItemMaterial.denseMatterBall, "_B_", "BUB", "_B_", 'B', GameRegistry.findItem("ExtraUtilities", "bedrockiumIngot"), 'U', GameRegistry.findItem("ExtraUtilities", "unstableingot"));
+        }
+        else {
+            GameRegistry.addShapedRecipe(ItemMaterial.denseMatterBall, "_C_", "CNC", "_C_", 'C', Blocks.cobblestone, 'N', Items.nether_star);
         }
     }
 

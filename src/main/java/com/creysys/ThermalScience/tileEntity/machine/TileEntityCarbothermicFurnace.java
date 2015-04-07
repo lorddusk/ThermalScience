@@ -1,6 +1,5 @@
-package com.creysys.ThermalScience.tileEntity;
+package com.creysys.ThermalScience.tileEntity.machine;
 
-import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipe;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipes;
 

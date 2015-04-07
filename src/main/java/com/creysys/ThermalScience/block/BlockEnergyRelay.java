@@ -8,9 +8,8 @@ import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.client.gui.IItemTooltipProvider;
 import com.creysys.ThermalScience.ThermalScienceGuiID;
-import com.creysys.ThermalScience.item.ItemBlockMeta;
 import com.creysys.ThermalScience.tileEntity.TileEntityEnergyRelay;
-import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
+import com.creysys.ThermalScience.tileEntity.machine.TileEntityMachine;
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.BlockContainer;
@@ -33,7 +32,7 @@ import java.util.List;
 /**
  * Created by Creysys on 13 Feb 15.
  */
-public class BlockEnergyRelay extends BlockContainer implements IItemTooltipProvider, IWrenchable{
+public class BlockEnergyRelay extends BlockContainer implements IItemTooltipProvider, IWrenchable {
 
     public IIcon iconOff;
     public IIcon iconIn;
@@ -51,7 +50,7 @@ public class BlockEnergyRelay extends BlockContainer implements IItemTooltipProv
         setBlockName(blockName);
         setCreativeTab(ThermalScience.creativeTab);
 
-        GameRegistry.registerBlock(this, ItemBlockMeta.class, blockName);
+        GameRegistry.registerBlock(this, blockName);
         GameRegistry.registerTileEntity(TileEntityEnergyRelay.class, "tileEntityEnergyRelay");
     }
 

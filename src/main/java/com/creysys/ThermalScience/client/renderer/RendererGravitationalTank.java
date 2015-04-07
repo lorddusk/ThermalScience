@@ -1,10 +1,13 @@
 package com.creysys.ThermalScience.client.renderer;
 
+import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.tileEntity.TileEntityGravitationalTank;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
@@ -16,15 +19,7 @@ import static org.lwjgl.opengl.GL11.*;
 /**
  * Created by Creysys on 14 Mar 15.
  */
-public class RendererGravitationalTank extends TileEntitySpecialRenderer {
-
-    Sphere sphere;
-
-    public RendererGravitationalTank(){
-        sphere = new Sphere();
-        sphere.setTextureFlag(false);
-        sphere.setOrientation(GLU.GLU_OUTSIDE);
-    }
+public class RendererGravitationalTank extends TileEntitySpecialRenderer implements IItemRenderer {
 
     @Override
     public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float f1) {
@@ -39,25 +34,28 @@ public class RendererGravitationalTank extends TileEntitySpecialRenderer {
 
         float radius = 0.3f;
 
+
         GL11.glPushMatrix();
 
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glTranslated(x + 0.5f, y + 0.5f, z + 0.5f);
         GL11.glRotatef(90, 1, 0, 0);
 
-        if (fluid != null) {
-            radius = (float) Math.pow(0.75f * fluid.amount / Math.PI, 1f / 3f) * 0.025f + 0.3f;
+        if (fluid != null && fluid.amount != 0) {
+            radius += (float) Math.pow(0.75f * fluid.amount / Math.PI, 1f / 3f) * 0.025f;
         }
 
-        if (radius <= 0.3f) {
-            GL11.glColor3f(0.5f, 0.5f, 0.5f);
-            renderSphere(radius, 0, 0, 0, 0, false);
-        } else {
+        bindTexture(ThermalScienceTextures.gravitationalTank);
+        renderSphere(0.3f, 0, 0, 2f, 2f, true);
+
+        if (radius > 0.3f) {
             bindTexture(TextureMap.locationBlocksTexture);
             IIcon icon = fluid.getFluid().getStillIcon();
 
             renderSphere(radius, icon.getMinU(), icon.getMinV(), icon.getMaxU(), icon.getMaxV(), true);
         }
+
+        GL11.glEnable(GL11.GL_LIGHTING);
 
         GL11.glPopMatrix();
     }
@@ -168,5 +166,21 @@ public class RendererGravitationalTank extends TileEntitySpecialRenderer {
             glVertex3f(x * radius, y * radius, z * radius);
         }
         glEnd();
+    }
+
+    @Override
+    public boolean handleRenderType(ItemStack item, ItemRenderType type) {
+        return type == ItemRenderType.INVENTORY;
+    }
+
+    @Override
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
+        return false;
+    }
+
+    @Override
+    public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+        bindTexture(ThermalScienceTextures.gravitationalTank);
+        renderSphere(0.3f, 0, 0, 2f, 2f, true);
     }
 }

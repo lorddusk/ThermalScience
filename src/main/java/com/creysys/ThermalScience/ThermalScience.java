@@ -1,7 +1,7 @@
 package com.creysys.ThermalScience;
 
-import cofh.thermalexpansion.util.crafting.PulverizerManager;
 import com.creysys.ThermalScience.block.*;
+import com.creysys.ThermalScience.block.machine.*;
 import com.creysys.ThermalScience.block.teleporter.BlockTeleporterController;
 import com.creysys.ThermalScience.block.teleporter.BlockTeleporterPowerTap;
 import com.creysys.ThermalScience.block.teleporter.BlockTeleporterWall;
@@ -23,14 +23,12 @@ import cpw.mods.fml.common.registry.GameData;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.monster.EntityEnderman;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 
 import java.io.File;
 import java.util.Iterator;
 
-@Mod(modid = ThermalScience.MODID, version = ThermalScience.VERSION, name = ThermalScience.MODNAME, dependencies = "required-after:CoFHCore;required-after:ThermalExpansion;required-after:EnderIO")
+@Mod(modid = ThermalScience.MODID, version = ThermalScience.VERSION, name = ThermalScience.MODNAME, dependencies = "required-after:CoFHCore;required-after:ThermalExpansion")
 public class ThermalScience
 {
     public static final String MODID = "ThermalScience";
@@ -57,11 +55,13 @@ public class ThermalScience
     public static BlockMachine blockWiremill;
     public static BlockMachine blockAssemblingMachine;
     public static BlockMachine blockMagnetizer;
+    public static BlockMachine blockExtractor;
 
     public static Block blockWatermill;
-    public static BlockEnergyRelay blockEnergyRelay;
+    public static Block blockFluidVoid;
 
-    public static Block blockGravitationalTank;
+    public static BlockEnergyRelay blockEnergyRelay;
+    public static BlockGravitationalTank blockGravitationalTank;
 
     //Teleporter
     public static BlockTeleporterWall blockTeleporterWall;
@@ -88,28 +88,35 @@ public class ThermalScience
         itemMaterial = new ItemMaterial();
         itemDust = new ItemDust();
 
+        itemPortableCompressor = new ItemPortableCompressor();
+        itemMachineUpgradeKit = new ItemMachineUpgradeKit();
+
+        itemTeleporterDestinationCard = new ItemTeleporterDestinationCard();
+
         blockCompressor = new BlockCompressor();
         blockCarbothermicFurnace = new BlockCarbothermicFurnace();
         blockCentrifuge = new BlockCentrifuge();
         blockWiremill = new BlockWiremill();
         blockAssemblingMachine = new BlockAssemblingMachine();
         blockMagnetizer = new BlockMagnetizer();
+        blockExtractor = new BlockExtractor();
 
         blockWatermill = new BlockWatermill();
+        blockFluidVoid = new BlockFluidVoid();
+
+
+
         blockEnergyRelay = new BlockEnergyRelay();
 
+
         blockGravitationalTank = new BlockGravitationalTank();
+
+
+
 
         blockTeleporterWall = new BlockTeleporterWall();
         blockTeleporterPowerTap = new BlockTeleporterPowerTap();
         blockTeleporterController = new BlockTeleporterController();
-
-
-
-        itemPortableCompressor = new ItemPortableCompressor();
-        itemMachineUpgradeKit = new ItemMachineUpgradeKit();
-
-        itemTeleporterDestinationCard = new ItemTeleporterDestinationCard();
 
         ThermalScienceRecipes.preInitialize();
     }

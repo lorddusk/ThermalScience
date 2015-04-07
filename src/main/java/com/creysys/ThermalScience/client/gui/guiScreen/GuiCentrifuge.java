@@ -2,7 +2,7 @@ package com.creysys.ThermalScience.client.gui.guiScreen;
 
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.container.ContainerCentrifuge;
-import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
+import com.creysys.ThermalScience.tileEntity.machine.TileEntityMachine;
 import net.minecraft.entity.player.InventoryPlayer;
 
 /**

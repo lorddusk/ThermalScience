@@ -30,7 +30,7 @@ public class HandlerPlayer {
             event.setCanceled(false);
             event.entityPlayer.swingItem();
 
-            if (!event.world.isRemote && event.world.getTotalWorldTime() % 80 == 0) {
+            if (!event.world.isRemote && event.world.rand.nextInt(50) == 0) {
                 if (event.entityPlayer.inventory.addItemStackToInventory(ItemMaterial.ingotMagneticIron.copy())) {
                     event.entityPlayer.getCurrentEquippedItem().stackSize--;
                     if (event.entityPlayer.getCurrentEquippedItem().stackSize <= 0) {

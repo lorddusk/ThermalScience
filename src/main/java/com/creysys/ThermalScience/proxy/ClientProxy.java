@@ -1,5 +1,6 @@
 package com.creysys.ThermalScience.proxy;
 
+import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.client.renderer.RendererGravitationalTank;
 import com.creysys.ThermalScience.event.ThermalScienceEventHandler;
 import com.creysys.ThermalScience.tileEntity.TileEntityGravitationalTank;
@@ -9,6 +10,7 @@ import cpw.mods.fml.relauncher.Side;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.client.MinecraftForgeClient;
 
 /**
  * Created by Creysys on 18 Feb 15.
@@ -23,7 +25,8 @@ public class ClientProxy extends ServerProxy
     }
 
     public void registerRenderers(){
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGravitationalTank.class, new RendererGravitationalTank());
+        RendererGravitationalTank rendererGravitationalTank = new RendererGravitationalTank();
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGravitationalTank.class, rendererGravitationalTank);
     }
 
     @Override

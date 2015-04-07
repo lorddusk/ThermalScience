@@ -66,6 +66,9 @@ public class ItemMaterial extends ItemThermalScience {
     public static ItemStack ingotMagneticInvar;
     public static ItemStack ingotMagneticEnderium;
 
+    public static ItemStack denseMatterBall;
+    public static ItemStack fluidTransmitter;
+    public static ItemStack fluidReceiver;
 
     public List<String> materials;
     public IIcon[] icons;
@@ -132,6 +135,10 @@ public class ItemMaterial extends ItemThermalScience {
         ingotMagneticCopper = registerMaterial("IngotMagneticCopper");
         ingotMagneticInvar = registerMaterial("IngotMagneticInvar");
         ingotMagneticEnderium = registerMaterial("IngotMagneticEnderium");
+
+        denseMatterBall = registerMaterial("DenseMatter");
+        fluidTransmitter = registerMaterial("FluidTransmitter");
+        fluidReceiver = registerMaterial("FluidReceiver");
     }
 
     public ItemStack registerMaterial(String name){

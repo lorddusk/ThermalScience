@@ -1,7 +1,7 @@
 package com.creysys.ThermalScience.item;
 
 import com.creysys.ThermalScience.ThermalScience;
-import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
+import com.creysys.ThermalScience.tileEntity.machine.TileEntityMachine;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;

@@ -2,8 +2,8 @@ package com.creysys.ThermalScience.client.gui.guiScreen;
 
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.container.ContainerAssemblingMachine;
-import com.creysys.ThermalScience.tileEntity.TileEntityAssemblingMachine;
-import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
+import com.creysys.ThermalScience.tileEntity.machine.TileEntityAssemblingMachine;
+import com.creysys.ThermalScience.tileEntity.machine.TileEntityMachine;
 import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.RenderHelper;
@@ -11,7 +11,6 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,6 +4,7 @@ import cofh.lib.util.helpers.ColorHelper;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.ThermalScienceWorldData;
+import com.creysys.ThermalScience.event.handler.HandlerBlock;
 import com.creysys.ThermalScience.util.DXYZ;
 import com.creysys.ThermalScience.compat.waila.IWailaBodyProvider;
 import com.creysys.ThermalScience.network.packet.PacketEnergy;
@@ -108,6 +109,16 @@ public class TileEntityTeleporterController extends TileEntity implements IInven
         if(worldObj.isRemote){
             return;
         }
+
+
+        for(int i = 0; i < HandlerBlock.getUpdatedBlocks().size(); i++){
+            DXYZ pos = HandlerBlock.getUpdatedBlocks().get(i);
+            if(pos.d == worldObj.provider.dimensionId && getDistanceFrom(pos.x,pos.y,pos.z) < 256){
+                checkMultiblock();
+                break;
+            }
+        }
+
 
         if (worldObj.getTotalWorldTime() % 40 == 0) {
             if (active && (slot == null || !slot.hasTagCompound())) {

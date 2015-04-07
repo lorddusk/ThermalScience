@@ -6,6 +6,7 @@ import codechicken.nei.api.IConfigureNEI;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.compat.nei.recipeHandler.*;
+import com.creysys.ThermalScience.item.ItemMaterial;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +23,13 @@ public class NEIThermalScienceConfig implements IConfigureNEI {
     public void loadConfig() {
         handlers = new ArrayList<TemplateRecipeHandler>();
 
-        handlers.add(new RecipeHandlerCentrifuge().newInstance());
-        handlers.add(new RecipeHandlerCompressor().newInstance());
-        handlers.add(new RecipeHandlerCarbothermicFurnace().newInstance());
-        handlers.add(new RecipeHandlerWiremill().newInstance().newInstance());
-        handlers.add(new RecipeHandlerAssemblingMachine().newInstance());
-        handlers.add(new RecipeHandlerMagnetizer().newInstance());
+        handlers.add(new RecipeHandlerCentrifuge());
+        handlers.add(new RecipeHandlerCompressor());
+        handlers.add(new RecipeHandlerCarbothermicFurnace());
+        handlers.add(new RecipeHandlerWiremill().newInstance());
+        handlers.add(new RecipeHandlerAssemblingMachine());
+        handlers.add(new RecipeHandlerMagnetizer());
+        handlers.add(new RecipeHandlerExtractor());
         handlers.add(new RecipeHandlerWorld());
 
 
@@ -36,6 +38,8 @@ public class NEIThermalScienceConfig implements IConfigureNEI {
             API.registerUsageHandler(handlers.get(i));
         }
 
+
+        RecipeHandlerWorld.addWorldCraftingRecipe(ItemMaterial.ingotMagneticIron.copy(), "Rub a piece of iron on wool\nto magnetize it.");
     }
 
     @Override

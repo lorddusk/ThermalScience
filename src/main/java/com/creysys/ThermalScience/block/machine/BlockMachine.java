@@ -1,9 +1,6 @@
-package com.creysys.ThermalScience.block;
+package com.creysys.ThermalScience.block.machine;
 
-import cofh.api.modhelpers.ThermalExpansionHelper;
-import cofh.core.entity.CoFHFakePlayer;
 import cofh.lib.util.helpers.StringHelper;
-import cofh.thermalexpansion.util.crafting.PulverizerManager;
 import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.util.IWrenchable;
@@ -12,7 +9,7 @@ import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.client.gui.IItemTooltipProvider;
 import com.creysys.ThermalScience.ThermalScienceGuiID;
 import com.creysys.ThermalScience.item.ItemBlockMeta;
-import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
+import com.creysys.ThermalScience.tileEntity.machine.TileEntityMachine;
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
@@ -22,7 +19,6 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -32,7 +28,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
 

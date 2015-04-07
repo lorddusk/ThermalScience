@@ -1,8 +1,8 @@
-package com.creysys.ThermalScience.block;
+package com.creysys.ThermalScience.block.machine;
 
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.ThermalScienceGuiID;
-import com.creysys.ThermalScience.tileEntity.TileEntityCarbothermicFurnace;
+import com.creysys.ThermalScience.tileEntity.machine.TileEntityCarbothermicFurnace;
 import net.minecraft.client.renderer.texture.IIconRegister;
 
 /**

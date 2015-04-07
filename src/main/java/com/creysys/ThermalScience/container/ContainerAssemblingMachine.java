@@ -1,10 +1,9 @@
 package com.creysys.ThermalScience.container;
 
 import com.creysys.ThermalScience.container.slot.SlotOutput;
-import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
+import com.creysys.ThermalScience.tileEntity.machine.TileEntityMachine;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
-import net.minecraft.tileentity.TileEntity;
 
 /**
  * Created by Creysys on 18 Mar 15.

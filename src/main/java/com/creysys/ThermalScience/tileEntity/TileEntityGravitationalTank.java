@@ -1,11 +1,17 @@
 package com.creysys.ThermalScience.tileEntity;
 
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
+import com.creysys.ThermalScience.event.handler.HandlerBlock;
+import com.creysys.ThermalScience.util.DXYZ;
+import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
@@ -18,7 +24,7 @@ public class TileEntityGravitationalTank extends TileEntity implements IFluidHan
     public int capacity;
 
     public TileEntityGravitationalTank(){
-        capacity = 10000000;
+        capacity = 0;
     }
 
     public void writeCustomToNBT(NBTTagCompound compound){
@@ -34,6 +40,31 @@ public class TileEntityGravitationalTank extends TileEntity implements IFluidHan
             fluid = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(ThermalScienceNBTTags.Fluid));
         }
     }
+
+    public void updateCapacity() {
+        //TODO: DO IT
+    }
+
+    @Override
+    public void updateEntity() {
+
+        if(worldObj.isRemote){
+            return;
+        }
+
+        for (int i = 0; i < HandlerBlock.getUpdatedBlocks().size(); i++) {
+            DXYZ pos = HandlerBlock.getUpdatedBlocks().get(i);
+            if (pos.d == worldObj.provider.dimensionId && getDistanceFrom(pos.x, pos.y, pos.z) <= 16) {
+                updateCapacity();
+            }
+        }
+    }
+
+    @Override
+    public boolean canUpdate() {
+        return true;
+    }
+
 
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
@@ -85,6 +116,17 @@ public class TileEntityGravitationalTank extends TileEntity implements IFluidHan
         FluidStack ret = fluid.copy();
         ret.amount = canDrain;
         return ret;
+    }
+
+    @Override
+    public AxisAlignedBB getRenderBoundingBox() {
+        float radius = 0.5f;
+
+        if(fluid != null) {
+            radius += Math.pow(0.75f * fluid.amount / Math.PI, 1f / 3f) * 0.025f + 0.5f;
+        }
+
+        return AxisAlignedBB.getBoundingBox(xCoord - radius, yCoord - radius, zCoord - radius, xCoord + radius, yCoord + radius, zCoord + radius);
     }
 
     @Override

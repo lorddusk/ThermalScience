@@ -5,15 +5,11 @@ import cofh.lib.util.helpers.ColorHelper;
 import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.container.ContainerBasic;
-import com.creysys.ThermalScience.tileEntity.TileEntityMachine;
-import net.minecraft.client.Minecraft;
+import com.creysys.ThermalScience.tileEntity.machine.TileEntityMachine;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
 import java.util.ArrayList;
 import java.util.List;

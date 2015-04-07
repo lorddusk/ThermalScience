@@ -1,19 +1,17 @@
-package com.creysys.ThermalScience.tileEntity;
+package com.creysys.ThermalScience.tileEntity.machine;
 
-import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipe;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipes;
 
 import java.util.List;
 
 /**
- * Created by Creysys on 1/31/2015.
+ * Created by Creysys on 06 Apr 15.
  */
-public class TileEntityCentrifuge extends TileEntityMachine{
-
+public class TileEntityExtractor extends TileEntityMachine {
     @Override
     public List<ThermalScienceRecipe> getRecipes() {
-        return ThermalScienceRecipes.recipesCentrifuge;
+        return ThermalScienceRecipes.recipesExtractor;
     }
 
     @Override
@@ -23,7 +21,7 @@ public class TileEntityCentrifuge extends TileEntityMachine{
 
     @Override
     public int getCraftingOutputSize() {
-        return 4;
+        return 2;
     }
 
     @Override
@@ -33,26 +31,22 @@ public class TileEntityCentrifuge extends TileEntityMachine{
 
     @Override
     public int[] getCraftingOutputSlots() {
-        return new int[]{1,2,3,4};
-    }
-
-    @Override
-    public int getCraftingSpeed() {
-        return super.getCraftingSpeed() / 4;
+        return new int[]{1, 2};
     }
 
     @Override
     public int getSizeInventory() {
-        return 5;
+        return 3;
     }
 
     @Override
     public String getInventoryName() {
-        return "centrifuge";
+        return "extractor";
     }
 
     @Override
-    public boolean hasCustomInventoryName() {
-        return false;
+    public int getCraftingSpeed() {
+        int factor = (int)Math.ceil(10 - 5f / 3f * getBlockMetadata());
+        return super.getCraftingSpeed() / factor;
     }
 }

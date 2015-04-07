@@ -1,19 +1,17 @@
-package com.creysys.ThermalScience.tileEntity;
+package com.creysys.ThermalScience.tileEntity.machine;
 
-import com.creysys.ThermalScience.client.ThermalScienceTextures;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipe;
 import com.creysys.ThermalScience.recipe.ThermalScienceRecipes;
 
 import java.util.List;
 
 /**
- * Created by Creysys on 08 Feb 15.
+ * Created by Creysys on 21 Mar 15.
  */
-public class TileEntityWiremill extends TileEntityMachine {
-
+public class TileEntityMagnetizer extends TileEntityMachine {
     @Override
     public List<ThermalScienceRecipe> getRecipes() {
-        return ThermalScienceRecipes.recipesWiremill;
+        return ThermalScienceRecipes.recipesMagnetizer;
     }
 
     @Override
@@ -43,11 +41,6 @@ public class TileEntityWiremill extends TileEntityMachine {
 
     @Override
     public String getInventoryName() {
-        return "wiremill";
-    }
-
-    @Override
-    public int getCraftingSpeed() {
-        return super.getCraftingSpeed() / 2;
+        return "magnetizer";
     }
 }

@@ -6,6 +6,7 @@ tile.blockCentrifuge.name=Centrifuge
 tile.blockWiremill.name=Wiremill
 tile.blockAssemblingMachine.name=Assembling Machine
 tile.blockMagnetizer.name=Magnetizer
+tile.blockExtractor.name=Extractor
 
 tile.blockWatermill.name=Watermill
 tile.blockEnergyRelay.name=Energy Relay
@@ -72,6 +73,10 @@ item.materialIngotMagneticTin.name=Magnetic Tin Ingot
 item.materialIngotMagneticCopper.name=Magnetic Copper Ingot
 item.materialIngotMagneticInvar.name=Magnetic Invar Ingot
 item.materialIngotMagneticEnderium.name=Magnetic Enderium Ingot
+
+item.materialDenseMatterBall.name=Dense Matter Ball
+item.materialFluidTransmitter.name=Fluid Transmitter
+item.materialFluidReceiver.name=Fluid Receiver
 
 item.dustNetherrack.name=Netherrack Dust
 item.dustDirtyNetherrack.name=Dirty Netherrack Dust

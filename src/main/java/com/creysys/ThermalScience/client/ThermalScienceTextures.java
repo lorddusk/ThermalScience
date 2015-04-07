@@ -36,8 +36,13 @@ public class ThermalScienceTextures {
     public static final ThermalScienceResourceLocation magnetizerOff = new ThermalScienceResourceLocation("textures/blocks/magnetizer/off.png");
     public static final ThermalScienceResourceLocation magnetizerOn = new ThermalScienceResourceLocation("textures/blocks/magnetizer/on.png");
 
+    public static final ThermalScienceResourceLocation extractorOff = new ThermalScienceResourceLocation("textures/blocks/extractor/off.png");
+    public static final ThermalScienceResourceLocation extractorOn = new ThermalScienceResourceLocation("textures/blocks/extractor/on.png");
+
 
     public static final ThermalScienceResourceLocation watermill = new ThermalScienceResourceLocation("textures/blocks/watermill.png");
+
+    public static final ThermalScienceResourceLocation gravitationalTank = new ThermalScienceResourceLocation("textures/blocks/gravitationalTank.png");
 
     //Items
     public static final ThermalScienceResourceLocation portableCompressorOff = new ThermalScienceResourceLocation("textures/items/portableCompressor/off.png");
@@ -61,6 +66,7 @@ public class ThermalScienceTextures {
     public static final ThermalScienceResourceLocation guiCompressor = new ThermalScienceResourceLocation("textures/gui/compressor.png");
     public static final ThermalScienceResourceLocation guiAssemblingMachine = new ThermalScienceResourceLocation("textures/gui/assemblingMachine.png");
     public static final ThermalScienceResourceLocation guiMagnetizer = new ThermalScienceResourceLocation("textures/gui/magnetizer.png");
+    public static final ThermalScienceResourceLocation guiExtractor = new ThermalScienceResourceLocation("textures/gui/extractor.png");
 
     public static final ThermalScienceResourceLocation guiEnergyRelay = new ThermalScienceResourceLocation("textures/gui/energyRelay.png");
 }

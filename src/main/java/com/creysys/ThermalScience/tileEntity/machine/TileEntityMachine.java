@@ -1,4 +1,4 @@
-package com.creysys.ThermalScience.tileEntity;
+package com.creysys.ThermalScience.tileEntity.machine;
 
 import cofh.api.energy.IEnergyReceiver;
 import cofh.lib.util.helpers.StringHelper;
