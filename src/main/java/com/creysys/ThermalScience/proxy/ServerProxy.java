@@ -10,7 +10,7 @@ import net.minecraft.network.NetHandlerPlayServer;
  */
 public class ServerProxy
 {
-    public void initialize(){};
+    public void initialize(){}
 
     public void registerRenderers(){}
 

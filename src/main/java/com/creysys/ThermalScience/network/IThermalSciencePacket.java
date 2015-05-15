@@ -8,8 +8,8 @@ import net.minecraft.entity.player.EntityPlayer;
  * Created by Creysys on 2/1/2015.
  */
 public interface IThermalSciencePacket {
-    public void write(ChannelHandlerContext ctx, ByteBuf buffer);
-    public void read(ChannelHandlerContext ctx, ByteBuf buffer);
-    public void executeClientSide(EntityPlayer player);
-    public void executeServerSide(EntityPlayer player);
+    void write(ChannelHandlerContext ctx, ByteBuf buffer);
+    void read(ChannelHandlerContext ctx, ByteBuf buffer);
+    void executeClientSide(EntityPlayer player);
+    void executeServerSide(EntityPlayer player);
 }

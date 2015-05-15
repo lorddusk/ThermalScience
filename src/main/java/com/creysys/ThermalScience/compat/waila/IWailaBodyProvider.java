@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface IWailaBodyProvider {
 
-    public List<String> getWailaBody(ItemStack itemStack, List<String> list, IWailaDataAccessor accessor, IWailaConfigHandler config);
+    List<String> getWailaBody(ItemStack itemStack, List<String> list, IWailaDataAccessor accessor, IWailaConfigHandler config);
 }

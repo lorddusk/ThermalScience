@@ -22,19 +22,11 @@ public class ItemTeleporterDestinationCard extends ItemThermalScience {
 
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int meta, float f1, float f2, float f3) {
-
-        if(world.isRemote){
+        if(world.isRemote || stack.hasTagCompound()){
             return false;
         }
 
-        if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
-        }
-        else {
-            return false;
-        }
-
-        NBTTagCompound tagCompound = stack.getTagCompound();
+        NBTTagCompound tagCompound = new NBTTagCompound();
         tagCompound.setInteger(ThermalScienceNBTTags.Dim, world.provider.dimensionId);
         tagCompound.setInteger(ThermalScienceNBTTags.XCoord, x);
         tagCompound.setInteger(ThermalScienceNBTTags.YCoord, y + 1);
@@ -50,7 +42,8 @@ public class ItemTeleporterDestinationCard extends ItemThermalScience {
 
         tagCompound.setInteger(ThermalScienceNBTTags.Yaw, (i * 90));
 
-        return false;
+        stack.setTagCompound(tagCompound);
+        return true;
     }
 
     @Override
@@ -62,21 +55,15 @@ public class ItemTeleporterDestinationCard extends ItemThermalScience {
         if(player.isSneaking()){
             stack.setTagCompound(null);
         }
-        else {
-            if (!stack.hasTagCompound()) {
-                stack.setTagCompound(new NBTTagCompound());
-            }
-            else {
-                return stack;
-            }
-
-            NBTTagCompound tagCompound = stack.getTagCompound();
+        else if(!stack.hasTagCompound()){
+            NBTTagCompound tagCompound = new NBTTagCompound();
             tagCompound.setInteger(ThermalScienceNBTTags.Dim, world.provider.dimensionId);
             tagCompound.setInteger(ThermalScienceNBTTags.XCoord, (int)player.posX);
             tagCompound.setInteger(ThermalScienceNBTTags.YCoord, (int)player.posY);
             tagCompound.setInteger(ThermalScienceNBTTags.ZCoord, (int)player.posZ);
-
             tagCompound.setInteger(ThermalScienceNBTTags.Yaw, (int)player.rotationYaw);
+
+            stack.setTagCompound(tagCompound);
         }
 
         return stack;

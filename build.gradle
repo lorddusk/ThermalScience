@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.10-1.1d.f3"
+version = "1.7.10-1.2"
 group = "com.creysys.ThermalScience"
 archivesBaseName = "ThermalScience"
 
@@ -42,8 +42,12 @@ repositories {
 }
 
 dependencies {
-	compile "mcp.mobius.waila:Waila:1.5.8a_1.7.10"
-    compile "li.cil.oc:OpenComputers:MC1.7.10-1.5.+:api"
+    compile "mcp.mobius.waila:Waila:1.5.8a_1.7.10"
+    compile "codechicken:CodeChickenCore:1.7.10-1.0.6."
+
+    //compile "appeng:appliedenergistics2:rv0-stable-10:dev"
+
+    //compile "li.cil.oc:OpenComputers:MC1.7.10-1.5.+:api"
 }
 
 processResources

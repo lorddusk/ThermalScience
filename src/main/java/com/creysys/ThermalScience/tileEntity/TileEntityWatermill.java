@@ -84,11 +84,8 @@ public class TileEntityWatermill extends TileEntity implements IEnergyProvider, 
                 return false;
             }
 
-            if(energyHandler.receiveEnergy(dir.getOpposite(), getEnergyStored(dir), false) == 0){
-                return false;
-            }
+            return energyHandler.receiveEnergy(dir.getOpposite(), getEnergyStored(dir), false) != 0;
 
-            return true;
         }
 
         return false;

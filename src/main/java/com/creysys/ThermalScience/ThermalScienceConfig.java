@@ -22,6 +22,7 @@ public class ThermalScienceConfig
     public static boolean recipeOverrideTesseract;
     public static boolean recipeOverrideServo;
     public static boolean recipeOverrideDynamos;
+    public static boolean recipeOverrideWood;
 
     public static boolean showOreDictNames;
     public static boolean showItemNames;
@@ -47,6 +48,7 @@ public class ThermalScienceConfig
         recipeOverrideTesseract = config.getBoolean("tesseract", "recipe overrides", false, "Greg tesseracts");
         recipeOverrideServo = config.getBoolean("servo", "recipe overrides", false, "(Greg) servo recipe");
         recipeOverrideDynamos = config.getBoolean("dynamos", "recipe overrides", false, "Greg dynamo recipe");
+        recipeOverrideWood = config.getBoolean("wood", "recipe overrides", false, "Nerf planks and stick recipes");
 
         config.save();
     }

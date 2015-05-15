@@ -8,5 +8,5 @@ import java.util.ArrayList;
  * Created by Creysys on 13 Mar 15.
  */
 public interface IContentDropper {
-    public ArrayList<ItemStack> getDrops();
+    ArrayList<ItemStack> getDrops();
 }

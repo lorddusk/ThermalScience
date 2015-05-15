@@ -3,9 +3,11 @@ package com.creysys.ThermalScience.item;
 import com.creysys.ThermalScience.ThermalScience;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -70,6 +72,11 @@ public class ItemMaterial extends ItemThermalScience {
     public static ItemStack fluidTransmitter;
     public static ItemStack fluidReceiver;
 
+    public static ItemStack pulverizedLether;
+    public static ItemStack pulverizedPork;
+    public static ItemStack preparedOssein;
+    public static ItemStack gelatine;
+
     public List<String> materials;
     public IIcon[] icons;
 
@@ -86,7 +93,7 @@ public class ItemMaterial extends ItemThermalScience {
         icons = new IIcon[materials.size()];
     }
 
-    public void registerMaterials(){
+    public void registerMaterials() {
         tube = registerMaterial("Tube");
         wireCopper = registerMaterial("WireCopper");
         coil = registerMaterial("Coil");
@@ -106,10 +113,10 @@ public class ItemMaterial extends ItemThermalScience {
         wireLumium = registerMaterial("WireLumium");
         wireEnderium = registerMaterial("WireEnderium");
 
-        insulatedWireCopper = registerMaterial("InsulatedWireCopper");
-        insulatedWireTin = registerMaterial("InsulatedWireTin");
-        insulatedWireIron = registerMaterial("InsulatedWireIron");
-        insulatedWireGold = registerMaterial("InsulatedWireGold");
+        insulatedWireCopper = registerMaterial("InsulatedWireCopper", "craftingWireCopper");
+        insulatedWireTin = registerMaterial("InsulatedWireTin", "craftingWireTin");
+        insulatedWireIron = registerMaterial("InsulatedWireIron", "craftingWireIron");
+        insulatedWireGold = registerMaterial("InsulatedWireGold", "craftingWireGold");
         insulatedWireSilver = registerMaterial("InsulatedWireSilver");
         insulatedWireLead = registerMaterial("InsulatedWireLead");
         insulatedWireNickel = registerMaterial("InsulatedWireNickel");
@@ -122,8 +129,8 @@ public class ItemMaterial extends ItemThermalScience {
         insulatedWireLumium = registerMaterial("InsulatedWireLumium");
         insulatedWireEnderium = registerMaterial("InsulatedWireEnderium");
 
-        circuitBasic = registerMaterial("CircuitBasic");
-        circuitHardened = registerMaterial("CircuitHardened");
+        circuitBasic = registerMaterial("CircuitBasic", "circuitBasic");
+        circuitHardened = registerMaterial("CircuitHardened", "circuitAdvanced");
         circuitReinforced = registerMaterial("CircuitReinforced");
         circuitResonant = registerMaterial("CircuitResonant");
 
@@ -139,6 +146,19 @@ public class ItemMaterial extends ItemThermalScience {
         denseMatterBall = registerMaterial("DenseMatter");
         fluidTransmitter = registerMaterial("FluidTransmitter");
         fluidReceiver = registerMaterial("FluidReceiver");
+
+        pulverizedLether = registerMaterial("PulverizedLether", "itemOssein");
+        pulverizedPork = registerMaterial("PulverizedPork", "itemOssein");
+        //Bone meal
+        OreDictionary.registerOre("itemOssein", new ItemStack(Items.dye, 1, 15));
+        preparedOssein = registerMaterial("PreparedOssein");
+        gelatine = registerMaterial("Gelatine");
+    }
+
+    public ItemStack registerMaterial(String name, String oreName){
+        ItemStack material = registerMaterial(name);
+        OreDictionary.registerOre(oreName, material);
+        return material;
     }
 
     public ItemStack registerMaterial(String name){

@@ -8,6 +8,7 @@ import com.creysys.ThermalScience.ThermalScience;
 import com.creysys.ThermalScience.ThermalScienceConfig;
 import com.creysys.ThermalScience.ThermalScienceNBTTags;
 import com.creysys.ThermalScience.compat.nei.recipeHandler.RecipeHandlerWorld;
+import com.creysys.ThermalScience.item.ItemTestTube;
 import com.creysys.ThermalScience.recipe.recipe.RecipeAssemblingMachine;
 import com.creysys.ThermalScience.util.ThermalScienceUtil;
 import com.creysys.ThermalScience.item.ItemDust;
@@ -17,6 +18,7 @@ import com.creysys.ThermalScience.recipe.recipe.RecipeCompressor;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.ReflectionHelper;
 import crazypants.enderio.machine.crusher.CrusherRecipeManager;
 import crazypants.enderio.machine.recipe.Recipe;
 import crazypants.enderio.machine.recipe.RecipeOutput;
@@ -26,6 +28,8 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.ShapedRecipes;
+import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -99,8 +103,19 @@ public class ThermalScienceRecipes {
         GameRegistry.addShapedRecipe(ItemMaterial.fluidReceiver, "_B_", "_T_", "_E_", 'E', ItemMaterial.ingotMagneticEnderium, 'T', Blocks.redstone_torch, 'B', Items.bucket);
         GameRegistry.addShapedRecipe(new ItemStack(ThermalScience.blockGravitationalTank), "CWT", "WDW", "RWC", 'C', ItemMaterial.circuitResonant, 'W', ItemMaterial.insulatedWireEnderium, 'T', ItemMaterial.fluidTransmitter, 'R', ItemMaterial.fluidReceiver, 'D', ItemMaterial.denseMatterBall);
 
+        GameRegistry.addRecipe(new ShapedOreRecipe(ItemTestTube.empty, "G_G", "G_G", "GGG", 'G', "blockGlass"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ItemTestTube.sulfur, ItemTestTube.empty, "dustSulfur"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ItemTestTube.sulfurDioxideAndPlatinum, ItemTestTube.sulfurDioxide, "dustPlatinum"));
+        GameRegistry.addShapelessRecipe(ThermalScienceUtil.setStack(ItemTestTube.sulfuricAcid, 2), ItemTestTube.sulfurTrioxide, ItemTestTube.water);
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ThermalScienceUtil.setStack(ItemMaterial.preparedOssein, 4), ItemTestTube.sulfuricAcid, "itemOssein", "itemOssein", "itemOssein", "itemOssein"));
+        GameRegistry.addRecipe(new ItemStack(Items.slime_ball, 4), "G", 'G', ItemMaterial.gelatine);
+
         //Tweaks
         GameRegistry.addRecipe(new ShapedOreRecipe(Items.glowstone_dust, "RGR", "GRG", "RGR", 'G', "dustGold", 'R', Items.redstone));
+
+        //Smelting
+        GameRegistry.addSmelting(ItemTestTube.sulfur, ItemTestTube.sulfurDioxide, 0);
+        GameRegistry.addSmelting(ItemTestTube.sulfurDioxideAndPlatinum, ItemTestTube.sulfurTrioxide, 0);
 
         //Carbothermic Furnace
         addRecipe(recipesCarbothermicFurnace, new Object[]{Items.coal, Blocks.sand}, new Object[]{"itemSilicon"}, 16000);
@@ -183,6 +198,7 @@ public class ThermalScienceRecipes {
 
         //Extractor
         addRecipe(recipesExtractor, new Object[]{"woodRubber"}, new Object[]{"itemRawRubber,3"}, 15000);
+        addRecipe(recipesExtractor, new Object[]{ItemMaterial.preparedOssein}, new Object[]{ItemMaterial.gelatine}, 5000);
     }
 
     public static void postInitialize() {
@@ -348,6 +364,69 @@ public class ThermalScienceRecipes {
     }
 
     public static void removeRecipes() {
+
+        if(ThermalScienceConfig.recipeOverrideWood){
+            List recipes = CraftingManager.getInstance().getRecipeList();
+            for(int i = 0; i < recipes.size(); i++){
+                Object object = recipes.get(i);
+
+                //Planks
+                if(object instanceof ShapedRecipes){
+                    ShapedRecipes recipe = (ShapedRecipes)object;
+                    ItemStack output = recipe.getRecipeOutput();
+
+                    if(output.stackSize == 4) {
+                        boolean found = false;
+
+                        int[] ores = OreDictionary.getOreIDs(output);
+                        for (int j = 0; j < ores.length; j++) {
+                            String ore = OreDictionary.getOreName(ores[j]);
+                            if (ore.equals("plankWood")) {
+                                found = true;
+                                break;
+                            }
+                        }
+
+                        if (found) {
+                            ItemStack[] inputs = ReflectionHelper.getPrivateValue(ShapedRecipes.class, recipe, "recipeItems");
+
+                            if(inputs.length == 1){
+                                ItemStack input = inputs[0];
+
+                                if(input.stackSize == 1) {
+                                    found = false;
+
+                                    ores = OreDictionary.getOreIDs(input);
+                                    for (int j = 0; j < ores.length; j++) {
+                                        String ore = OreDictionary.getOreName(ores[j]);
+                                        if (ore.equals("logWood")) {
+                                            found = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (found) {
+                                        output.stackSize = 2;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                //Sticks
+                else if(object instanceof ShapedOreRecipe){
+                    ShapedOreRecipe recipe = (ShapedOreRecipe)object;
+                    ItemStack output = recipe.getRecipeOutput();
+
+                    if(output.stackSize == 4 && output.getItem() == Items.stick && recipe.getRecipeSize() == 2){
+                        output.stackSize = 2;
+                    }
+                }
+            }
+        }
+
+
         if (Loader.isModLoaded("ThermalExpansion")) {
 
             PulverizerManager.removeRecipe(new ItemStack(Blocks.netherrack));

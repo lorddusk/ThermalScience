@@ -89,7 +89,7 @@ public abstract class TileEntityMachine extends TileEntity implements IEnergyRec
             return 0;
         }
 
-        return (int) Math.round(100f / (float) craftingEnergyNeeded * (float) craftingEnergy);
+        return Math.round(100f / (float) craftingEnergyNeeded * (float) craftingEnergy);
     }
 
     public void writeCustomToNBT(NBTTagCompound compound)

@@ -72,6 +72,7 @@ public class ThermalScience
     //Items
     public static ItemMaterial itemMaterial;
     public static ItemDust itemDust;
+    public static ItemTestTube itemTestTube;
 
     public static Item itemPortableCompressor;
     public static Item itemMachineUpgradeKit;
@@ -87,6 +88,7 @@ public class ThermalScience
 
         itemMaterial = new ItemMaterial();
         itemDust = new ItemDust();
+        itemTestTube = new ItemTestTube();
 
         itemPortableCompressor = new ItemPortableCompressor();
         itemMachineUpgradeKit = new ItemMachineUpgradeKit();

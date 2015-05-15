@@ -58,6 +58,8 @@ public class ItemPortableCompressor extends ItemEnergyContainer
         }
     }
 
+
+
     public IIcon iconOn;
     public IIcon iconOff;
 
@@ -72,6 +74,8 @@ public class ItemPortableCompressor extends ItemEnergyContainer
         setMaxStackSize(1);
         setMaxDamage(16);
     }
+
+
 
     public int getTier(ItemStack stack){
         int tier = 0;
@@ -316,6 +320,8 @@ public class ItemPortableCompressor extends ItemEnergyContainer
 
         return amount;
     }
+
+
 
     public void decreaseItemStack(InventoryPlayer inventory, ArrayList<Integer> indices, int amount){
         for(int i = 0; i < indices.size(); i++){

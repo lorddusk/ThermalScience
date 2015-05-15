@@ -161,6 +161,7 @@ public class BlockMachine extends BlockContainer implements IItemTooltipProvider
         super.breakBlock(world, x, y, z, block, meta);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void getSubBlocks(Item item, CreativeTabs tab, List list) {
         for(int i = 0; i < 4; i++){
